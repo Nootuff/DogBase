@@ -19,5 +19,5 @@ app.get("/", function(req, res){
 
 
 app.listen(3000, function () {
-    console.log("Put http://localhost:3000 into the url bar to see your new app" ); //String template literal, accuratley shows the port you are serving on Heroku or local. 
+    console.log("Live on http://localhost:3000" ); //String template literal, accuratley shows the port you are serving on Heroku or local. 
 });
