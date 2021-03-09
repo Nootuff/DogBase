@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
 const uploadSchema = new mongoose.Schema({
-    title: String    
+    title: {
+      type: String    
+    }
   }); 
   
+  module.exports = mongoose.model('Upload', uploadSchema);
 
-  const Upload = mongoose.model('Upload', uploadSchema);
-
-  module.exports = Upload;
+ 
