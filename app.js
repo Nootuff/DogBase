@@ -26,13 +26,24 @@ app.engine('ejs', engine);
 app.set("views", path.join(__dirname, "/views"))
 app.use(express.static(__dirname + '/public'));
 
-app.get("/", function (req, res) {
-    res.render("uploads/index.ejs");
+app.get("/", async (req, res) => {
+    const uploads = await Upload.find({});
+    res.render("uploads/index.ejs", {uploads});
 });
 
-app.get("/show", function (req, res) {
+/*
+app.get("/show", function (req, res) { This is no longer needed
     res.render("uploads/show.ejs");
 });
+*/
+
+app.get("/uploads/:id", async (req, res) =>{ //In farmsIndex.ejs, <%=farms[i]._id%> holds that farm's _id value, when placed after /farms/, it activates this route. 
+var find  = req.params.id;
+  const fetch = await Upload.findById(find); //The products object on the farm model is just an array of product object ids. Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
+  //res.render("farmsFolder/farmDetails.ejs", { farm }) This passes the value of const farm to the farmDetails.ejs page 
+  console.log(fetch);
+  res.render("uploads/show.ejs", {fetch});
+  })
 
 app.get("/upload", function (req, res) {
     res.render("uploads/upload.ejs");
