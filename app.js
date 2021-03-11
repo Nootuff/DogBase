@@ -3,10 +3,10 @@ const ejs = require('ejs');
 const path = require("path");
 const mongoose = require('mongoose');
 const engine = require('ejs-mate'); //This npm lets you use your boilerplate.ejs
+const methodOverride = require('method-override'); //THis npm lets you use the edit and delete parts of CRUD.
+const Upload = require("./models/upload"); //Link for the upload schema in models
 
-const Upload = require("./models/upload"); //Link for the farm schema
-
-const app = express();
+const app = express(); //Activates express.
 
 mongoose.connect('mongodb://localhost:27017/ExpressDogProject', { 
     useNewUrlParser: true,
@@ -20,7 +20,8 @@ db.once("open", function () {
     console.log("database connected");
 });
 
-app.use(express.urlencoded({ extended: true })); //Lets you take the inputted data from the form 
+app.use(express.urlencoded({ extended: true })); //Lets you take the inputted data from the form
+app.use(methodOverride('_method')); //Activates methodOverride.
 
 app.engine('ejs', engine);
 app.set("views", path.join(__dirname, "/views"))
@@ -57,6 +58,17 @@ app.post("/upload", async (req, res) => {
     
     res.redirect("/")
    });
+
+   //Will probably need to watch one of colt's videos to get the edit stuff working. 
+   app.put('/uploads/:id', async (req, res, next) => { //This activates when the submit button is pressed on the edit.ejs page, updates that product in the database. 
+    try {
+      const test = req.params.id;
+      const product = await Upload.findByIdAndUpdate(test, req.body, { runValidators: true, new: true }); //No idea what most of this does, findByIdAndUpdate is a mongoose method, don't know why it needs to be an await. Test holds the value of the id. 
+      res.redirect(`/uploads/${upload._id}`) //String template literal, note the backticks
+    } catch (error) {
+      next(error)
+    }
+  })
 
 app.listen(3000, function () {
     console.log("Live on http://localhost:3000"); //String template literal, accuratley shows the port you are serving on Heroku or local. 
