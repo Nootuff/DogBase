@@ -40,15 +40,21 @@ app.get("/show", function (req, res) { This is no longer needed
 
 app.get("/uploads/:id", async (req, res) =>{ //In farmsIndex.ejs, <%=farms[i]._id%> holds that farm's _id value, when placed after /farms/, it activates this route. 
 var find  = req.params.id;
-  const fetch = await Upload.findById(find); //The products object on the farm model is just an array of product object ids. Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
+  const upload = await Upload.findById(find); //The products object on the farm model is just an array of product object ids. Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
   //res.render("farmsFolder/farmDetails.ejs", { farm }) This passes the value of const farm to the farmDetails.ejs page 
-  console.log(fetch);
-  res.render("uploads/show.ejs", {fetch});
+  console.log(upload);
+  res.render("uploads/show.ejs", {upload});
   })
 
 app.get("/upload", function (req, res) {
     res.render("uploads/upload.ejs");
 });
+
+app.get("/uploads/:id/edit", async(req, res)=>{
+  var find  = req.params.id;
+  const upload = await Upload.findById(find); 
+  res.render("uploads/edit.ejs", {upload});
+})
 
 app.post("/upload", async (req, res) => {
     var test = req.body;
@@ -59,8 +65,12 @@ app.post("/upload", async (req, res) => {
     res.redirect("/")
    });
 
-   //Will probably need to watch one of colt's videos to get the edit stuff working. 
-   app.put('/uploads/:id', async (req, res, next) => { //This activates when the submit button is pressed on the edit.ejs page, updates that product in the database. 
+
+  //Will probably need to watch one of colt's videos to get the edit stuff working. 
+   app.put('/uploads/:id', async (req, res, /*next*/) => { //This activates when the submit button is pressed on the edit.ejs page, updates that 
+    res.send("it works")
+    /*
+    product in the database. 
     try {
       const test = req.params.id;
       const product = await Upload.findByIdAndUpdate(test, req.body, { runValidators: true, new: true }); //No idea what most of this does, findByIdAndUpdate is a mongoose method, don't know why it needs to be an await. Test holds the value of the id. 
@@ -68,7 +78,9 @@ app.post("/upload", async (req, res) => {
     } catch (error) {
       next(error)
     }
+    */
   })
+
 
 app.listen(3000, function () {
     console.log("Live on http://localhost:3000"); //String template literal, accuratley shows the port you are serving on Heroku or local. 
