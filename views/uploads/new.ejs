@@ -5,9 +5,15 @@
 <h1>Upload new dog</h1>
 <p>Html form.</p>
 
-<form action="/upload" method="POST"> <!-- This form creates a new product, the .post route it is linked to is in app.js. -->
+<form action="/uploads" method="POST"> <!-- This form creates a new product, the .post route it is linked to is in app.js. -->
     <label for="title">Title</label>
     <input type="text" id="title" name="title" placeholder="Title here">
+
+    <label for="image">Image</label>
+    <input type="text" id="image" name="image" placeholder="img url">
+
+    <label for="caption">Caption</label>
+    <input type="text" id="caption" name="caption" placeholder="Caption here">
     <input type="submit" value="Submit">
 </form>
 

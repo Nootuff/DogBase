@@ -8,8 +8,14 @@
 </section>
 <section>
   <h2>Title= <%= upload.title %></h2>
+  <img src="<%= upload.image %>" alt="Dog image">
+  
+  <p><%= upload.caption %></p>
   </section>
   <a href="/uploads/<%= upload._id%>/edit">Edit this</a>
+  <form action="/uploads/<%= upload._id%>?_method=DELETE" method="POST">
+    <button>Delete this</button>
+    </form>
 </main>
       <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
     </body>
