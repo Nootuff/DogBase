@@ -9,3 +9,20 @@ background-color: #96f8ff;
 .navItem{
     color: #570000;
 }
+
+ul {
+    list-style: none;
+}
+
+li{
+    margin-bottom: 20px;
+}
+
+.indexImg{
+    border: 1px solid red;
+    width: 250px;
+}
+
+.noInput{
+    color: red;
+}

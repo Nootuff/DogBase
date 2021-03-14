@@ -3,8 +3,6 @@
 <main>
   <section>
 <h1>Home page</h1>
-<p>Have a list of thumb nails, medium sized & titles.</p>
-<p>Don't just have a bunch of divs, <a href="https://www.w3schools.com/html/html5_semantic_elements.asp">use these</a> .</p>
 </section>
 <section>
   
@@ -12,6 +10,7 @@
     <% for (var i=0; i < uploads.length; i++){ %>
     <li id="indexItem">
       <h3><a href="/uploads/<%=uploads[i]._id %>"><%= uploads[i].title%></a></h3>
+      <img class="indexImg" src="<%= uploads[i].image %>" alt="Dog image">
     </li>
     <% } %>
     <ul>

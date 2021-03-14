@@ -5,13 +5,15 @@
 <h1>Edit post</h1>
 <p>Html form.</p>
 <h2><%= upload.title%></h2>
-<form action="/uploads/<%= upload._id%>?_method=PUT" method="POST"> 
+<form action="/uploads/<%= upload._id%>?_method=PUT" method="POST" novalidate class="validated-form"> 
      <!--Use multipart/form-data when your form includes any <input type="file"> elements. I think novalidate is something to do with error handling or making sure enough data is input.-->
     <label for="title">Title</label>
-    <input type="text" id="title" name="upload[title]" value="<%= upload.title%>" placeholder="Title here">
+    <input type="text" id="title" name="upload[title]" value="<%= upload.title%>" placeholder="Title here" required>
+    <div class="noInput">Please enter a valid title</div> <!--https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22291538#questions/13805266/ this is how it should look, these show when no te4xt entered--> 
 
     <label for="image">Image</label>
-    <input type="text" id="image" name="upload[image]" value="<%= upload.image%>" placeholder="img url">
+    <input type="text" id="image" name="upload[image]" value="<%= upload.image%>" placeholder="img url" required>
+    <div class="noInput">Please enter a valid image</div>
     
     <label for="caption">Caption</label>
     <input type="text" id="caption" name="upload[caption]" value="<%= upload.caption%>" placeholder="Caption here">
