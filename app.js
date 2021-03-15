@@ -3,6 +3,7 @@ const path = require("path");
 const ejs = require('ejs');
 const engine = require('ejs-mate'); //This npm lets you use your boilerplate.ejs
 const mongoose = require('mongoose');
+const Joi = require("joi");
 const ExpressError = require("./utilities/ExpressError"); //Imports the function from ExpressError.js.
 
 const methodOverride = require('method-override'); //THis npm lets you use the edit and delete parts of CRUD.
