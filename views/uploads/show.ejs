@@ -17,10 +17,10 @@
     <button>Delete this</button>
     </form>
     <br>
-    <form action="">
+    <form action="/uploads/<%= upload._id%>/comments" method="POST">
       <label for="body">Comment</label>
       <br>
-<textarea name="comment[body]" id="body" cols="30" rows="10"></textarea>
+<textarea name="comment[body]" id="body" cols="30" rows="10" required></textarea>
 <br>
 <button>Submit</button> 
     </form>

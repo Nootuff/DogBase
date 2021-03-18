@@ -9,6 +9,10 @@ const ExpressError = require("./utilities/ExpressError"); //Imports the function
 const methodOverride = require('method-override'); //THis npm lets you use the edit and delete parts of CRUD.
 const Upload = require("./models/upload"); //Link for the upload schema in models
 const uploadRoutes = require('./routes/uploadRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+
+const { commentSchema } = require("./schemas.js");
+const catchAsync = require("./utilities/catchAsync");
 
 const app = express(); //Activates express.
 
@@ -33,9 +37,14 @@ app.use(express.static(__dirname + '/public'));
 app.use('/uploads', uploadRoutes)
 
 
+
 app.get('/', (req, res) => {
   res.send('home')
 });
+
+app.post("/uploads/:id/comments", catchAsync(async (req, res) => { 
+  res.send("it works")
+ }));
 
 app.all("*", (req, res, next) => { //app.all means this will activate for all route types eg .put and .get. The * means it will activate for all inputted urls. This will only run if nothing else runs first which is why it is last. 
   next(new ExpressError("Page not found.", 404))
