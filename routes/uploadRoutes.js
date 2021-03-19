@@ -41,8 +41,8 @@ router.get("/", async (req, res) => { //Home page.
   
   router.get("/:id", catchAsync(async (req, res) => { //This loads an individual upload on the show page. 
     var find = req.params.id;
-    const upload = await Upload.findById(find); //The products object on the farm model is just an array of product object ids. Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
-    //res.render("farmsFolder/farmDetails.ejs", { farm }) This passes the value of const farm to the farmDetails.ejs page 
+    const upload = await Upload.findById(find).populate("comments"); // Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
+    
     console.log(upload);
     res.render("uploads/show.ejs", { upload });
   }));

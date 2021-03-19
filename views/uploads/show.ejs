@@ -17,13 +17,19 @@
     <button>Delete this</button>
     </form>
     <br>
-    <form action="/uploads/<%= upload._id%>/comments" method="POST">
+    <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
       <label for="body">Comment</label>
       <br>
 <textarea name="comment[body]" id="body" cols="30" rows="10" required></textarea>
 <br>
 <button>Submit</button> 
     </form>
+    <% for (var i=0; i < upload.comments.length; i++){ %>
+        <p><%=upload.comments[i].body %></p>
+        <form action="/uploads/<%= upload._id%>/comments/<%=upload.comments[i]._id%>?_method=DELETE" method="POST">
+          <button>Delete</button>
+          </form>
+      <% } %>
 </main>
       <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
     </body>
