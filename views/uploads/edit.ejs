@@ -16,7 +16,7 @@
     <div class="noInput">Please enter a valid image</div>
     
     <label for="caption">Caption</label>
-    <input type="text" id="caption" name="upload[caption]" value="<%= upload.caption%>" placeholder="Caption here">
+    <input type="text" id="caption" name="upload[caption]" value="<%= upload.caption%>" placeholder="Caption here" required>
     <button>Update upload</button>
 </form>
 <a href="/uploads/<%= upload._id%>">Back to campground</a>

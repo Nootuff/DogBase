@@ -26,3 +26,15 @@ li{
 .noInput{
     color: red;
 }
+
+.successFlash{
+  background-color: #42f55a;
+  border-radius: 5px;
+  padding: 7px;
+}
+
+.errorFlash{
+  background-color: #ff3838;
+  border-radius: 5px;
+  padding: 7px;
+}

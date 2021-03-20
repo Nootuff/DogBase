@@ -23,6 +23,7 @@ const validateComment = (req, res, next) => {
         upload.comments.push(comment);
         await comment.save();
         await upload.save();
+        req.flash("success", "Comment posted.");
         res.redirect(`/uploads/${upload._id}`)
       }));
       
@@ -31,6 +32,7 @@ const validateComment = (req, res, next) => {
         const commentId = req.params.commentId
        await Upload.findByIdAndUpdate(id, {$pull: { comments: commentId } } )   
         await Comment.findByIdAndDelete(commentId);
+        req.flash("success", "Comment deleted.");
         res.redirect(`/uploads/${id}`)
       }));
 

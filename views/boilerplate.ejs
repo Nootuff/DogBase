@@ -4,36 +4,18 @@
 <head>
     <title>Welcome to Dog Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styling.css">
+    <link rel="stylesheet" href="/styles/styling.css">
     <!-- This works because of the app.use statment in app.js setting dirname to public-->
 
 </head>
 
 <body>
-   
     <%- include("partials/header") %>
+        <%- include("partials/flash") %>
             <%- body %>
 </body>
-<script>
-    // JavaScript for disabling form submissions if there are invalid or empty fields
-    (function () {
-      'use strict'
-    
-      // Select all the forms we want to apply thios to.
-      var forms = document.querySelectorAll('.validated-form')
-    
-      // Loop over them and prevent submission
-      Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-          form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-              event.preventDefault()
-              event.stopPropagation()
-            }
-    
-            form.classList.add('was-validated')
-          }, false)
-        })
-    })()
-      </script>
+<script src="/javascripts/validateForms.js">
+
+</script>
+
 </html>

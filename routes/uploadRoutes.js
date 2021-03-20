@@ -28,12 +28,17 @@ router.get("/", async (req, res) => { //Home page.
   router.post("/", validateUpload, catchAsync(async (req, res, next) => {   //Post new upload post  
     const upload = new Upload(req.body.upload);
     await upload.save();
+    req.flash("success", "Woof! Remember to build a js function that dissmisses this when you press the X!"); //Could you have an array of dog noises and this pulls a random one with each upload?
     res.redirect(`/uploads/${upload._id}`)
   }));
   
   router.get("/:id", catchAsync(async (req, res) => { //This loads an individual upload on the show page. 
     var find = req.params.id;
     const upload = await Upload.findById(find).populate("comments"); // Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
+    if(!upload){
+      req.flash("error", "Can't be found");
+      return res.redirect("/uploads");
+    }
     console.log(upload);
     res.render("uploads/show.ejs", { upload });
   }));
@@ -41,6 +46,10 @@ router.get("/", async (req, res) => { //Home page.
   router.get("/:id/edit", catchAsync(async (req, res) => { //Load the edit page
     var find = req.params.id;
     const upload = await Upload.findById(find);
+    if(!upload){
+      req.flash("error", "Can'#'t be found");
+      return res.redirect("/uploads");
+    }
     res.render("uploads/edit.ejs", { upload });
   }));
   
@@ -48,12 +57,14 @@ router.get("/", async (req, res) => { //Home page.
     const idHolder = req.params.id;
     const upload = await Upload.findByIdAndUpdate(idHolder, { ...req.body.upload }); //No idea what most of this 
     //await upload.save();
+    req.flash("success", "Update Success!");
     res.redirect(`/uploads/${upload._id}`) //String template literal, note the backticks
   }));
   
   router.delete('/:id', catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates to, deleting all the comments associated with it. 
     const idHolder = req.params.id; 
     await Upload.findByIdAndDelete(idHolder);
+    req.flash("success", "Deleted.");
     res.redirect('/uploads');
   }));
 

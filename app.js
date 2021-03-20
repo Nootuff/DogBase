@@ -4,6 +4,8 @@ const ejs = require('ejs');
 const engine = require('ejs-mate'); //This npm lets you use your boilerplate.ejs
 const mongoose = require('mongoose');
 const Joi = require("joi");
+const session = require("express-session");
+const flash = require('connect-flash');
 const ExpressError = require("./utilities/ExpressError"); //Imports the function from ExpressError.js.
 
 const methodOverride = require('method-override'); //THis npm lets you use the edit and delete parts of CRUD.
@@ -20,7 +22,8 @@ const app = express(); //Activates express.
 mongoose.connect('mongodb://localhost:27017/ExpressDogProject', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 })
 
 const db = mongoose.connection; //No idea what this code does, seems to just put messages in console log
@@ -34,7 +37,28 @@ app.use(methodOverride('_method')); //Activates methodOverride.
 
 app.engine('ejs', engine);
 app.set("views", path.join(__dirname, "/views"))
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname + '/public')));
+
+const sessionConfig = {
+  secret: "secretHere",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true, //This thing is optional, if its included, the cookie cannot be accessed through or interfered with by a client side script. This is extra security. Hackers cannot see confidential cookies, you should have it. 
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //This is when the cookie is programmed to expire. It is todays date, Date.now is in milliseconds. We want this cookie to expire in a week so the sum is 1000 milliseconds in a second, 60 secs in a minute, 60 mins in an hour, 24 hours etc. So the date it will expire is today's date plus that time.
+    maxAge: 1000 * 60 * 60 * 24 * 7
+    //All this expiration stuff is because we don't want users to log in and stay logged in, they will get logged out after a week? 
+}
+}
+app.use(session(sessionConfig));
+app.use(flash());
+
+app.use(function (req, res, next) {//has to come before the route handlers below apparently  
+  //res.locals.currentUser = req.user; 
+  res.locals.successFlash = req.flash("success"); 
+  res.locals.errorFlash = req.flash("error");
+  next();
+})
 
 app.use('/uploads', uploadRoutes)
 app.use('/uploads/:id/comments', commentRoutes)
