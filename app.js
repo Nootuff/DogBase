@@ -35,7 +35,9 @@ app.use(methodOverride('_method')); //Activates methodOverride.
 app.engine('ejs', engine);
 app.set("views", path.join(__dirname, "/views"))
 app.use(express.static(__dirname + '/public'));
+
 app.use('/uploads', uploadRoutes)
+app.use('/uploads/:id/comments', commentRoutes)
 
 const validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
@@ -50,25 +52,6 @@ const validateComment = (req, res, next) => {
 app.get('/', (req, res) => {
   res.send('home')
 });
-
-app.post("/uploads/:id/comments", validateComment, catchAsync(async (req, res) => {
-  //res.send("it works")
-  const upload = await Upload.findById(req.params.id);
-  const comment = new Comment(req.body.comment);
-  upload.comments.push(comment);
-  await comment.save();
-  await upload.save();
-  res.redirect(`/uploads/${upload._id}`)
-}));
-
-app.delete("/uploads/:id/comments/:commentId", catchAsync(async (req, res) => {
-  const id = req.params.id
-  const commentId = req.params.commentId
- await Upload.findByIdAndUpdate(id, {$pull: { comments: commentId } } )   
-  await Comment.findByIdAndDelete(commentId);
-  res.redirect(`/uploads/${id}`)
-}));
-
 
 app.all("*", (req, res, next) => { //app.all means this will activate for all route types eg .put and .get. The * means it will activate for all inputted urls. This will only run if nothing else runs first which is why it is last. 
   next(new ExpressError("Page not found.", 404))

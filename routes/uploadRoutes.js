@@ -4,7 +4,6 @@ const catchAsync = require("../utilities/catchAsync");
 const Joi = require("joi");
 const ExpressError = require("../utilities/ExpressError"); //Imports the function from ExpressError.js.
 const { uploadSchema } = require("../schemas.js")
-
 const Upload = require("../models/upload"); //Link for the upload schema in models
 
 const validateUpload = (req, res, next) => {
@@ -15,25 +14,18 @@ const validateUpload = (req, res, next) => {
       } else{
         next();
       }
-    console.log("result");
 	}
 
 router.get("/", async (req, res) => { //Home page.
     const uploads = await Upload.find({});
     res.render("uploads/index.ejs", { uploads });
   });
-  
-  /*
-  app.get("/show", function (req, res) { This is no longer needed
-      res.render("uploads/show.ejs");
-  });
-  */
-  
+    
   router.get("/new", function (req, res) { //Just loads new page.
    res.render("uploads/new.ejs");
   });
   
-  router.post("/", validateUpload, catchAsync(async (req, res, next) => {    
+  router.post("/", validateUpload, catchAsync(async (req, res, next) => {   //Post new upload post  
     const upload = new Upload(req.body.upload);
     await upload.save();
     res.redirect(`/uploads/${upload._id}`)
@@ -42,12 +34,11 @@ router.get("/", async (req, res) => { //Home page.
   router.get("/:id", catchAsync(async (req, res) => { //This loads an individual upload on the show page. 
     var find = req.params.id;
     const upload = await Upload.findById(find).populate("comments"); // Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
-    
     console.log(upload);
     res.render("uploads/show.ejs", { upload });
   }));
   
-  router.get("/:id/edit", catchAsync(async (req, res) => {
+  router.get("/:id/edit", catchAsync(async (req, res) => { //Load the edit page
     var find = req.params.id;
     const upload = await Upload.findById(find);
     res.render("uploads/edit.ejs", { upload });
@@ -60,7 +51,7 @@ router.get("/", async (req, res) => { //Home page.
     res.redirect(`/uploads/${upload._id}`) //String template literal, note the backticks
   }));
   
-  router.delete('/:id', catchAsync(async (req, res) => {
+  router.delete('/:id', catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates to, deleting all the comments associated with it. 
     const idHolder = req.params.id; 
     await Upload.findByIdAndDelete(idHolder);
     res.redirect('/uploads');
