@@ -66,7 +66,6 @@ app.delete("/uploads/:id/comments/:commentId", catchAsync(async (req, res) => {
   const commentId = req.params.commentId
  await Upload.findByIdAndUpdate(id, {$pull: { comments: commentId } } )   
   await Comment.findByIdAndDelete(commentId);
-  //res.send("back at it!")
   res.redirect(`/uploads/${id}`)
 }));
 

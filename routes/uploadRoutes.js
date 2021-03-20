@@ -63,7 +63,6 @@ router.get("/", async (req, res) => { //Home page.
   router.delete('/:id', catchAsync(async (req, res) => {
     const idHolder = req.params.id; 
     await Upload.findByIdAndDelete(idHolder);
-    console.log("hit it")
     res.redirect('/uploads');
   }));
 
