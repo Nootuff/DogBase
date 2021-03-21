@@ -6,11 +6,16 @@ const mongoose = require('mongoose');
 const Joi = require("joi");
 const session = require("express-session");
 const flash = require('connect-flash');
-const ExpressError = require("./utilities/ExpressError"); //Imports the function from ExpressError.js.
-
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const methodOverride = require('method-override'); //THis npm lets you use the edit and delete parts of CRUD.
+
+ 
+const ExpressError = require("./utilities/ExpressError"); //Imports the function from ExpressError.js.
 const Upload = require("./models/upload"); //Link for the upload schema in models
 const Comment = require("./models/comment");
+const User = require("./models/user");
+const userRoutes = require("./routes/userRoutes");
 const uploadRoutes = require('./routes/uploadRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 
@@ -50,8 +55,16 @@ const sessionConfig = {
     //All this expiration stuff is because we don't want users to log in and stay logged in, they will get logged out after a week? 
 }
 }
-app.use(session(sessionConfig));
+app.use(session(sessionConfig)); //This must be above passposrt.session bellow.
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate())); //User is the const with your user schema. This line of code is telling the app to use LocalStrategy and the authentication method will be located on the User model and the method is called "authenticate", there is no method in user.js because passport-local imports it itself.
+
+passport.serializeUser(User.serializeUser());//This is something relating to storing the user in the session. Once again, "User" is the const holding our user schema. 
+passport.deserializeUser(User.deserializeUser());//This lets you get the user out of the session, remove them from the session's storage. serializeUser and deserializeUser are methods bought in from passport, you didn't write them. 
+
 
 app.use(function (req, res, next) {//has to come before the route handlers below apparently  
   //res.locals.currentUser = req.user; 
@@ -60,6 +73,7 @@ app.use(function (req, res, next) {//has to come before the route handlers below
   next();
 })
 
+app.use("/", userRoutes)
 app.use('/uploads', uploadRoutes)
 app.use('/uploads/:id/comments', commentRoutes)
 
