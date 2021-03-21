@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const catchAsync = require("../utilities/catchAsync");
 const Joi = require("joi");
-const ExpressError = require("../utilities/ExpressError"); //Imports the function from ExpressError.js.
 const { uploadSchema } = require("../schemas.js")
+const {isLoggedIn} = require("../middleware");
+
+const ExpressError = require("../utilities/ExpressError"); //Imports the function from ExpressError.js.
 const Upload = require("../models/upload"); //Link for the upload schema in models
 
 const validateUpload = (req, res, next) => {
@@ -21,11 +23,11 @@ router.get("/", async (req, res) => { //Home page.
     res.render("uploads/index.ejs", { uploads });
   });
     
-  router.get("/new", function (req, res) { //Just loads new page.
+  router.get("/new", isLoggedIn, function (req, res) { //Just loads new page.
    res.render("uploads/new.ejs");
   });
   
-  router.post("/", validateUpload, catchAsync(async (req, res, next) => {   //Post new upload post  
+  router.post("/", isLoggedIn, validateUpload, catchAsync(async (req, res, next) => {   //Post new upload post  
     const upload = new Upload(req.body.upload);
     await upload.save();
     req.flash("success", "Woof! Remember to build a js function that dissmisses this when you press the X!"); //Could you have an array of dog noises and this pulls a random one with each upload?
@@ -43,7 +45,7 @@ router.get("/", async (req, res) => { //Home page.
     res.render("uploads/show.ejs", { upload });
   }));
   
-  router.get("/:id/edit", catchAsync(async (req, res) => { //Load the edit page
+  router.get("/:id/edit", isLoggedIn, catchAsync(async (req, res) => { //Load the edit page
     var find = req.params.id;
     const upload = await Upload.findById(find);
     if(!upload){
@@ -53,7 +55,7 @@ router.get("/", async (req, res) => { //Home page.
     res.render("uploads/edit.ejs", { upload });
   }));
   
-  router.put('/:id', validateUpload, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the edit.ejs page, updates that 
+  router.put('/:id', isLoggedIn, validateUpload, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the edit.ejs page, updates that 
     const idHolder = req.params.id;
     const upload = await Upload.findByIdAndUpdate(idHolder, { ...req.body.upload }); //No idea what most of this 
     //await upload.save();
@@ -61,7 +63,7 @@ router.get("/", async (req, res) => { //Home page.
     res.redirect(`/uploads/${upload._id}`) //String template literal, note the backticks
   }));
   
-  router.delete('/:id', catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates to, deleting all the comments associated with it. 
+  router.delete('/:id', isLoggedIn, catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates to, deleting all the comments associated with it. 
     const idHolder = req.params.id; 
     await Upload.findByIdAndDelete(idHolder);
     req.flash("success", "Deleted.");
