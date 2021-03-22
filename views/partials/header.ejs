@@ -1,5 +1,13 @@
 <nav>
     <h1><a href="/uploads">Untitled Dog Project</a></h1>
-    <h3><a class="navItem" href="/uploads/new">Upload New</a></h3>
+    
+    <% if(!currentUser){ %>
+    <h3><a href="/login">Login</a> </h3>
+    <h3><a href="/register">Register</a></h3>
+    <% } else { %>
+        <h3><a class="navItem" href="/uploads/new">Upload New</a></h3>
+        <h3><a href="/userpage"><%= currentUser.username %></a></h3>
+    <h3><a href="/logout">Logout</a></h3>
+    <% } %>
 </nav>
 

@@ -66,8 +66,9 @@ passport.serializeUser(User.serializeUser());//This is something relating to sto
 passport.deserializeUser(User.deserializeUser());//This lets you get the user out of the session, remove them from the session's storage. serializeUser and deserializeUser are methods bought in from passport, you didn't write them. 
 
 
-app.use(function (req, res, next) {//has to come before the route handlers below apparently  
-  //res.locals.currentUser = req.user; 
+app.use(function (req, res, next) {//has to come before the route handlers below apparently. These things are called "locals" you have access to them accross the entire website. 
+console.log(req.session)
+  res.locals.currentUser = req.user; 
   res.locals.successFlash = req.flash("success"); 
   res.locals.errorFlash = req.flash("error");
   next();
