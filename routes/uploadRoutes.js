@@ -29,6 +29,7 @@ router.get("/", async (req, res) => { //Home page.
   
   router.post("/", isLoggedIn, validateUpload, catchAsync(async (req, res, next) => {   //Post new upload post  
     const upload = new Upload(req.body.upload);
+    upload.author = req.user._id;
     await upload.save();
     req.flash("success", "Woof! Remember to build a js function that dissmisses this when you press the X!"); //Could you have an array of dog noises and this pulls a random one with each upload?
     res.redirect(`/uploads/${upload._id}`)
@@ -36,7 +37,7 @@ router.get("/", async (req, res) => { //Home page.
   
   router.get("/:id", catchAsync(async (req, res) => { //This loads an individual upload on the show page. 
     var find = req.params.id;
-    const upload = await Upload.findById(find).populate("comments"); // Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
+    const upload = await Upload.findById(find).populate("comments").populate("author"); // Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. 
     if(!upload){
       req.flash("error", "Can't be found");
       return res.redirect("/uploads");

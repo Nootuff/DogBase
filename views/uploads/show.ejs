@@ -8,14 +8,17 @@
 </section>
 <section>
   <h2>Title= <%= upload.title %></h2>
+  <p>By: <%= upload.author.username %></p>
   <img src="<%= upload.image %>" alt="Dog image">
   
   <p><%= upload.caption %></p>
   </section>
+  <% if(currentUser && upload.author.equals(currentUser._id)){%>
   <a href="/uploads/<%= upload._id%>/edit">Edit this</a>
   <form action="/uploads/<%= upload._id%>?_method=DELETE" method="POST">
     <button>Delete this</button>
     </form>
+    <% } %>
     <br>
     <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
       <label for="body">Comment</label>
