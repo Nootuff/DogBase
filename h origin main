@@ -1,0 +1,131 @@
+[33mcommit 8ac07c1cc8d035dd4ddc83f31ebe1021cc556b43[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Tue Mar 23 21:06:54 2021 +0000
+
+    User auth integration begins.
+
+[33mcommit 1c1725fac9c47f1cd876f786406d7032c098b73d[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Mon Mar 22 21:10:31 2021 +0000
+
+    User authentication complete, created user-page.
+
+[33mcommit ec7c5c22fcc974f9b8f1dbc5b3e8575cc1be38d3[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Sun Mar 21 18:36:09 2021 +0000
+
+    Created login form and logged in user detection middleware.
+
+[33mcommit f7f210d817e862a7d77618cfff6943ee06be8f87[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Sun Mar 21 16:29:08 2021 +0000
+
+    Created user routes and registration form.
+
+[33mcommit 6472388b69e74785e2498b0d6a1d178fb3423ad5[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Sat Mar 20 21:07:18 2021 +0000
+
+    Created users model.
+
+[33mcommit d232ea4970ee501ef7f624df63e01a5a89f59375[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Sat Mar 20 19:46:49 2021 +0000
+
+    Session and Flash integrated.
+
+[33mcommit 28c3ed4244e7aadfbc2f95b4104f7daa0bd49997[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Sat Mar 20 14:43:29 2021 +0000
+
+    Moved comment routes to separate doc using router.
+
+[33mcommit e3e3f9e490206895ff7f212e155a1ba865eaa4c9[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Sat Mar 20 13:20:23 2021 +0000
+
+    Comment deletion middleware implemented.
+
+[33mcommit 91c1885b64dbe690d1308decc4a35aef232b9b58[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Fri Mar 19 08:58:57 2021 +0000
+
+    Comments are now displayed on associated upload pages and can be deleted.
+
+[33mcommit a1028e18d38e593106e6ca08f025a4e924d1a787[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Thu Mar 18 08:56:01 2021 +0000
+
+    Connected comment post route.
+
+[33mcommit ade394912b9b383e7cd84b057a0d0ea56522db3a[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Wed Mar 17 08:54:20 2021 +0000
+
+    Created comment form.
+
+[33mcommit 7cba60aa9249b8b296257785b462747aac5e82b2[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Mon Mar 15 21:12:42 2021 +0000
+
+    Completed error handling, moving on to upload comments.
+
+[33mcommit 2b6b4d5c3ae29cbb71d1ccf6dca7caded2e40901[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Sun Mar 14 20:24:22 2021 +0000
+
+    Started error handling.
+
+[33mcommit ac0d1a806552aa132a01b8a9c64a569342640677[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Sat Mar 13 15:05:20 2021 +0000
+
+    Basic CRUD implementation with new values added to uploads model.
+
+[33mcommit a0ee5262b506ce4592b110e1d3c42debabca9759[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Thu Mar 11 20:41:47 2021 +0000
+
+    Created edit form, linked to display page and created edit route.
+
+[33mcommit 2fc1741fffba5817421c68ed4bc503f818ee7f55[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Thu Mar 11 09:49:43 2021 +0000
+
+    Started work on edit route.
+
+[33mcommit 7def06b3ffbe196585a532797efb225669028c29[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Thu Mar 11 09:19:41 2021 +0000
+
+    Completed display route and index page now links to those routes.
+
+[33mcommit 23450d5d65bc46fb3f9b860b2c79908dcbf0b3c1[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Tue Mar 9 21:27:50 2021 +0000
+
+    Linked mongoose schema to html form.
+
+[33mcommit 7f6184a13708ccfa357a5d787b2132b625c989ab[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Tue Mar 9 09:41:07 2021 +0000
+
+    Created first mongoose schema.
+
+[33mcommit ef46db676d031f671fac9e66eef1e7c0756c1929[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Mon Mar 8 20:22:10 2021 +0000
+
+    Minor listen change.
+
+[33mcommit 15cf3272edaf1c84cf617043e9c8d7ef3489833e[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Mon Mar 8 20:20:19 2021 +0000
+
+    Name change test.
+
+[33mcommit 9071c450aef304c67bde030eb0f5fe995c288c46[m
+Author: Adam <adamwalkerlondon@gmail.com>
+Date:   Mon Mar 8 20:15:44 2021 +0000
+
+    First commit.

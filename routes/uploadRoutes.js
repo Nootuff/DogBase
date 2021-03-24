@@ -18,6 +18,16 @@ const validateUpload = (req, res, next) => {
       }
 	}
 
+  const isAuthor = async(req, res, next) =>{
+    const idHolder = req.params.id;
+    const upload = await Upload.findById(idHolder);  //Look to see if the user whose logged in right now's Id equals (is the same as) the current campground ID. 
+        if(!upload.author.equals(req.user._id)){
+          req.flash("error", "You don't have permission to do this.");
+          return res.redirect(`/uploads/${idHolder}`);
+        }
+      next(); //The next lets you move on with whatever you want to do once the function has ascertained you have permission.
+    }
+
 router.get("/", async (req, res) => { //Home page.
     const uploads = await Upload.find({});
     res.render("uploads/index.ejs", { uploads });
@@ -58,8 +68,8 @@ router.get("/", async (req, res) => { //Home page.
   
   router.put('/:id', isLoggedIn, validateUpload, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the edit.ejs page, updates that 
     const idHolder = req.params.id;
-    const upload = await Upload.findByIdAndUpdate(idHolder, { ...req.body.upload }); //No idea what most of this 
-    //await upload.save();
+    
+    const update = await Upload.findByIdAndUpdate(idHolder, { ...req.body.upload }); //No idea what most of this 
     req.flash("success", "Update Success!");
     res.redirect(`/uploads/${upload._id}`) //String template literal, note the backticks
   }));
