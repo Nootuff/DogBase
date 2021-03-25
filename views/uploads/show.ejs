@@ -20,6 +20,7 @@
     </form>
     <% } %>
     <br>
+    <% if(currentUser){%> <!--If there IS a current user at all, render this form. -->
     <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
       <label for="body">Comment</label>
       <br>
@@ -27,11 +28,15 @@
 <br>
 <button>Submit</button> 
     </form>
+    <% } %>
     <% for (var i=0; i < upload.comments.length; i++){ %>
-        <p><%=upload.comments[i].body %></p>
+      <p><%=upload.comments[i].author.username %> says</p>
+      <p><%=upload.comments[i].body %></p>
+      <% if(currentUser && upload.comments[i].author.equals(currentUser._id)){%>
         <form action="/uploads/<%= upload._id%>/comments/<%=upload.comments[i]._id%>?_method=DELETE" method="POST">
           <button>Delete</button>
           </form>
+          <% } %>
       <% } %>
 </main>
       <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
