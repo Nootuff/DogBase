@@ -19,8 +19,12 @@ router.get("/register", function(req, res) {
     res.render("users/register.ejs")
 });
 
-router.get("/userpage", isLoggedIn, catchAsync(async(req, res)=> {
-    res.render("users/userpage.ejs")
+router.get("/accountPage", isLoggedIn, catchAsync(async(req, res)=> {
+    res.render("users/accountPage.ejs")
+}));
+
+router.get("/userPage", catchAsync(async(req, res)=> {
+    res.render("users/userPage.ejs")
 }));
 
 router.post("/register", catchAsync(async (req, res) => {

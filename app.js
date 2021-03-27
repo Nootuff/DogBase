@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const path = require("path");
 const ejs = require('ejs');
@@ -9,7 +13,6 @@ const flash = require('connect-flash');
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const methodOverride = require('method-override'); //THis npm lets you use the edit and delete parts of CRUD.
-
  
 const ExpressError = require("./utilities/ExpressError"); //Imports the function from ExpressError.js.
 const Upload = require("./models/upload"); //Link for the upload schema in models
