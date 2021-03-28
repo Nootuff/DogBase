@@ -10,7 +10,7 @@
     <% for (var i=0; i < uploads.length; i++){ %>
     <li id="indexItem">
       <h3><a href="/uploads/<%=uploads[i]._id %>"><%= uploads[i].title%></a></h3>
-      <img class="indexImg" src="<%= uploads[i].image %>" alt="Dog image">
+      <img class="indexImg" src="<%= uploads[i].image.url %>" alt="Dog image">
     </li>
     <% } %>
     <ul>

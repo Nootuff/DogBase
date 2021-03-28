@@ -6,6 +6,7 @@ const {isLoggedIn, validateUpload, isAuthor } = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary"); //This imports the const "storage"  object from the index.js file in your cloudinary folder. Node automatically looks for a file named index.js in a folder which is why the index file isn't actually reffered to. 
 const upload = multer({ storage }); 
+const { cloudinary } = require("../cloudinary")
 
 
 const Upload = require("../models/upload"); //Link for the upload schema in models
@@ -19,20 +20,27 @@ router.get("/", async (req, res) => { //Home page.
    res.render("uploads/new.ejs");
   });
   
-  /*
-  router.post("/", isLoggedIn, validateUpload, catchAsync(async (req, res, next) => {   Post new upload post  
+
+  router.post("/", isLoggedIn, upload.single('image'), validateUpload, catchAsync(async (req, res, next) => {  //Post new upload post  
     const upload = new Upload(req.body.upload);
+    upload.image.url = req.file.path;
+    upload.image.filename = req.file.filename;
     upload.author = req.user._id;
     await upload.save();
+    console.log("**It's here** " + upload.image.url);
     req.flash("success", "Woof! Remember to build a js function that dissmisses this when you press the X!"); //Could you have an array of dog noises and this pulls a random one with each upload?
     res.redirect(`/uploads/${upload._id}`)
   }));
-  */
-
-  router.post("/", upload.array('image'),(req, res) => {    
-    console.log(req.body, req.files)
+  
+  
+  /*
+  router.post("/", upload.single('image'),(req, res) => {    
+    console.log(req.file)
     res.send("Great success!")
   });
+
+  */
+
 
   router.get("/:id", catchAsync(async (req, res) => { //This loads an individual upload on the show page. 
     var find = req.params.id;
@@ -64,7 +72,9 @@ router.get("/", async (req, res) => { //Home page.
   
   router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates to, deleting all the comments associated with it. 
     const idHolder = req.params.id; 
+    console.log("this is it " + idHolder);
     await Upload.findByIdAndDelete(idHolder);
+    
     req.flash("success", "Deleted.");
     res.redirect('/uploads');
   }));

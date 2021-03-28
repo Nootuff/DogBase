@@ -22,11 +22,9 @@ router.get("/register", function(req, res) {
 router.get("/accountPage", isLoggedIn, catchAsync(async(req, res)=> {
     res.render("users/accountPage.ejs")
 }));
+/*
 
-router.get("/userPage", catchAsync(async(req, res)=> {
-    res.render("users/userPage.ejs")
-}));
-
+*/
 router.post("/register", catchAsync(async (req, res) => {
     try {
         const username = req.body.username;

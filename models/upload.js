@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 const Comment = require('./comment')
 const Schema = mongoose.Schema;
+const { cloudinary } = require("../cloudinary")
 
 const uploadSchema = new mongoose.Schema({
   title: String,
   caption: String,
-  image: String,
+  image: 
+    {
+      url: String,
+      filename: String
+    }
+  ,
   author: {
     type: Schema.Types.ObjectId,
     ref: "User"
@@ -24,9 +30,9 @@ uploadSchema.post("findOneAndDelete", async function (item) {
       _id: {
         $in: item.comments    //The $in operator selects the documents where the value of a field equals any value in the specified array.
       }
-
     })
-    console.log("deleted")
+    await cloudinary.uploader.destroy(item.image.filename); //This is a method from cloudinary, deletes the image from cloudinary. 
+    console.log("deleted " + item.image.filename)
   }
 });
 
