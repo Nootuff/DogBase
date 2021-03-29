@@ -6,7 +6,7 @@ const {isLoggedIn, validateUpload, isAuthor } = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary"); //This imports the const "storage"  object from the index.js file in your cloudinary folder. Node automatically looks for a file named index.js in a folder which is why the index file isn't actually reffered to. 
 const upload = multer({ storage }); 
-const { cloudinary } = require("../cloudinary")
+
 
 
 const Upload = require("../models/upload"); //Link for the upload schema in models

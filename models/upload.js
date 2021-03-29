@@ -37,4 +37,3 @@ uploadSchema.post("findOneAndDelete", async function (item) {
 });
 
 module.exports = mongoose.model('Upload', uploadSchema);
-

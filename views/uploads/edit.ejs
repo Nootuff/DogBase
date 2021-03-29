@@ -10,10 +10,6 @@
     <label for="title">Title</label>
     <input type="text" id="title" name="upload[title]" value="<%= upload.title%>" placeholder="Title here" required>
     <div class="noInput">Please enter a valid title</div> <!--https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22291538#questions/13805266/ this is how it should look, these show when no te4xt entered--> 
-<!--
-    <label for="image">Image</label>
-    <input type="text" id="image" name="upload[image]" value="<%= upload.image%>" placeholder="img url" required>
-   -->
     <img src="<%= upload.image.url %>" alt="<%= upload.image.filename %>">
     <br>
     <label for="caption">Caption</label>
