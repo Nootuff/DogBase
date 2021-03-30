@@ -1,11 +1,15 @@
 /*
-username: Adam,
-email: adamwalkerlondon@gmail.com,
+username: Adam
+email: adamwalkerlondon@gmail.com
 pass: Winter
 
-username: EmochNoh,
-  email: blue.emu@hotmail.com,
+username: EmochNoh
+  email: blue.emu@hotmail.com
   pass: Campaign1
+
+  username: Tester,
+  email: tester@hotmail.com
+  pass: Test
 */
 
 const express = require('express');
@@ -15,17 +19,15 @@ const User = require("../models/user");
 const catchAsync = require("../utilities/catchAsync");
 const {isLoggedIn} = require("../middleware");
 
-router.get("/register", function(req, res) {
+router.get("/register", function(req, res) { //Renders register page
     res.render("users/register.ejs")
 });
 
-router.get("/accountPage", isLoggedIn, catchAsync(async(req, res)=> {
+router.get("/accountPage", isLoggedIn, catchAsync(async(req, res)=> { //Renders the current users' account page.
     res.render("users/accountPage.ejs")
 }));
-/*
 
-*/
-router.post("/register", catchAsync(async (req, res) => {
+router.post("/register", catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
     try {
         const username = req.body.username;
         const email = req.body.email;
@@ -44,11 +46,18 @@ router.post("/register", catchAsync(async (req, res) => {
     }
 }));
 
-router.get("/login", function(req, res){
+router.get("/login", function(req, res){ //Renders login page. 
 res.render("users/login.ejs");
 })
 
-router.post("/login", passport.authenticate("local", {failureFlash: true, failureRedirect: "/login"}), (req, res) =>{
+router.get("/:id", catchAsync(async(req, res)=> { //This renders the userpage 
+    var find = req.params.id;
+      const user = await (User.findById(find)).populate("posts");;
+    console.log(user);
+    res.render("users/userPage.ejs", { user })
+  }));
+
+router.post("/login", passport.authenticate("local", {failureFlash: true, failureRedirect: "/users/login"}), (req, res) =>{
 console.log(req.user);
     req.flash("success", "Welcome back! " + req.user.username)
     const redirectUrl = req.session.returnTo || "/uploads"; //When user logs in, either redirect them to the page held in returnTo as defined in middleware.js OR redirect them to /campgrounds. 

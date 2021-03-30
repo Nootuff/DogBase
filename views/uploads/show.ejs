@@ -8,7 +8,7 @@
 </section>
 <section>
   <h2>Title= <%= upload.title %></h2>
-  <p>By: <%= upload.author.username %></p>
+  <p>By: <a href="/users/<%= upload.author._id  %>"><%= upload.author.username %></a></p>
   <img src="<%= upload.image.url %>" alt="<%= upload.image.filename %>">
   <p><%= upload.caption %></p>
   </section>

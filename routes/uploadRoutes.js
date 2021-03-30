@@ -26,8 +26,11 @@ router.get("/", async (req, res) => { //Home page.
     upload.image.url = req.file.path;
     upload.image.filename = req.file.filename;
     upload.author = req.user._id;
+    const author = req.user;
+    console.log("Author of this post is " + author);
+    author.posts.push(upload);
+    await author.save(); // try this out see if it saves to the posts array in user 
     await upload.save();
-    console.log("**It's here** " + upload.image.url);
     req.flash("success", "Woof! Remember to build a js function that dissmisses this when you press the X!"); //Could you have an array of dog noises and this pulls a random one with each upload?
     res.redirect(`/uploads/${upload._id}`)
   }));
@@ -49,7 +52,7 @@ router.get("/", async (req, res) => { //Home page.
       req.flash("error", "Can't be found");
       return res.redirect("/uploads");
     }
-    console.log(upload);
+    //console.log(upload);
     res.render("uploads/show.ejs", { upload });
   }));
   

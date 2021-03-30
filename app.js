@@ -78,7 +78,7 @@ console.log(req.session)
   next();
 })
 
-app.use("/", userRoutes)
+app.use("/users", userRoutes)
 app.use('/uploads', uploadRoutes)
 app.use('/uploads/:id/comments', commentRoutes)
 
@@ -97,12 +97,7 @@ app.get('/', (req, res) => {
 });
 
 //Must find a way to get this into the userRoutes.js file, if there is no /users/ then this route breaks the whole system if its in taht file but if you want to add /users/ to everything in user routes you must redo all the url links like login and logout and register. 
-app.get("/users/:id", catchAsync(async(req, res)=> {
-  var find = req.params.id;
-    const user = await User.findById(find); 
-  console.log(user);
-  res.render("users/userPage.ejs", { user })
-}));
+
 
 
 app.all("*", (req, res, next) => { //app.all means this will activate for all route types eg .put and .get. The * means it will activate for all inputted urls. This will only run if nothing else runs first which is why it is last. 

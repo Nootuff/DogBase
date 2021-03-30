@@ -7,7 +7,7 @@ const ExpressError = require("../utilities/ExpressError"); //Imports the functio
 const catchAsync = require("../utilities/catchAsync");
 const { validateComment, isLoggedIn, isCommentAuthor } = require('../middleware');
 
-    router.post("/", isLoggedIn, validateComment, catchAsync(async (req, res) => {
+    router.post("/", isLoggedIn, validateComment, catchAsync(async (req, res) => { //Posts a new comment.
         const upload = await Upload.findById(req.params.id);
         const comment = new Comment(req.body.comment);
         comment.author = req.user._id; //The details of the current user.
