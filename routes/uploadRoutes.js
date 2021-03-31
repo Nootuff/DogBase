@@ -44,7 +44,6 @@ router.get("/", async (req, res) => { //Home page.
 
   */
 
-
   router.get("/:id", catchAsync(async (req, res) => { //This loads an individual upload on the show page. 
     var find = req.params.id;
     const upload = await Upload.findById(find).populate({path: "comments", populate: {path: "author" }}).populate("author"); // Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. The path stuff with comments tells the system to populate all the comments from the comments array from the upload we're finding, then on each comment, populate that comment's author. 

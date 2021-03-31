@@ -15,7 +15,7 @@ const userSchema = new Schema({ //We do not specify a username or password becau
 			ref: "Upload"
 		  }
 	]
-})
+});
 userSchema.plugin(passportLocalMongoose); //This is passport, Passport-Local Mongoose will add a username, hash and salt field to store the username, the hashed password and the salt value meaning in your user schema you don’t have to include those values just the extra ones you want 
 
 module.exports = mongoose.model("User", userSchema);
