@@ -10,6 +10,19 @@
   <h2>Title= <%= upload.title %></h2>
   <p>By: <a href="/users/<%= upload.author._id  %>"><%= upload.author.username %></a></p>
   <img src="<%= upload.image.url %>" alt="<%= upload.image.filename %>">
+  <br>
+  <%  
+    var likes = upload.likes.length-1; //Can this be moved to a external js file?
+    %>
+  <p>Likes: <%= likes %></p>
+
+
+  <% if(currentUser && !upload.likes.includes(currentUser._id)){%>
+  <form form action="/uploads/<%= upload._id%>/like?_method=PUT"  method="POST"> <!--First attempt at like button-->
+    <button>Like</button>
+    </form>
+    <% } %>
+
   <p><%= upload.caption %></p>
   </section>
   <% if(currentUser && upload.author.equals(currentUser._id)){%>

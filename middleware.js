@@ -55,3 +55,16 @@ module.exports.validateUpload = (req, res, next) => {
             next();
           }
         }
+
+        /*
+        module.exports.hasLiked = async(req, res, next) =>{
+          const idHolder = req.params.id; //System seems to take these Ids from the URL 
+        
+          const comment = await Comment.findById(commentIdHolder);  
+              if(!comment.author.equals(req.user._id)){
+                req.flash("error", "You don't have permission to do this.");
+                return res.redirect(`/uploads/${idHolder}`);
+              }
+            next(); 
+          }
+          */

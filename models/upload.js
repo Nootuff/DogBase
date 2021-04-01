@@ -21,6 +21,9 @@ const uploadSchema = new mongoose.Schema({
       type: Schema.Types.ObjectId,
       ref: "Comment"
     }
+  ],
+  likes: [
+    
   ]
 });
 
