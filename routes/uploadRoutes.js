@@ -27,6 +27,7 @@ router.get("/", async (req, res) => { //Home page.
     upload.image.filename = req.file.filename;
     upload.author = req.user._id;
     upload.likes.push(req.user._id);
+    upload.dislikes.push(req.user._id);
     const author = req.user;
     console.log("Author of this post is " + author);
     author.posts.push(upload);
@@ -75,7 +76,7 @@ router.get("/", async (req, res) => { //Home page.
 
   
 
-  router.put('/:id/like', isLoggedIn, catchAsync(async (req, res,) => { //First attempt at likes 
+  router.put('/:id/like', isLoggedIn, catchAsync(async (req, res,) => { //Add to like array route
     const idHolder = req.params.id;
     const upload = await Upload.findByIdAndUpdate(idHolder); 
     upload.likes.push(req.user._id);
@@ -83,6 +84,15 @@ router.get("/", async (req, res) => { //Home page.
     req.flash("success", "Liked!");
     res.redirect(`/uploads/${upload._id}`) //String template literal, note the backticks
   }));
+
+  router.put('/:id/dislike', isLoggedIn, catchAsync(async (req, res,) => { //Add to Dislike array route 
+    const idHolder = req.params.id;
+    const upload = await Upload.findByIdAndUpdate(idHolder); 
+    upload.dislikes.push(req.user._id);
+    await upload.save();
+    res.redirect(`/uploads/${upload._id}`)
+  }));
+
 
   
   router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates to, deleting all the comments associated with it. 

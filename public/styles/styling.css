@@ -26,6 +26,27 @@ li{
     color: red;
 }
 
+.opinionButton {
+    float: left;
+}
+
+.likes {
+    color: #005925;
+}
+
+.dislikes {
+    color: #ff3838;
+}
+
+.unlikeButton{
+    background-color: #42f55a;
+}
+
+.unDislikeButton{
+    background-color: #ff3838;
+}
+
+
 .successFlash{
   background-color: #42f55a;
   border-radius: 5px;

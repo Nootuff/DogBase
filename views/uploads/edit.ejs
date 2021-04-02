@@ -4,7 +4,7 @@
   <section>
 <h1>Edit post</h1>
 <p>Html form.</p>
-<h2><%= upload.title%></h2>
+<h2><%= upload.title%></h2> 
 <form action="/uploads/<%= upload._id%>?_method=PUT" method="POST" novalidate class="validated-form"> 
      <!--Use multipart/form-data when your form includes any <input type="file"> elements. I think novalidate is something to do with error handling or making sure enough data is input.-->
     <label for="title">Title</label>

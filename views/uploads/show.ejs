@@ -13,16 +13,40 @@
   <br>
   <%  
     var likes = upload.likes.length-1; //Can this be moved to a external js file?
+    var dislikes = upload.dislikes.length-1;
     %>
-  <p>Likes: <%= likes %></p>
+  <p class ="likes">Likes: <%= likes %></p>
+  <p class ="dislikes">Dislikes: <%= dislikes %></p>
 
-
-  <% if(currentUser && !upload.likes.includes(currentUser._id)){%>
-  <form form action="/uploads/<%= upload._id%>/like?_method=PUT"  method="POST"> <!--First attempt at like button-->
+  <!--like button, adds user to likes array. Shows when user is not in dislikes array or likes array-->
+  <% if(currentUser && !upload.likes.includes(currentUser._id) ){%>
+  <form form action="/uploads/<%= upload._id%>/like?_method=PUT"  method="POST" class="opinionButton"> 
     <button>Like</button>
     </form>
     <% } %>
 
+       <!--Un-like button, removes user to from likes array. Shows when user is in likes array.-->
+  <% if(currentUser && upload.likes.includes(currentUser._id) && !upload.dislikes.includes(currentUser._id)){%>
+    <form form action="/uploads/<%= upload._id%>/unlike?_method=PUT"  method="POST" class="opinionButton">
+      <button class="unlikeButton">Remove like</button> 
+    </form>
+    <% } %>
+
+    <!--Dislike button, adds user to dislikes array. Shows when user is not in dislikes array or likes array-->
+    <% if(currentUser && !upload.dislikes.includes(currentUser._id)){%>
+    <form form action="/uploads/<%= upload._id%>/dislike?_method=PUT"  method="POST" class="opinionButton">
+    <button>Dislike</button> 
+  </form>
+  <% } %>
+
+  <!--Un-dislike button, removes user  from dislike array. Shows when user is in dislikes array.-->
+  <% if(currentUser && !upload.likes.includes(currentUser._id) && upload.dislikes.includes(currentUser._id)){%>
+  <form form action="/uploads/<%= upload._id%>/undislike?_method=PUT"  method="POST" class="opinionButton">
+    <button class="unDislikeButton">Remove dislike</button> 
+  </form>
+  <% } %>
+
+ <br>
   <p><%= upload.caption %></p>
   </section>
   <% if(currentUser && upload.author.equals(currentUser._id)){%>

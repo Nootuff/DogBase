@@ -22,9 +22,8 @@ const uploadSchema = new mongoose.Schema({
       ref: "Comment"
     }
   ],
-  likes: [
-    
-  ]
+  likes: [],
+  dislikes: []
 });
 
 uploadSchema.post("findOneAndDelete", async function (item) {
