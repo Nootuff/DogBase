@@ -75,24 +75,42 @@ router.get("/", async (req, res) => { //Home page.
   }));
 
   
-
+//Use an if statement, if 
   router.put('/:id/like', isLoggedIn, catchAsync(async (req, res,) => { //Add to like array route
-    const idHolder = req.params.id;
-    const upload = await Upload.findByIdAndUpdate(idHolder); 
+    const upload = await Upload.findByIdAndUpdate(req.params.id); 
     upload.likes.push(req.user._id);
+    if(upload.dislikes.includes(req.user._id)){
+      await Upload.findByIdAndUpdate(upload, {$pull: { dislikes: req.user._id } } );
+    }
     await upload.save();
     req.flash("success", "Liked!");
     res.redirect(`/uploads/${upload._id}`) //String template literal, note the backticks
   }));
 
+  router.put('/:id/unlike', isLoggedIn, catchAsync(async (req, res,) => { //Remove like from likes array, replace unlike button with like 
+    const upload = req.params.id;
+	const likedUser = req.user._id; 
+    await Upload.findByIdAndUpdate(upload, {$pull: { likes: likedUser } } );  //Pulls current users ID out of the likes array.
+    res.redirect("back"); //Apparently "back" just takes you back to the last page you were on which has now been modified with the above code. 
+  }));
+
+
   router.put('/:id/dislike', isLoggedIn, catchAsync(async (req, res,) => { //Add to Dislike array route 
-    const idHolder = req.params.id;
-    const upload = await Upload.findByIdAndUpdate(idHolder); 
+    const upload = await Upload.findByIdAndUpdate(req.params.id); 
     upload.dislikes.push(req.user._id);
+    if(upload.likes.includes(req.user._id)){
+      await Upload.findByIdAndUpdate(upload, {$pull: { likes: req.user._id } } );
+    }
     await upload.save();
     res.redirect(`/uploads/${upload._id}`)
   }));
-
+  
+  router.put('/:id/undislike', isLoggedIn, catchAsync(async (req, res,) => { //Remove like from likes array, replace unlike button with like 
+    const upload = req.params.id;
+	const dislikedUser = req.user._id; 
+    await Upload.findByIdAndUpdate(upload, {$pull: { dislikes: dislikedUser } } );  //Pulls current users ID out of the dislikes array.
+    res.redirect("back"); 
+  }));
 
   
   router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates to, deleting all the comments associated with it. 
