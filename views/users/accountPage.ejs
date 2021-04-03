@@ -3,8 +3,8 @@
 <main>
   <section>
 <h1>User account page of "displayName" </h1>
-<p>Username: <%= currentUser.username %></p>
-<p>Email: <%= currentUser.email %></p>
+<p>Username: <%= user.username %></p>
+<p>Email: <%= user.email %></p>
 
 
 -Way for user to change display name, user and email and password, need to find out how to change pass.
@@ -12,7 +12,15 @@
 -Have the favourites on a seperate page.
 - Have all of your  posts too. 
 
+<h3>Your posts</h3>
 
+<h3>Your favourites</h3>
+<%= user.favourites.length %>
+<% for (var i=0; i < user.favourites.length; i++){ %> 
+    
+  <p><%=user.favourites[i].title %></p>
+  
+  <% } %>
 
 </main>
       <!--  <script type="text/javascript" src="newjavascript.js"></script> -->

@@ -46,6 +46,10 @@ li{
     background-color: #ff3838;
 }
 
+.favButton {
+    float: left;
+}
+
 
 .successFlash{
   background-color: #42f55a;

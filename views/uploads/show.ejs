@@ -4,7 +4,6 @@
   <section>
 <h1>Display page</h1>
 <p>Larger image of the dog, text description, comments.</p>
-<p>Don't just have a bunch of divs, <a href="https://www.w3schools.com/html/html5_semantic_elements.asp">use these</a> .</p>
 </section>
 <section>
   <h2>Title= <%= upload.title %></h2>
@@ -50,6 +49,17 @@
     <button class="unDislikeButton">Remove dislike</button> 
   </form>
   <% } %>
+  <br>
+  <br>
+
+  <% if(currentUser && currentUser._id != upload.author._id ){%>
+    <form form action="/uploads/<%= upload._id%>/fav?_method=PUT"  method="POST" class="favButton"> 
+      <button>Fav this dog</button>
+      </form>
+      <form form action="/uploads/  /unfav?_method=PUT"  method="POST" class="favButton">
+        <button >unFav this dog</button> 
+      </form>
+      <% } %>
 
  <br>
   <p><%= upload.caption %></p>

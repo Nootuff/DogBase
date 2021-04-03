@@ -23,8 +23,9 @@ router.get("/register", function (req, res) { //Renders register page
     res.render("users/register.ejs")
 });
 
-router.get("/accountPage", isLoggedIn, catchAsync(async (req, res) => { //Renders the current users' account page.
-    res.render("users/accountPage.ejs")
+router.get("/accountPage", isLoggedIn, catchAsync(async (req, res) => { //Renders the current users' account page.    
+    const user =  await User.findById(req.user._id).populate("favourites");
+    res.render("users/accountPage.ejs", { user })
 }));
 
 router.post("/register", catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
@@ -51,7 +52,6 @@ router.get("/login", function (req, res) { //Renders login page.
 })
 
 router.get("/logout", function (req, res) {
-    console.log("hate my life")
     req.logout(); //.logout() is another route bought in from passport, logs the user out.
     req.flash("success", "Goodbye! try to build something that will make this route only activate if the user is logged in to begin with.");
     res.redirect("/uploads");
@@ -60,12 +60,10 @@ router.get("/logout", function (req, res) {
 router.get("/:id", catchAsync(async (req, res) => { //This renders the userpage. This route MUST be below all other get routes because the :id will pull in any value and try to run it through the code below. 
     var find = req.params.id;
     const user = await (User.findById(find)).populate("posts");;
-    console.log(user);
     res.render("users/userPage.ejs", { user })
 }));
 
 router.post("/login", passport.authenticate("local", { failureFlash: true, failureRedirect: "/users/login" }), (req, res) => {
-    console.log(req.user);
     req.flash("success", "Welcome back! " + req.user.username)
     const redirectUrl = req.session.returnTo || "/uploads"; //When user logs in, either redirect them to the page held in returnTo as defined in middleware.js OR redirect them to /campgrounds. 
     delete req.session.returnTo; //We don't need the returnTo in the session after the redirect so delete just deletes it from the object, otherwise all these returnTo's would clutter up the object.

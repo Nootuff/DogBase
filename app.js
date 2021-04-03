@@ -71,7 +71,7 @@ passport.deserializeUser(User.deserializeUser());//This lets you get the user ou
 
 
 app.use(function (req, res, next) {//has to come before the route handlers below apparently. These things are called "locals" you have access to them accross the entire website. 
-console.log(req.session)
+//console.log(req.session)
   res.locals.currentUser = req.user; 
   res.locals.successFlash = req.flash("success"); 
   res.locals.errorFlash = req.flash("error");
