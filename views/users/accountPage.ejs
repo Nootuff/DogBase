@@ -18,7 +18,7 @@
 <%= user.favourites.length %>
 <% for (var i=0; i < user.favourites.length; i++){ %> 
     
-  <p><%=user.favourites[i].title %></p>
+  <p><a href="/uploads/<%=user.favourites[i]._id %>"><%=user.favourites[i].title %></a></p>
   
   <% } %>
 

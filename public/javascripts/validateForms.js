@@ -12,6 +12,7 @@
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
+          alert("Missing data.")
         }
 
         form.classList.add('was-validated')

@@ -1,63 +1,62 @@
 <% layout("/boilerplate") %>
 
 <main>
-  <section>
-<h1>Display page</h1>
-<p>Larger image of the dog, text description, comments.</p>
-</section>
 <section>
-  <h2>Title= <%= upload.title %></h2>
+  <h2><%= upload.title %></h2>
   <p>By: <a href="/users/<%= upload.author._id  %>"><%= upload.author.username %></a></p>
-  <img src="<%= upload.image.url %>" alt="<%= upload.image.filename %>">
-  <br>
   <%  
-    var likes = upload.likes.length-1; //Can this be moved to a external js file?
-    var dislikes = upload.dislikes.length-1;
-    %>
-    
-  <table>
-    <tr>
-      <td class ="likes">Likes: <%= likes %></td>
-      <td class ="dislikes">Dislikes: <%= dislikes %></td>
-    </tr>
+  var likes = upload.likes.length-1; //Can this be moved to a external js file?
+  var dislikes = upload.dislikes.length-1;
+  var comments = (upload.comments.length == 1) ? "comment" : "comments";
+  %>
+<table>
+  <tr>
+    <td class ="likes">Likes: <%= likes %></td>
+    <td class ="dislikes">Dislikes: <%= dislikes %></td>
+    <td><a href="#comments"><%= upload.comments.length %> <%= comments %></a></td>
+  </tr>
 </table>
+  <% var reFormat = upload.image.url.replace("/upload", "/upload/w_400"); %>
+  <img src="<%= reFormat %>" alt="<%= upload.image.filename %>">
+  <br>
+
 
   <!--like button, adds user to likes array. Shows when user is not in dislikes array or likes array-->
   <% if(currentUser && !upload.likes.includes(currentUser._id) ){%>
-  <form form action="/uploads/<%= upload._id%>/like?_method=PUT"  method="POST" class="opinionButton"> 
-    <button>Like</button>
+  <form form action="/uploads/<%= upload._id%>/like?_method=PUT"  method="POST" class="opinionForm"> 
+    <button  class="opinionButton"><i class="fas fa-thumbs-up"></i></button>
     </form>
     <% } %>
 
        <!--UN-like button, removes user to from likes array. Shows when user is in likes array.-->
   <% if(currentUser && upload.likes.includes(currentUser._id) && !upload.dislikes.includes(currentUser._id)){%>
-    <form form action="/uploads/<%= upload._id%>/unlike?_method=PUT"  method="POST" class="opinionButton">
-      <button class="unlikeButton">Remove like</button> 
+    <form form action="/uploads/<%= upload._id%>/unlike?_method=PUT"  method="POST" class="opinionForm">
+      <button class="opinionButton unlikeButton"><i class="fas fa-thumbs-up"></i></button> 
     </form>
     <% } %>
 
     <!--Dislike button, adds user to dislikes array. Shows when user is not in dislikes array or likes array-->
     <% if(currentUser && !upload.dislikes.includes(currentUser._id)){%>
-    <form form action="/uploads/<%= upload._id%>/dislike?_method=PUT"  method="POST" class="opinionButton">
-    <button>Dislike</button> 
+    <form form action="/uploads/<%= upload._id%>/dislike?_method=PUT"  method="POST" class="opinionForm">
+    <button class="opinionButton"><i class="fas fa-thumbs-down"></i></button> 
   </form>
   <% } %>
 
   <!--Un-dislike button, removes user  from dislike array. Shows when user is in dislikes array.-->
   <% if(currentUser && !upload.likes.includes(currentUser._id) && upload.dislikes.includes(currentUser._id)){%>
-  <form form action="/uploads/<%= upload._id%>/undislike?_method=PUT"  method="POST" class="opinionButton">
-    <button class="unDislikeButton">Remove dislike</button> 
+  <form form action="/uploads/<%= upload._id%>/undislike?_method=PUT"  method="POST" class="opinionForm">
+    <button class="opinionButton unDislikeButton"><i class="fas fa-thumbs-down"></i></button> 
   </form>
   <% } %>
   <br>
   <br>
-
-  <% if(currentUser && currentUser._id != upload.author._id ){%>
-    <form form action="/uploads/<%= upload._id%>/fav?_method=PUT"  method="POST" class="favButton"> 
-      <button>Fav this dog</button>
+  <% if(currentUser && !currentUser.posts.includes(upload._id) && !currentUser.favourites.includes(upload._id)){%>
+    <form form action="/uploads/<%= upload._id%>/fav?_method=PUT"  method="POST" class="favForm"> 
+      <button class="favButton">Fav this dog</button>
       </form>
-      <form form action="/uploads/  /unfav?_method=PUT"  method="POST" class="favButton">
-        <button >unFav this dog</button> 
+      <% } else if(currentUser && !currentUser.posts.includes(upload._id) && currentUser.favourites.includes(upload._id)){ %>
+      <form form action="/uploads/<%= upload._id%>/unfav?_method=PUT"  method="POST" class="favForm">
+        <button class="favButton unFav">unFav this dog</button> 
       </form>
       <% } %>
 
@@ -80,6 +79,7 @@
 <button>Submit</button> 
     </form>
     <% } %>
+    <section id="comments">
     <% for (var i=0; i < upload.comments.length; i++){ %>
       <p><a href="/users/<%=upload.comments[i].author._id %>"><%=upload.comments[i].author.username %></a> says</p>
       <p><%=upload.comments[i].body %></p>
@@ -89,6 +89,7 @@
           </form>
           <% } %>
       <% } %>
+    </section>
 </main>
       <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
     </body>

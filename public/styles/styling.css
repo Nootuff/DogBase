@@ -6,6 +6,10 @@ nav {
 background-color: #96f8ff;
 }
 
+html {
+    scroll-behavior: smooth;
+  }
+
 .navItem{
     color: #570000;
 }
@@ -26,30 +30,55 @@ li{
     color: red;
 }
 
+.opinionForm{
+    float: left;
+}
+
 .opinionButton {
     float: left;
+    border: none;
+    font-size: 28px;
+  cursor: pointer;
+}
+
+.opinionButton:focus {
+    outline:0;
+}
+
+.opinionButton:active {
+    transform: scale(0.9);
 }
 
 .likes {
     color: #005925;
+    font-weight: bold;
 }
 
 .dislikes {
     color: #ff3838;
+    font-weight: bold;
 }
 
 .unlikeButton{
-    background-color: #42f55a;
+    color: green;
+
 }
 
 .unDislikeButton{
-    background-color: #ff3838;
+    color: #ff3838;
 }
 
-.favButton {
+.favForm {
     float: left;
 }
 
+.unFav{
+    color: #005925;
+}
+
+.requiredInput:invalid { border: 1px solid red; }
+
+.requiredInput:valid { border: 1px solid green; }
 
 .successFlash{
   background-color: #42f55a;

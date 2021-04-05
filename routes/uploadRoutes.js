@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const catchAsync = require("../utilities/catchAsync");
 const Joi = require("joi");
-const { isLoggedIn, validateUpload, isAuthor, hasLiked, hasDisliked } = require("../middleware");
+const { isLoggedIn, validateUpload, isAuthor, hasLiked, hasDisliked, hasFavd } = require("../middleware");
 const multer = require("multer");
 const { storage } = require("../cloudinary"); //This imports the const "storage"  object from the index.js file in your cloudinary folder. Node automatically looks for a file named index.js in a folder which is why the index file isn't actually reffered to. 
-const upload = multer({ storage });
+const multerUpload = multer({ storage });
 const Upload = require("../models/upload"); //Link for the upload schema in models
 const User = require("../models/user");
 
@@ -19,7 +19,7 @@ router.get("/new", isLoggedIn, function (req, res) { //Just loads new page.
   res.render("uploads/new.ejs");
 });
 
-router.post("/", isLoggedIn, upload.single('image'), validateUpload, catchAsync(async (req, res, next) => {  //Post new upload post  
+router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catchAsync(async (req, res, next) => {  //Post new upload post  
   const upload = new Upload(req.body.upload);
   upload.image.url = req.file.path;
   upload.image.filename = req.file.filename;
@@ -110,10 +110,9 @@ router.put('/:id/undislike', isLoggedIn, catchAsync(async (req, res,) => { //Rem
 
 //The fave and un-fave routes.
 
-router.put('/:id/fav', isLoggedIn, catchAsync(async (req, res,) => { //Add to user fav array route
+router.put('/:id/fav', isLoggedIn, hasFavd, catchAsync(async (req, res,) => { //Add post to user fav array route.
   const upload = await Upload.findById(req.params.id);
   const user = await User.findByIdAndUpdate(req.user._id);
- 
 user.favourites.push(upload);
 console.log("upload is " + upload);
 await user.save();
@@ -121,11 +120,24 @@ await user.save();
   res.redirect("back")
 }));
 
+router.put('/:id/unFav', isLoggedIn, catchAsync(async (req, res,) => { //Remove prost from user fav array route.
+  const user = req.user._id;
+   const upload = req.params.id;
+await User.findByIdAndUpdate(user, { $pull: { favourites: upload } }); 
+  req.flash("success", "Removed from favs.");
+  res.redirect("back")
+}));
 
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates to, deleting all the comments associated with it. 
-  const idHolder = req.params.id;
-  console.log("this is it " + idHolder);
-  await Upload.findByIdAndDelete(idHolder);
+
+router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => { //Delete route to delete an upload, the associated middleware in the upload model activates too, deleting all the comments associated with it. 
+  const upload = req.params.id;
+  //console.log("this is it " + idHolder);
+  const user = await User.findById(req.user._id);
+  if(user.posts.includes(upload)){
+console.log("post detected")
+await User.findByIdAndUpdate(user, { $pull: { posts: upload } }); 
+  }
+  await Upload.findByIdAndDelete(upload);
 
   req.flash("success", "Deleted.");
   res.redirect('/uploads');
