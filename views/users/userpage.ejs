@@ -2,15 +2,30 @@
 
 <main>
     <h2>Userpage of <%= user.username %></h2>
+   <table>
+     <td>
+    <h3>Posts</h3>
+    </td>
+    <td>
+      <h3><a href="/users/<%=user._id %>/favourites">Favourites</a></h3>
+      </td>
+    </table>
 
-<p>The userpage display of the person whose name you clicked on.<br>Must be accessible from clicking on upload author and comment author, may need 2 seperate routes to do this, see if it can be done with one.</p>
-
+<hr>
 
 <% for (var i=0; i < user.posts.length; i++){ %> 
-    
-    <p><%=user.posts[i].title %></p>
-    
+    <table >
+        <tr>
+          <td><a href="/uploads/<%=user.posts[i]._id %>"><%=user.posts[i].title %></a></td>
+        </tr>
+        <tr>
+          <td>Likes: <%=user.posts[i].likes.length-1 %></td>
+          <td>Dislikes: <%=user.posts[i].dislikes.length-1 %></td>
+          <td>Comments: <%=user.posts[i].comments.length %></td>
+        </tr>
+      </table>
     <% } %>
+    - Have an if statement that checks the length, if under 1, have a message saying this user has no favs / posts
  - Have small thumbnails of the images. 
 
 

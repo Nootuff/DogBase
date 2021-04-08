@@ -76,6 +76,14 @@ li{
     color: #005925;
 }
 
+.shown{
+    display: block;
+}
+
+.hidden{
+    display: none;
+}
+
 .requiredInput:invalid { border: 1px solid red; }
 
 .requiredInput:valid { border: 1px solid green; }

@@ -59,8 +59,14 @@ router.get("/logout", function (req, res) {
 
 router.get("/:id", catchAsync(async (req, res) => { //This renders the userpage. This route MUST be below all other get routes because the :id will pull in any value and try to run it through the code below. 
     var find = req.params.id;
-    const user = await (User.findById(find)).populate("posts");;
+    const user = await (User.findById(find)).populate("posts").populate("favourites");
     res.render("users/userPage.ejs", { user })
+}));
+
+router.get("/:id/favourites", catchAsync(async (req, res) => { //This renders the userpage. favs tab. Can both of these 2 be combined? have a cosnt taht contains all of the above code and just reference it here or soemthing. 
+    var find = req.params.id;
+    const user = await (User.findById(find)).populate("posts").populate("favourites");
+    res.render("users/userFavs.ejs", { user })
 }));
 
 router.post("/login", passport.authenticate("local", { failureFlash: true, failureRedirect: "/users/login" }), (req, res) => {

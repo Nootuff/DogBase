@@ -13,6 +13,7 @@
           event.preventDefault()
           event.stopPropagation()
           alert("Missing data.")
+          //Can you have soemthing that changes the style of a popup that appears instead, changes it from none to block?
         }
 
         form.classList.add('was-validated')
