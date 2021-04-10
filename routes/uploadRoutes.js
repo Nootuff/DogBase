@@ -9,6 +9,7 @@ const multerUpload = multer({ storage });
 const Upload = require("../models/upload"); //Link for the upload schema in models
 const User = require("../models/user");
 
+const dogNoise = ["Woof!", "Bark!", "Yelp!"]
 
 router.get("/", async (req, res) => { //Home page.
   const uploads = await Upload.find({});

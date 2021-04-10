@@ -1,10 +1,10 @@
 <% layout("/boilerplate") %>
 
 <main>
-    <h2>Userpage of <%= user.username %></h2>
+    <h2>Your favourites</h2>
    <table>
      <td>
-    <h3><a href="/users/<%=user._id %>">Posts</a></h3>
+    <h3><a href="/users/accountPage">Posts</a></h3>
     </td>
     <td>
       <h3>Favourites</h3>
@@ -23,11 +23,11 @@
             <td>Comments: <%=user.favourites[i].comments.length %></td>
           </tr>
         </table>
-        <% }} else { %>
-          <p>This user currently has no fav'd posts.</p>
-              <% } %>
+      <% } %>
+     <% } else { %>
+        <p>You currently have no fav'd posts.</p>
+            <% } %>
 
- 
       - Have small thumbnails of the images. 
 
 

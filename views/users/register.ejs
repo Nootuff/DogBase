@@ -1,20 +1,23 @@
-  
 <% layout("/boilerplate") %>
-<main>
-    <h1>Register</h1>
-    <form action="/users/register" method="POST" class="validated-form" novalidate>
-        <div>
-            <label for="username">Username</label><br>
-            <input type="text" id="username" name="username"  class="requiredInput" required><br>
-        </div>
-        <div>
-            <label for="email">Email</label><br>
-            <input type="email" id="email" name="email"  class="requiredInput" required><br>
-        </div>
-        <div>
-            <label for="password">Password</label><br>
-            <input type="password" id="password" name="password"  class="requiredInput" required><br>
-        </div>
-        <button>Register</button>
-    </form>
-</main>
+    <main>
+        <h1>Register</h1>
+        <form action="/users/register" method="POST" class="validated-form" novalidate>
+            <div>
+                <label for="username">Username</label><br>
+                <input type="text" id="username" name="username" class="requiredInput" required><br>
+            </div>
+            <div>
+                <label for="email">Email</label><br>
+                <input type="email" id="email" name="email" class="requiredInput" required><br>
+            </div>
+            <div>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" name="password" class="requiredInput" required><br>
+            </div>
+            <div>
+                <label for="displayName">How would you like others to see you?</label><br>
+                <input type="text" id="displayName" name="displayName" class="requiredInput" required><br>
+            </div>
+            <button>Register</button>
+        </form>
+    </main>

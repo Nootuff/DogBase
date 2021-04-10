@@ -24,8 +24,13 @@ router.get("/register", function (req, res) { //Renders register page
 });
 
 router.get("/accountPage", isLoggedIn, catchAsync(async (req, res) => { //Renders the current users' account page.    
-    const user =  await User.findById(req.user._id).populate("favourites");
+    const user =  await User.findById(req.user._id).populate("posts");
     res.render("users/accountPage.ejs", { user })
+}));
+
+router.get("/accountPage/favourites", isLoggedIn, catchAsync(async (req, res) => { //Renders the current users' account page.    
+    const user =  await User.findById(req.user._id).populate("favourites");
+    res.render("users/accountFavs.ejs", { user })
 }));
 
 router.post("/register", catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
@@ -33,7 +38,8 @@ router.post("/register", catchAsync(async (req, res) => { //The route that adds 
         const username = req.body.username;
         const email = req.body.email;
         const password = req.body.password;
-        const newUser = new User({ username, email }); //Creates a new instance of user with this data.
+        const displayName =  req.body.displayName;
+        const newUser = new User({ username, email, displayName }); //Creates a new instance of user with this data.
         const registeredUser = await User.register(newUser, password);
         console.log(registeredUser);
         req.login(registeredUser, error => { //This is another method from passport, logs in newly created user after registering. 
@@ -59,13 +65,13 @@ router.get("/logout", function (req, res) {
 
 router.get("/:id", catchAsync(async (req, res) => { //This renders the userpage. This route MUST be below all other get routes because the :id will pull in any value and try to run it through the code below. 
     var find = req.params.id;
-    const user = await (User.findById(find)).populate("posts").populate("favourites");
+    const user = await (User.findById(find)).populate("posts");
     res.render("users/userPage.ejs", { user })
 }));
 
 router.get("/:id/favourites", catchAsync(async (req, res) => { //This renders the userpage. favs tab. Can both of these 2 be combined? have a cosnt taht contains all of the above code and just reference it here or soemthing. 
     var find = req.params.id;
-    const user = await (User.findById(find)).populate("posts").populate("favourites");
+    const user = await (User.findById(find)).populate("favourites");
     res.render("users/userFavs.ejs", { user })
 }));
 

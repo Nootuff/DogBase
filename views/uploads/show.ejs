@@ -3,7 +3,7 @@
 <main>
 <section>
   <h2><%= upload.title %></h2>
-  <p>By: <a href="/users/<%= upload.author._id  %>"><%= upload.author.username %></a></p>
+  <p>By: <a href="/users/<%= upload.author._id  %>"><%= upload.author.displayName %></a></p>
   <%  
   var likes = upload.likes.length-1; //Can all these vars be moved to a external js file?
   var dislikes = upload.dislikes.length-1;
@@ -20,8 +20,10 @@
   <img src="<%= reFormat %>" alt="<%= upload.image.filename %>">
   <br>
 
-  <% var userOrNo = (currentUser) ? "shown" : "hidden";%>
-<div class="<%= userOrNo %>">
+  <% var userOrNo = (currentUser) ? "shown" : "hidden";
+  var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "shown" : "hidden";
+  %>
+<div class="<%= userOrNo %> <%= authorOrNo %>">
   <!--like button, adds user to likes array. Shows when user is not in dislikes array or likes array-->
   <% if(currentUser && !upload.likes.includes(currentUser._id) ){%>
   <form form action="/uploads/<%= upload._id%>/like?_method=PUT"  method="POST" class="opinionForm "> 
@@ -65,12 +67,15 @@
 
   <p><%= upload.caption %></p>
   </section>
+  <hr>
+  <div class="<%= userOrNo %>">
   <% if(currentUser && upload.author.equals(currentUser._id)){%>
   <a href="/uploads/<%= upload._id%>/edit">Edit this</a>
   <form action="/uploads/<%= upload._id%>?_method=DELETE" method="POST">
     <button>Delete this</button>
     </form>
     <% } %>
+  
     <br>
     <% if(currentUser){%> <!--If there IS a current user at all, render this form. -->
     <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
@@ -80,10 +85,12 @@
 <br>
 <button>Submit</button> 
     </form>
+ 
     <% } %>
+  </div>
     <section id="comments">
     <% for (var i=0; i < upload.comments.length; i++){ %>
-      <p><a href="/users/<%=upload.comments[i].author._id %>"><%=upload.comments[i].author.username %></a> says</p>
+      <p><a href="/users/<%=upload.comments[i].author._id %>"><%=upload.comments[i].author.displayName %></a> says</p>
       <p><%=upload.comments[i].body %></p>
       <% if(currentUser && upload.comments[i].author.equals(currentUser._id)){%>
         <form action="/uploads/<%= upload._id%>/comments/<%=upload.comments[i]._id%>?_method=DELETE" method="POST">

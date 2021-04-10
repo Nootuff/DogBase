@@ -12,7 +12,7 @@
     </table>
 
 <hr>
-
+<% if(!user.posts.length == 0){ %>
 <% for (var i=0; i < user.posts.length; i++){ %> 
     <table >
         <tr>
@@ -24,8 +24,9 @@
           <td>Comments: <%=user.posts[i].comments.length %></td>
         </tr>
       </table>
-    <% } %>
-    - Have an if statement that checks the length, if under 1, have a message saying this user has no favs / posts
+    <% }} else { %>
+      <p>This user currently has no posts.</p>
+          <% } %>
  - Have small thumbnails of the images. 
 
 

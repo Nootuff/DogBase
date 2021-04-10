@@ -9,6 +9,11 @@ const userSchema = new Schema({ //We do not specify a username or password becau
 	required: true,
 	unique: true
 	},
+	displayName: {
+		type: String,
+		required: true,
+		unique: true
+	},
 	posts: [
 		{
 			type: Schema.Types.ObjectId,

@@ -1,26 +1,44 @@
 <% layout("/boilerplate") %>
 
 <main>
-  <section>
-<h1>User account page of "displayName" </h1>
+ 
+  <table>
+    <td>
+   <h3>Posts</h3>
+   </td>
+   <td>
+     <h3><a href="/users/accountPage/favourites">Favourites</a></h3>
+     </td>
+   </table>
+   <hr>
+<h1>User account page of <%= user.username %></h1>
 <p>Username: <%= user.username %></p>
 <p>Email: <%= user.email %></p>
+<p>Your display name: <%= user.displayName %></p>
 
 
 -Way for user to change display name, user and email and password, need to find out how to change pass.
 <br>
--Have the favourites on a seperate page.
-- Have all of your  posts too. 
+
 
 <h3>Your posts</h3>
 
-<h3>Your favourites</h3>
-<%= user.favourites.length %>
-<% for (var i=0; i < user.favourites.length; i++){ %> 
-    
-  <p><a href="/uploads/<%=user.favourites[i]._id %>"><%=user.favourites[i].title %></a></p>
-  
+<% if(!user.posts.length == 0){ %>
+<% for (var i=0; i < user.posts.length; i++){ %> 
+  <table >
+      <tr>
+        <td><a href="/uploads/<%=user.posts[i]._id %>"><%=user.posts[i].title %></a></td>
+      </tr>
+      <tr>
+        <td>Likes: <%=user.posts[i].likes.length-1 %></td>
+        <td>Dislikes: <%=user.posts[i].dislikes.length-1 %></td>
+        <td>Comments: <%=user.posts[i].comments.length %></td>
+      </tr>
+    </table>
   <% } %>
+  <% } else { %>
+<p>You currently have no posts.</p>
+    <% } %>
 
 </main>
       <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
