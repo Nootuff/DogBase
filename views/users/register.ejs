@@ -1,7 +1,7 @@
 <% layout("/boilerplate") %>
     <main>
         <h1>Register</h1>
-        <form action="/users/register" method="POST" class="validated-form" novalidate>
+        <form action="/users/register" method="POST" class="validated-form"  enctype="multipart/form-data" novalidate>
             <div>
                 <label for="username">Username</label><br>
                 <input type="text" id="username" name="username" class="requiredInput" required><br>
@@ -12,12 +12,17 @@
             </div>
             <div>
                 <label for="password">Password</label><br>
-                <input type="password" id="password" name="password" class="requiredInput" required><br>
+                <input type="password" id="password" name="password" class="requiredInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required><br>
             </div>
             <div>
                 <label for="displayName">How would you like others to see you?</label><br>
                 <input type="text" id="displayName" name="displayName" class="requiredInput" required><br>
             </div>
-            <button>Register</button>
+<div>
+    <label for="profileImage">Image</label><br>
+    <input type="file" name="profileImage" id="profileImage" accept="image/*" >
+    </div>
+
+    <input type="submit" value="Register">
         </form>
     </main>

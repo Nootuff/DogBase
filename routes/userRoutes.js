@@ -1,7 +1,7 @@
 /*
 username: Adam
 email: adamwalkerlondon@gmail.com
-pass: Winter
+pass: Winter01
 
 username: EmochNoh
   email: blue.emu@hotmail.com
@@ -9,7 +9,7 @@ username: EmochNoh
 
   username: Tester,
   email: tester@hotmail.com
-  pass: Test
+  pass: Testing01
 */
 
 const express = require('express');
@@ -17,7 +17,11 @@ const passport = require('passport');
 const router = express.Router();
 const User = require("../models/user");
 const catchAsync = require("../utilities/catchAsync");
-const { isLoggedIn } = require("../middleware");
+const { isLoggedIn, authNewUser} = require("../middleware");
+
+const multer = require("multer");
+const { storage } = require("../cloudinary"); //This imports the const "storage"  object from the index.js file in your cloudinary folder. Node automatically looks for a file named index.js in a folder which is why the index file isn't actually reffered to. 
+const multerUpload = multer({ storage });
 
 router.get("/register", function (req, res) { //Renders register page
     res.render("users/register.ejs")
@@ -33,14 +37,27 @@ router.get("/accountPage/favourites", isLoggedIn, catchAsync(async (req, res) =>
     res.render("users/accountFavs.ejs", { user })
 }));
 
-router.post("/register", catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
+router.post("/register", multerUpload.single('profileImage'), authNewUser, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
     try {
         const username = req.body.username;
         const email = req.body.email;
         const password = req.body.password;
         const displayName =  req.body.displayName;
-        const newUser = new User({ username, email, displayName }); //Creates a new instance of user with this data.
+        var profileImage = (!req.file) ? "/assets/placeholder.png" : req.file.path;
+        /*
+       if(!req.file){
+        const profileImage = "yes";
+       } else {
+        const profileImage = req.file.path;
+       }
+         /*
+        const profileImageFile = req.file.filename;
+        console.log( profileImageUrl + profileImageFile)
+       */
+        const newUser = new User({ username, email, displayName, profileImage}); //Creates a new instance of user with this data.
+        
         const registeredUser = await User.register(newUser, password);
+     
         console.log(registeredUser);
         req.login(registeredUser, error => { //This is another method from passport, logs in newly created user after registering. 
             if (error) return next(error); //If there's an error logging in the new user, go to the error handler, the error is passed to it I think, 
@@ -51,6 +68,7 @@ router.post("/register", catchAsync(async (req, res) => { //The route that adds 
         req.flash("error", error.message)
         res.redirect("register")
     }
+    
 }));
 
 router.get("/login", function (req, res) { //Renders login page. 

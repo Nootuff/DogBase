@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 const Schema = mongoose.Schema;
 
+const { cloudinary } = require("../cloudinary")
+
 const userSchema = new Schema({ //We do not specify a username or password because of passport which is handling this for us. 
     email: {
 	type: String,
@@ -14,6 +16,9 @@ const userSchema = new Schema({ //We do not specify a username or password becau
 		required: true,
 		unique: true
 	},
+	profileImage: {
+		type: String
+	  },
 	posts: [
 		{
 			type: Schema.Types.ObjectId,

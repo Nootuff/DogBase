@@ -87,3 +87,11 @@ const user = await User.findById(req.user._id);
   }
   next();
 }
+
+module.exports.authNewUser = async (req, res, next) => {
+  if(req.body.username.length < 3){
+  req.flash("error", "Username must be at least 6 characters long."); //This actually works, maybe you could beef it up.
+  return res.redirect(`/users/register`);
+  }
+  next();
+}

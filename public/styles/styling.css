@@ -22,6 +22,10 @@ li{
     margin-bottom: 20px;
 }
 
+.commentImg{
+    width: 100px;
+}
+
 .indexImg{
     border: 1px solid red;
 }

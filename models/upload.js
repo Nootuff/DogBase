@@ -11,8 +11,7 @@ const uploadSchema = new mongoose.Schema({
     {
       url: String,
       filename: String
-    }
-  ,
+    },
   author: {
     type: Schema.Types.ObjectId,
     ref: "User"

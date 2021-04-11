@@ -9,7 +9,7 @@ const multerUpload = multer({ storage });
 const Upload = require("../models/upload"); //Link for the upload schema in models
 const User = require("../models/user");
 
-const dogNoise = ["Woof!", "Bark!", "Yelp!"]
+const dogNoise = ["Woof!", "Bark!", "Yelp!", "Yap!"];
 
 router.get("/", async (req, res) => { //Home page.
   const uploads = await Upload.find({});
@@ -28,11 +28,10 @@ router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catch
   upload.likes.push(req.user._id);
   upload.dislikes.push(req.user._id);
   const author = req.user;
-  console.log("Author of this post is " + author);
   author.posts.push(upload);
   await author.save();
   await upload.save();
-  req.flash("success", "Woof! Remember to build a js function that dissmisses this when you press the X!"); //Could you have an array of dog noises and this pulls a random one with each upload?
+  req.flash("success", dogNoise[Math.floor(Math.random() * dogNoise.length)] +  " Remember to build a js function that dissmisses this when you press the X!");
   res.redirect(`/uploads/${upload._id}`)
 }));
 

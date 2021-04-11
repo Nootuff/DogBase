@@ -11,11 +11,7 @@
     <!--<div class="noInput">Please enter a valid title</div> https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22291538#questions/13805266/ this is how it should look, these show when no text entered--> 
 <br>
     <label for="image">Image</label>
-    <!--
-    <input type="text" id="image" name="upload[image]" placeholder="img url" required>
-    <div class="noInput">Please enter a valid image</div>
--->
-    <input type="file" name="image" id="image">
+    <input type="file" name="image" id="image" accept="image/*" required>
     <br>
     <label for="caption">Caption</label>
     <input type="text" id="caption" name="upload[caption]" placeholder="Caption here">

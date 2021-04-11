@@ -90,6 +90,8 @@
   </div>
     <section id="comments">
     <% for (var i=0; i < upload.comments.length; i++){ %>
+     
+      <img class="commentImg" src="<%= upload.comments[i].author.profileImage %>">
       <p><a href="/users/<%=upload.comments[i].author._id %>"><%=upload.comments[i].author.displayName %></a> says</p>
       <p><%=upload.comments[i].body %></p>
       <% if(currentUser && upload.comments[i].author.equals(currentUser._id)){%>
