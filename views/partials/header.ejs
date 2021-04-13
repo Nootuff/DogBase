@@ -7,10 +7,10 @@
     <% } else { %>
         <h3><a class="navItem" href="/uploads/new">Upload New</a></h3>
        <div class="dropdown">
-        <button class="dropbtn"><a href="/users/accountPage"><%= currentUser.username %></a></button>
+        <button class="dropbtn"><a href="/users/accountPage"><%= currentUser.username %></a> have user profile pic in a tiny circle</button>
         <div class="dropdown-content">
           <a href="/users/accountPage">Account Page</a>
-          <a href="#">Change details</a>
+          <a href="/users/edit">Change details</a>
           <a href="/users/logout">Logout</a>
         </div>
       </div>

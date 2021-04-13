@@ -54,7 +54,7 @@ router.get("/:id", catchAsync(async (req, res) => { //This loads an individual u
 }));
 
 router.get("/:id/edit", isLoggedIn, isAuthor, catchAsync(async (req, res) => { //Load the edit page
-  var idHolder = req.params.id;
+  const idHolder = req.params.id;
   const upload = await Upload.findById(idHolder);
   if (!upload) {
     req.flash("error", "Can't be found");

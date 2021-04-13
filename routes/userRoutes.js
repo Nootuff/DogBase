@@ -7,7 +7,7 @@ username: EmochNoh
   email: blue.emu@hotmail.com
   pass: Campaign1
 
-  username: Tester,
+  username: Tester
   email: tester@hotmail.com
   pass: Testing01
 */
@@ -27,16 +27,6 @@ router.get("/register", function (req, res) { //Renders register page
     res.render("users/register.ejs")
 });
 
-router.get("/accountPage", isLoggedIn, catchAsync(async (req, res) => { //Renders the current users' account page.    
-    const user =  await User.findById(req.user._id).populate("posts");
-    res.render("users/accountPage.ejs", { user })
-}));
-
-router.get("/accountPage/favourites", isLoggedIn, catchAsync(async (req, res) => { //Renders the current users' account page.    
-    const user =  await User.findById(req.user._id).populate("favourites");
-    res.render("users/accountFavs.ejs", { user })
-}));
-
 router.post("/register", multerUpload.single('profileImage'), authNewUser, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
     try {
         const username = req.body.username;
@@ -55,9 +45,7 @@ router.post("/register", multerUpload.single('profileImage'), authNewUser, catch
         console.log( profileImageUrl + profileImageFile)
        */
         const newUser = new User({ username, email, displayName, profileImage}); //Creates a new instance of user with this data.
-        
         const registeredUser = await User.register(newUser, password);
-     
         console.log(registeredUser);
         req.login(registeredUser, error => { //This is another method from passport, logs in newly created user after registering. 
             if (error) return next(error); //If there's an error logging in the new user, go to the error handler, the error is passed to it I think, 
@@ -67,8 +55,7 @@ router.post("/register", multerUpload.single('profileImage'), authNewUser, catch
     } catch (error) {
         req.flash("error", error.message)
         res.redirect("register")
-    }
-    
+    }  
 }));
 
 router.get("/login", function (req, res) { //Renders login page. 
@@ -80,6 +67,35 @@ router.get("/logout", function (req, res) {
     req.flash("success", "Goodbye! try to build something that will make this route only activate if the user is logged in to begin with.");
     res.redirect("/uploads");
 });
+
+router.get("/accountPage", isLoggedIn, catchAsync(async (req, res) => { //Renders the current users' account page.    
+    const user =  await User.findById(req.user._id).populate("posts");
+    res.render("users/accountPage.ejs", { user })
+}));
+
+router.get("/accountPage/favourites", isLoggedIn, catchAsync(async (req, res) => { //Renders the current users' account page.    
+    const user =  await User.findById(req.user._id).populate("favourites");
+    res.render("users/accountFavs.ejs", { user })
+}));
+
+router.get("/edit", isLoggedIn, catchAsync(async (req, res) => { //Render the user edit page.
+    const user =  await User.findById(req.user._id);
+    res.render("users/editUser.ejs", { user });
+  }));
+
+  router.put('/updateUser', catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
+const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
+    req.flash("success", "Update Success!");
+    res.redirect("/uploads") 
+  }));
+
+  /*  Update profile pic route. Need a different route to delete the pic. 
+  router.put('/updateProfilePic', catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
+    const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
+        req.flash("success", "Update Success!");
+        res.redirect("/uploads") 
+      }));
+*/
 
 router.get("/:id", catchAsync(async (req, res) => { //This renders the userpage. This route MUST be below all other get routes because the :id will pull in any value and try to run it through the code below. 
     var find = req.params.id;
@@ -99,7 +115,5 @@ router.post("/login", passport.authenticate("local", { failureFlash: true, failu
     delete req.session.returnTo; //We don't need the returnTo in the session after the redirect so delete just deletes it from the object, otherwise all these returnTo's would clutter up the object.
     res.redirect(redirectUrl);
 })
-
-
 
 module.exports = router;
