@@ -22,6 +22,7 @@ const { isLoggedIn, authNewUser} = require("../middleware");
 const multer = require("multer");
 const { storage } = require("../cloudinary"); //This imports the const "storage"  object from the index.js file in your cloudinary folder. Node automatically looks for a file named index.js in a folder which is why the index file isn't actually reffered to. 
 const multerUpload = multer({ storage });
+const { cloudinary } = require("../cloudinary");
 
 router.get("/register", function (req, res) { //Renders register page
     res.render("users/register.ejs")
@@ -33,7 +34,10 @@ router.post("/register", multerUpload.single('profileImage'), authNewUser, catch
         const email = req.body.email;
         const password = req.body.password;
         const displayName =  req.body.displayName;
-        var profileImage = (!req.file) ? "/assets/placeholder.png" : req.file.path;
+
+        var profileImage = (!req.file) ? { url: "/assets/placeholder.png", filename: "User-profile-image" } : { url: req.file.path, filename: req.file.filename };
+       //var profileImage = (!req.file) ? "/assets/placeholder.png" : req.file.path;
+
         /*
        if(!req.file){
         const profileImage = "yes";
@@ -83,19 +87,33 @@ router.get("/edit", isLoggedIn, catchAsync(async (req, res) => { //Render the us
     res.render("users/editUser.ejs", { user });
   }));
 
-  router.put('/updateUser', catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
+  router.put('/updateUser', isLoggedIn, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
 const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
     req.flash("success", "Update Success!");
     res.redirect("/uploads") 
   }));
 
-  /*  Update profile pic route. Need a different route to delete the pic. 
-  router.put('/updateProfilePic', catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
-    const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
-        req.flash("success", "Update Success!");
-        res.redirect("/uploads") 
+  router.put('/destroyUserPic', isLoggedIn, catchAsync(async (req, res,) => { 
+    const user =  await User.findById(req.user._id);
+    await cloudinary.uploader.destroy(user.profileImage.filename);
+    user.profileImage.url = "/assets/placeholder.png";
+    user.profileImage.filename = "User-profile-image";
+    await user.save();
+        req.flash("success", "Image deleted.");
+        res.redirect("/users/edit") 
       }));
-*/
+
+  
+  router.put('/updateProfilePic', multerUpload.single('profileImage'), isLoggedIn, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
+    const user =  await User.findById(req.user._id);
+    await cloudinary.uploader.destroy(user.profileImage.filename);
+    const profileImage = { url: req.file.path, filename: req.file.filename };
+    user.profileImage = profileImage;
+    await user.save();
+        req.flash("success", "Update Success!");
+        res.redirect("/users/edit") 
+      }));
+
 
 router.get("/:id", catchAsync(async (req, res) => { //This renders the userpage. This route MUST be below all other get routes because the :id will pull in any value and try to run it through the code below. 
     var find = req.params.id;

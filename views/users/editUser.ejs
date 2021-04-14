@@ -1,26 +1,35 @@
 <% layout("/boilerplate") %>
+  <% var picOrNo=(user.profileImage.url !="/assets/placeholder.png" ) ? "shown" : "hidden" ; %>
 
-<main>
-  <section>
-<h1>Edit Your details</h1>
-<form action="/users/updateUser?_method=PUT" method="POST"> 
-    <h3>Change Display name</h3>
-    <label for="displayName">Display name</label>
-    <input type="text" id="displayName" name="user[displayName]" value="<%= user.displayName%>" placeholder="Display name">
-    <br>
-    <button >Update upload</button>
-</form>
-<!--Forget letting them edit password, just find some way to change the profile picture.-->
-<form action="" method="POST" enctype="multipart/form-data" >
-    <img src="<%= user.profileImage %>"  width="200">
-    <h3>Change profile picture</h3>
-    <label for="profileImage">Image</label><br>
-    <input type="file" name="profileImage" id="profileImage" accept="image/*" >
-    </form>
-    <form action="" method="POST" enctype="multipart/form-data" >
-        <button>Delete profile pic.</button>
+    <main>
+      <section>
+        <h1>Edit Your details</h1>
+        <h1>Put boxes around each of these forms and give them large buttons so it is clear they are 2 different forms.
+        </h1>
+        <form action="/users/updateUser?_method=PUT" method="POST">
+          <h3>Change Display name</h3>
+          <label for="displayName">Display name</label>
+          <br>
+          <input type="text" id="displayName" name="user[displayName]" value="<%= user.displayName%>"
+            placeholder="Display name">
+          <br>
+          <button>Update Display name</button>
         </form>
-<br>
-
-</section>
-</main>
+        <!--Forget letting them edit password, just find some way to change the profile picture.-->
+        <img src="<%= user.profileImage.url %>" width="200">
+        <h3>Change profile picture</h3>
+        <form action="/users/updateProfilePic?_method=PUT" method="POST" enctype="multipart/form-data">
+          <label for="profileImage">Image</label><br>
+          <input type="file" name="profileImage" id="profileImage" accept="image/*">
+          <br>
+          <button>Update profile pic</button>
+        </form>
+        <br>
+        <% if(user.profileImage.url !="/assets/placeholder.png" ){%>
+          <form action="/users/destroyUserPic?_method=PUT" method="POST" class="<%= picOrNo %>">
+            <button>Delete profile pic</button>
+          </form>
+          <% } %>
+            <br>
+      </section>
+    </main>

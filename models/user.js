@@ -17,7 +17,8 @@ const userSchema = new Schema({ //We do not specify a username or password becau
 		unique: true
 	},
 	profileImage: {
-		type: String
+		url: String,
+		filename: String
 	  },
 	posts: [
 		{
