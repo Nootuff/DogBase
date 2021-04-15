@@ -1,10 +1,8 @@
 // JavaScript for disabling form submissions if there are invalid or empty fields
 (function () {
   'use strict'
-
-  // Select all the forms we want to apply thios to.
+  // Select all the forms we want to apply this to.
   var forms = document.querySelectorAll('.validated-form')
-
   // Loop over them and prevent submission
   Array.prototype.slice.call(forms)
     .forEach(function (form) {
@@ -12,11 +10,17 @@
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
-          alert("Missing data.")
-          //Can you have soemthing that changes the style of a popup that appears instead, changes it from none to block?
+          document.getElementById("noFile").classList.remove("hidden");
         }
-
         form.classList.add('was-validated')
       }, false)
     })
 })()
+
+//Function to prevent file button being pressed on editUser page when no file present. 
+document.getElementById("picSubmit").onclick = function(e) {
+  if (document.getElementById("profileImage").value == "") {
+    e.preventDefault();
+    document.getElementById("noFile").classList.remove("hidden");
+  }
+}
