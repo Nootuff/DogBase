@@ -89,9 +89,29 @@ const user = await User.findById(req.user._id);
 }
 
 module.exports.authNewUser = async (req, res, next) => {
-  if(req.body.username.length < 3){
-  req.flash("error", "Username must be at least 6 characters long."); //This actually works, maybe you could beef it up.
-  return res.redirect(`/users/register`);
-  }
+  const username = req.body.username;
+  const existUsername = await User.findOne({username: username});
+  const password = req.body.password;
+  const matchPass = req.body.matchPass;
+  if(req.body.username.length < 4){
+  req.flash("error", "Username must be at least 4 characters long"); //This actually works, maybe you could beef it up.
+return res.redirect(`/users/register`);
+  } else if (existUsername) {
+    req.flash("error", "Username already in use");
+    return res.redirect(`/users/register`);
+   } else if(password != matchPass){
+    req.flash("error", "Passwords must match");
+    return res.redirect(`/users/register`);
+   }
+  next();
+}
+
+module.exports.existDisplayName = async (req, res, next) => {
+  const displayName =  req.body.displayName;
+  const existDisplayName = await User.findOne({displayName: displayName});
+  if (existDisplayName) {
+    req.flash("error", "Display name  already in use");
+    return res.redirect("back");
+   }
   next();
 }

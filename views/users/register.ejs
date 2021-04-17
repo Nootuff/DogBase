@@ -1,7 +1,8 @@
 <% layout("/boilerplate") %>
     <main>
+        <div id="noFile" class="hidden errorFlash">Missing data</div>
         <h1>Register</h1>
-        <form action="/users/register" method="POST" enctype="multipart/form-data">
+        <form action="/users/register" method="POST" enctype="multipart/form-data" novalidate>
             <div>
                 <label for="username">Username</label><br>
                 <input type="text" id="username" name="username" class="requiredInput" required><br>
@@ -12,8 +13,9 @@
             </div>
             <div>
                 <label for="password">Password</label><br>
-                <input type="password" id="psw" name="password" class="requiredInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+                <input type="password" id="firstPass" name="password" class="requiredInput newPass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
                 <br>
+                <input type="password" id="matchPass" name ="matchPass" class="requiredInput newPass" required>
             </div>
             <div>
                 <label for="displayName">How would you like others to see you?</label><br>
@@ -24,7 +26,7 @@
                 <input type="file" name="profileImage" id="profileImage" accept="image/*">
             </div>
 
-            <input type="submit" value="Register">
+            <button>Submit</button>
         </form>
         <div id="message">
             <h3>Password must contain the following:</h3>
@@ -32,6 +34,7 @@
             <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
             <p id="number" class="invalid">A <b>number</b></p>
             <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+            <p id="match" class="invalid">Passwords <b>must match</b></p>
           </div>
     </main>
     <script src="/javascripts/validateNewUser.js"></script>

@@ -10,7 +10,7 @@
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
-          document.getElementById("noFile").classList.remove("hidden");
+          document.getElementById("noData").classList.remove("hidden");
         }
         form.classList.add('was-validated')
       }, false)
@@ -18,9 +18,11 @@
 })()
 
 //Function to prevent file button being pressed on editUser page when no file present. 
+
 document.getElementById("picSubmit").onclick = function(e) {
   if (document.getElementById("profileImage").value == "") {
     e.preventDefault();
-    document.getElementById("noFile").classList.remove("hidden");
+    document.getElementById("noData").classList.remove("hidden");
   }
 }
+

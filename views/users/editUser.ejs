@@ -2,16 +2,16 @@
   <% var picOrNo=(user.profileImage.url !="/assets/placeholder.png" ) ? "shown" : "hidden" ; %>
 
     <main>
-      <div id="noFile" class="hidden errorFlash">No file input</div>
+      <div id="noData" class="hidden errorFlash">Missing data</div>
       <section>
         <h1>Edit Your details</h1>
         <h1>Put boxes around each of these forms and give them large buttons so it is clear they are 2 different forms.
         </h1>
-        <form action="/users/updateUser?_method=PUT" method="POST">
+        <form action="/users/updateUser?_method=PUT" method="POST" class="validated-form" novalidate>
           <h3>Change Display name</h3>
           <label for="displayName">Display name</label>
           <br>
-          <input type="text" id="displayName" name="user[displayName]" value="<%= user.displayName%>"
+          <input type="text" id="displayName" name="displayName" value="<%= user.displayName%>"
             placeholder="Display name" required>
           <br>
           <button>Update Display name</button>

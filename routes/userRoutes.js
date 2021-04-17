@@ -5,7 +5,7 @@ pass: Winter01
 
 username: EmochNoh
   email: blue.emu@hotmail.com
-  pass: Campaign1
+  pass: Jackson1
 
   username: Tester
   email: tester@hotmail.com
@@ -17,7 +17,7 @@ const passport = require('passport');
 const router = express.Router();
 const User = require("../models/user");
 const catchAsync = require("../utilities/catchAsync");
-const { isLoggedIn, authNewUser} = require("../middleware");
+const { isLoggedIn, authNewUser, existDisplayName} = require("../middleware");
 
 const multer = require("multer");
 const { storage } = require("../cloudinary"); //This imports the const "storage"  object from the index.js file in your cloudinary folder. Node automatically looks for a file named index.js in a folder which is why the index file isn't actually reffered to. 
@@ -28,14 +28,21 @@ router.get("/register", function (req, res) { //Renders register page
     res.render("users/register.ejs")
 });
 
-router.post("/register", multerUpload.single('profileImage'), authNewUser, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
+router.post("/register", multerUpload.single('profileImage'), authNewUser, existDisplayName, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
     try {
         const username = req.body.username;
         const email = req.body.email;
         const password = req.body.password;
         const displayName =  req.body.displayName;
-
         var profileImage = (!req.file) ? { url: "/assets/placeholder.png", filename: "User-profile-image" } : { url: req.file.path, filename: req.file.filename };
+
+       /*
+        const existUsername = await User.findOne({username: username});
+   if (existUsername) {
+    req.flash("error", "Username already in use");
+    res.redirect("register")
+   }
+    /*
        //var profileImage = (!req.file) ? "/assets/placeholder.png" : req.file.path;
 
         /*
@@ -57,7 +64,7 @@ router.post("/register", multerUpload.single('profileImage'), authNewUser, catch
             res.redirect("/uploads");
         })
     } catch (error) {
-        req.flash("error", error.message)
+        req.flash("error", "Missing data")
         res.redirect("register")
     }  
 }));
@@ -87,8 +94,10 @@ router.get("/edit", isLoggedIn, catchAsync(async (req, res) => { //Render the us
     res.render("users/editUser.ejs", { user });
   }));
 
-  router.put('/updateUser', isLoggedIn, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
-const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
+  router.put('/updateUser', isLoggedIn, existDisplayName, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
+    const displayName =  req.body.displayName;
+    const user = await User.findByIdAndUpdate(req.user._id, { displayName: displayName });
+//const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
     req.flash("success", "Update Success!");
     res.redirect("/uploads") 
   }));
@@ -102,7 +111,6 @@ const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
         req.flash("success", "Image deleted.");
         res.redirect("/users/edit") 
       }));
-
   
   router.put('/updateProfilePic', multerUpload.single('profileImage'), isLoggedIn, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
     const user =  await User.findById(req.user._id);
@@ -113,7 +121,6 @@ const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
         req.flash("success", "Update Success!");
         res.redirect("/users/edit") 
       }));
-
 
 router.get("/:id", catchAsync(async (req, res) => { //This renders the userpage. This route MUST be below all other get routes because the :id will pull in any value and try to run it through the code below. 
     var find = req.params.id;
@@ -128,7 +135,7 @@ router.get("/:id/favourites", catchAsync(async (req, res) => { //This renders th
 }));
 
 router.post("/login", passport.authenticate("local", { failureFlash: true, failureRedirect: "/users/login" }), (req, res) => {
-    req.flash("success", "Welcome back! " + req.user.username)
+    req.flash("success", "Welcome back " + req.user.username + "!")
     const redirectUrl = req.session.returnTo || "/uploads"; //When user logs in, either redirect them to the page held in returnTo as defined in middleware.js OR redirect them to /campgrounds. 
     delete req.session.returnTo; //We don't need the returnTo in the session after the redirect so delete just deletes it from the object, otherwise all these returnTo's would clutter up the object.
     res.redirect(redirectUrl);

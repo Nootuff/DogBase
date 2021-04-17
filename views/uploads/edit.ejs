@@ -1,6 +1,7 @@
 <% layout("/boilerplate") %>
 
 <main>
+  <div id="noData" class="hidden errorFlash">Uploads need an image and a title</div>
   <section>
 <h1>Edit post</h1>
 <p>Html form.</p>
@@ -9,13 +10,15 @@
      <!--Use multipart/form-data when your form includes any <input type="file"> elements. I think novalidate is something to do with error handling or making sure enough data is input.-->
     <label for="title">Title</label>
     <input type="text" id="title" name="upload[title]" value="<%= upload.title%>" placeholder="Title here"  class="requiredInput"  required>
-    <div class="noInput">Please enter a valid title</div> <!--https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22291538#questions/13805266/ this is how it should look, these show when no te4xt entered--> 
     <img src="<%= upload.image.url %>" alt="<%= upload.image.filename %>">
     <br>
     <label for="caption">Caption</label>
     <input type="text" id="caption" name="upload[caption]" value="<%= upload.caption%>" placeholder="Caption here" required>
     <button onclick="captionOverride()">Update upload</button>
 </form>
+<form action="/uploads/<%= upload._id%>?_method=DELETE" method="POST">
+  <button>Delete this</button>
+  </form>
 <a href="/uploads/<%= upload._id%>">Back to campground</a>
 <br>
 
