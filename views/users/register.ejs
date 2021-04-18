@@ -1,6 +1,6 @@
 <% layout("/boilerplate") %>
     <main>
-        <div id="noFile" class="hidden errorFlash">Missing data</div>
+        <div id="noData" class="hidden errorFlash">Missing data</div>
         <h1>Register</h1>
         <form action="/users/register" method="POST" enctype="multipart/form-data" novalidate>
             <div>
@@ -13,7 +13,7 @@
             </div>
             <div>
                 <label for="password">Password</label><br>
-                <input type="password" id="firstPass" name="password" class="requiredInput newPass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+                <input type="password" id="firstPass" name="password" class="requiredInput newPass" required>
                 <br>
                 <input type="password" id="matchPass" name ="matchPass" class="requiredInput newPass" required>
             </div>

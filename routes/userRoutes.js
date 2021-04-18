@@ -35,7 +35,6 @@ router.post("/register", multerUpload.single('profileImage'), authNewUser, exist
         const password = req.body.password;
         const displayName =  req.body.displayName;
         var profileImage = (!req.file) ? { url: "/assets/placeholder.png", filename: "User-profile-image" } : { url: req.file.path, filename: req.file.filename };
-
        /*
         const existUsername = await User.findOne({username: username});
    if (existUsername) {

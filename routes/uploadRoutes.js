@@ -9,8 +9,6 @@ const multerUpload = multer({ storage });
 const Upload = require("../models/upload"); //Link for the upload schema in models
 const User = require("../models/user");
 
-const dogNoise = ["Woof!", "Bark!", "Yelp!", "Yap!"];
-
 router.get("/", async (req, res) => { //Home page.
   const uploads = await Upload.find({});
   res.render("uploads/index.ejs", { uploads });
@@ -21,6 +19,7 @@ router.get("/new", isLoggedIn, function (req, res) { //Just loads new page.
 });
 
 router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catchAsync(async (req, res, next) => {  //Post new upload post  
+  const dogNoise = ["Woof!", "Bark!", "Yelp!", "Yap!"];
   const upload = new Upload(req.body.upload);
   upload.image.url = req.file.path;
   upload.image.filename = req.file.filename;

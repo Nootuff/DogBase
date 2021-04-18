@@ -89,15 +89,35 @@ const user = await User.findById(req.user._id);
 }
 
 module.exports.authNewUser = async (req, res, next) => {
+  //Check if username has been taken already
   const username = req.body.username;
   const existUsername = await User.findOne({username: username});
+  //Check if inputted passwords match
   const password = req.body.password;
   const matchPass = req.body.matchPass;
+//Regex system for checking password validity.
+  const passRegex = /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,30}$/;
+  const passPattern = new RegExp(passRegex);
+  const passCheck = passPattern.test(password);
+  //Check if email is valid
+  const email = req.body.email;
+  const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+  const emailPattern = new RegExp(emailRegex);
+  const emailCheck = emailPattern.test(email); 
   if(req.body.username.length < 4){
-  req.flash("error", "Username must be at least 4 characters long"); //This actually works, maybe you could beef it up.
+  req.flash("error", "Username must be at least 4 characters long");
 return res.redirect(`/users/register`);
+  }  else if(username.includes(" ")){
+    req.flash("error", "Username cannot include spaces");
+    return res.redirect(`/users/register`);
   } else if (existUsername) {
     req.flash("error", "Username already in use");
+    return res.redirect(`/users/register`);
+   } else if(emailCheck == false){
+    req.flash("error", "Invalid email.");
+    return res.redirect(`/users/register`);
+   } else if(passCheck == false){
+    req.flash("error", "Password must have 1 capital letter, 1 lowercase letter, 1 number & be at least 8 characters long with no spaces.");
     return res.redirect(`/users/register`);
    } else if(password != matchPass){
     req.flash("error", "Passwords must match");
@@ -110,7 +130,13 @@ module.exports.existDisplayName = async (req, res, next) => {
   const displayName =  req.body.displayName;
   const existDisplayName = await User.findOne({displayName: displayName});
   if (existDisplayName) {
-    req.flash("error", "Display name  already in use");
+    req.flash("error", "Display name already in use");
+    return res.redirect("back");
+   } else if(displayName.length > 30){
+    req.flash("error", "Display name too long");
+    return res.redirect("back");
+   } else if (displayName.includes(" ")){
+    req.flash("error", "Display name cannot include spaces");
     return res.redirect("back");
    }
   next();
