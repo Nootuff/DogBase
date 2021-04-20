@@ -10,7 +10,7 @@ const Upload = require("../models/upload"); //Link for the upload schema in mode
 const User = require("../models/user");
 
 router.get("/", async (req, res) => { //Home page.
-  const uploads = await Upload.find({});
+  const uploads = await Upload.find({}).populate("author");
   res.render("uploads/index.ejs", { uploads });
 });
 

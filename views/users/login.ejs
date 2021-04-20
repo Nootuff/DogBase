@@ -1,5 +1,6 @@
 <% layout("/boilerplate") %>
     <main>
+    <div class="shortPageContainer">
         <div id="noData" class="hidden errorFlash">Please enter login details</div>
         <h1>Login</h1>
         <form action="/users/login" method="POST" class="validated-form" novalidate>
@@ -14,4 +15,5 @@
             <button>Login</button>
         </form>
         <p>Don't have an account? Why not create one <a href="/users/register">here?</a></p>
+        </div>
     </main>

@@ -2,10 +2,8 @@
 
 <main>
   <div id="noData" class="hidden errorFlash">Uploads need an image and a title</div>
-  <section>
+<div class="shortPageContainer">
 <h1>Upload new dog</h1>
-<p>Html form.</p>
-
 <form action="/uploads" method="POST" novalidate class="validated-form" enctype="multipart/form-data"> <!-- This form creates a new product, the .post route it is linked to is in uploadRoutes.js. -->
     <label for="title">Title</label>
     <input type="text" id="title" name="upload[title]" placeholder="Title here "  class="requiredInput" required>
@@ -19,7 +17,6 @@
     <br>
     <input type="submit" value="Submit" onclick="captionOverride()">
 </form>
-
-</section>
+</div>
 </main>
 <script src="/javascripts/captionProver.js"></script>

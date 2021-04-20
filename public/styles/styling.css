@@ -1,192 +1,244 @@
+/* This code prevents the contents of the page being wider than the window. */ 
+*{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 body, html {
   width: 100%;
   margin: 0;
   scroll-behavior: smooth;
+  min-height: 100%;
+  background-color: #eeeeee;
 }
 
-nav { 
-  position:absolute;
-    left:0;
-    top:0;
-background-color: #96f8ff;
-width:100%; 
-padding: 0 15px;
-}
-
-#pageContent{
-  margin-top: 150px;
+nav {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #96f8ff;
+  width: 100%;
   padding: 0 15px;
 }
 
-h1 {
-  color: #570000;
-  }
+#pageContent {
+  margin: 150px auto 10px;
+  padding: 0 15px;
+  width: 90%;
+  border: 1px solid #e1e1e1;
+  background-color: #ffffff;
+border-radius: 5px;
+-webkit-box-shadow: 0px 3px 14px -6px #000000; 
+box-shadow: 0px 3px 14px -6px #000000;
+}
 
-.navItem{
-    color: #570000;
+a{
+  text-decoration: none;
+  color: #0067b0;
 }
 
 ul {
-  border: 1px solid red;
-  padding: 0 ;
-    list-style: none;
+  padding: 0;
+  list-style: none;
 }
 
-li{
-    margin-bottom: 20px;
+.indexItem{
+margin-bottom: 5px;
+border-bottom: 1px solid  #e1e1e1;
 }
 
-.commentImg{
-    width: 100px;
+table{
+ 
 }
 
-.indexImg{
-    border: 1px solid red;
+td {
+
 }
 
-.noInput{
-    color: red;
+.shortPageContainer{
+  margin-bottom: 200px;
 }
 
- /* Header dropdown styles */ 
- .dropbtn {
-    background-color: #322bff;
-    color: white;
-    font-size: 16px;
-    border: none;
-  }
-  
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  .dropdown:hover .dropbtn {background-color: #05008a;}
+.commentImg {
+  width: 100px;
+  border: 1px solid grey;
+  border-radius: 6px;
+}
+
+.indexImg {
+  border: 1px solid #c2c2c2;
+}
+
+.noInput {
+  color: red;
+}
+
+footer{
+  background-color: #96f8ff;
+  width: 100%;
+  height: 100px;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  margin-top: 100px;
+}
+
+/* Header dropdown styles */
+
+.dropbtn {
+  background-color: #322bff;
+  color: white;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #05008a;
+}
 
 /*User registration form */
-/* The message box is shown when the user clicks on the password field */
-#message {
-    display:none;
-    background: #f1f1f1;
-    color: #000;
-    position: relative;
-    padding: 20px;
-    margin-top: 10px;
-  }
-  
-  #message p {
-    padding: 10px 35px;
-    font-size: 18px;
-  }
-  
-  /* Add a green text color and a checkmark when the requirements are right */
-  .valid {
-    color: green;
-  }
-  
-  .valid:before {
-    position: relative;
-    left: -35px;
-    content: "\2713";
-  }
-  
-  /* Add a red text color and an "x" when the requirements are wrong */
-  .invalid {
-    color: red;
-  }
-  
-  .invalid:before {
-    position: relative;
-    left: -35px;
-    content: "\2716";
-  }
 
- /* Opinion section */ 
-.opinionForm{
-    float: left;
+/* The message box is shown when the user clicks on the password field */
+
+#message {
+  display: none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "\2713";
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "\2716";
+}
+
+/* Opinion section */
+
+.opinionForm {
+  float: left;
 }
 
 .opinionButton {
-    float: left;
-    border: none;
-    font-size: 28px;
+  float: left;
+  border: none;
+  font-size: 28px;
   cursor: pointer;
+  background-color: white;
 }
 
 .opinionButton:focus {
-    outline:0;
+  outline: 0;
 }
 
 .opinionButton:active {
-    transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 .likes {
-    color: #005925;
-    font-weight: bold;
+  color: #005925;
+  font-weight: bold;
 }
 
 .dislikes {
-    color: #ff3838;
-    font-weight: bold;
+  color: #ff3838;
+  font-weight: bold;
 }
 
-.unlikeButton{
-    color: green;
-
+.unlikeButton {
+  color: green;
 }
 
-.unDislikeButton{
-    color: #ff3838;
+.unDislikeButton {
+  color: #ff3838;
 }
 
 .favForm {
-    float: left;
+  float: left;
 }
 
-.unFav{
-    color: #005925;
+.unFav {
+  color: #005925;
 }
 
-.shown{
-    display: block;
+.shown {
+  display: block;
 }
 
-.hidden{
-    display: none;
+.hidden {
+  display: none;
 }
 
-.requiredInput:invalid { border: 1px solid red; }
+.requiredInput:invalid {
+  border: 1px solid red;
+}
 
-.requiredInput:valid { border: 1px solid green; }
+.requiredInput:valid {
+  border: 1px solid green;
+}
 
-.successFlash{
+.successFlash {
   background-color: #42f55a;
   border-radius: 5px;
   padding: 7px;
 }
 
-.errorFlash{
+.errorFlash {
   background-color: #ff3838;
   border-radius: 5px;
   padding: 7px;
