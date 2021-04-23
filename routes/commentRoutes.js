@@ -7,10 +7,19 @@ const ExpressError = require("../utilities/ExpressError"); //Imports the functio
 const catchAsync = require("../utilities/catchAsync");
 const { validateComment, isLoggedIn, isCommentAuthor } = require('../middleware');
 
+const datePosted = () => {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const yyyy = today.getFullYear();
+  return dd + '-' + mm + '-' + yyyy;
+}
+
     router.post("/", isLoggedIn, validateComment, catchAsync(async (req, res) => { //Posts a new comment.
         const upload = await Upload.findById(req.params.id);
         const comment = new Comment(req.body.comment);
         comment.author = req.user._id; //The details of the current user.
+        comment.datePosted = datePosted();
         upload.comments.push(comment);
         await comment.save();
         await upload.save();

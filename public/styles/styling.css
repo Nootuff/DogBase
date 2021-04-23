@@ -1,3 +1,8 @@
+:root {
+  --blue-color: #4188fa;
+  
+}
+
 /* This code prevents the contents of the page being wider than the window. */ 
 *{
   -webkit-box-sizing: border-box;
@@ -11,13 +16,14 @@ body, html {
   scroll-behavior: smooth;
   min-height: 100%;
   background-color: #eeeeee;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-nav {
+header {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: #96f8ff;
+  background-color: var(--blue-color);
   width: 100%;
   padding: 0 15px;
 }
@@ -60,10 +66,28 @@ td {
   margin-bottom: 200px;
 }
 
+#commentSection{
+  width: 97%;
+  margin: auto;
+}
+
 .commentImg {
   width: 100px;
   border: 1px solid grey;
   border-radius: 6px;
+}
+
+.comment{
+  margin: 10px 0;
+  padding: 10px 0;
+}
+
+.comment:not(:last-child){
+  border-bottom: 1px solid #242424;
+}
+
+hr{
+  border-top: 1px solid #242424;
 }
 
 .indexImg {
@@ -75,7 +99,7 @@ td {
 }
 
 footer{
-  background-color: #96f8ff;
+  background-color: var(--blue-color);
   width: 100%;
   height: 100px;
   position: relative;
@@ -208,12 +232,37 @@ footer{
   color: #ff3838;
 }
 
+.favButton{
+  padding: 3px 20px;
+  background-color: white;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 5px solid  #4188fa;
+  border-radius: 70px;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+  
+}
+
+.favButton:hover {
+  background-color: #4188fa;
+  color: white;
+}
+
 .favForm {
   float: left;
 }
 
 .unFav {
-  color: #005925;
+  
+}
+
+#caption{
+  margin-top: 15px;
 }
 
 .shown {

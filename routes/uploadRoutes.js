@@ -9,6 +9,15 @@ const multerUpload = multer({ storage });
 const Upload = require("../models/upload"); //Link for the upload schema in models
 const User = require("../models/user");
 
+
+const datePosted = () => {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const yyyy = today.getFullYear();
+  return dd + '-' + mm + '-' + yyyy;
+}
+
 router.get("/", async (req, res) => { //Home page.
   const uploads = await Upload.find({}).populate("author");
   res.render("uploads/index.ejs", { uploads });
@@ -24,13 +33,14 @@ router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catch
   upload.image.url = req.file.path;
   upload.image.filename = req.file.filename;
   upload.author = req.user._id;
+  upload.datePosted = datePosted();
   upload.likes.push(req.user._id);
   upload.dislikes.push(req.user._id);
   const author = req.user;
   author.posts.push(upload);
   await author.save();
   await upload.save();
-  req.flash("success", dogNoise[Math.floor(Math.random() * dogNoise.length)] +  " Remember to build a js function that dissmisses this when you press the X!");
+  req.flash("success", dogNoise[Math.floor(Math.random() * dogNoise.length)] + " Remember to build a js function that dissmisses this when you press the X!");
   res.redirect(`/uploads/${upload._id}`)
 }));
 
@@ -112,17 +122,17 @@ router.put('/:id/undislike', isLoggedIn, catchAsync(async (req, res,) => { //Rem
 router.put('/:id/fav', isLoggedIn, hasFavd, catchAsync(async (req, res,) => { //Add post to user fav array route.
   const upload = await Upload.findById(req.params.id);
   const user = await User.findByIdAndUpdate(req.user._id);
-user.favourites.push(upload);
-console.log("upload is " + upload);
-await user.save();
+  user.favourites.push(upload);
+  console.log("upload is " + upload);
+  await user.save();
   req.flash("success", "Fav'd!");
   res.redirect("back")
 }));
 
 router.put('/:id/unFav', isLoggedIn, catchAsync(async (req, res,) => { //Remove prost from user fav array route.
   const user = req.user._id;
-   const upload = req.params.id;
-await User.findByIdAndUpdate(user, { $pull: { favourites: upload } }); 
+  const upload = req.params.id;
+  await User.findByIdAndUpdate(user, { $pull: { favourites: upload } });
   req.flash("success", "Removed from favs.");
   res.redirect("back")
 }));
@@ -132,9 +142,9 @@ router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => { //D
   const upload = req.params.id;
   //console.log("this is it " + idHolder);
   const user = await User.findById(req.user._id);
-  if(user.posts.includes(upload)){
-console.log("post detected")
-await User.findByIdAndUpdate(user, { $pull: { posts: upload } }); 
+  if (user.posts.includes(upload)) {
+    console.log("post detected")
+    await User.findByIdAndUpdate(user, { $pull: { posts: upload } });
   }
   await Upload.findByIdAndDelete(upload);
 
