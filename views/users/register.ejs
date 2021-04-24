@@ -1,44 +1,41 @@
 <% layout("/boilerplate") %>
-    <main>
-    <div class="shortPageContainer">
-        <div id="noData" class="hidden errorFlash">Missing data</div>
-        <h1>Register</h1>
-        <form action="/users/register" method="POST" enctype="multipart/form-data" novalidate>
-            <div>
-                <label for="username">Username</label><br>
-                <input type="text" id="username" name="username" class="requiredInput" required><br>
+    <div id="noData" class="hidden subFlash flash errorFlash">Missing data</div>
+    <div id="pageContent">
+        <div class="shortPageContainer">
+            <h1>Register</h1>
+            <form action="/users/register" method="POST" enctype="multipart/form-data" novalidate>
+                <div>
+                    <label for="username">Username</label><br>
+                    <input type="text" id="username" name="username" class="requiredInput" required><br>
+                </div>
+                <div>
+                    <label for="email">Email</label><br>
+                    <input type="email" id="email" name="email" class="requiredInput" required><br>
+                </div>
+                <div>
+                    <label for="password">Password</label><br>
+                    <input type="password" id="firstPass" name="password" class="requiredInput newPass" required>
+                    <br>
+                    <input type="password" id="matchPass" name="matchPass" class="requiredInput newPass" required>
+                </div>
+                <div>
+                    <label for="displayName">How would you like others to see you?</label><br>
+                    <input type="text" id="displayName" name="displayName" class="requiredInput" required><br>
+                </div>
+                <div>
+                    <label for="profileImage">Image</label><br>
+                    <input type="file" name="profileImage" id="profileImage" accept="image/*">
+                </div>
+                <button>Submit</button>
+            </form>
+            <div id="message">
+                <h3>Password must contain the following:</h3>
+                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                <p id="number" class="invalid">A <b>number</b></p>
+                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                <p id="match" class="invalid">Passwords <b>must match</b></p>
             </div>
-            <div>
-                <label for="email">Email</label><br>
-                <input type="email" id="email" name="email" class="requiredInput" required><br>
-            </div>
-            <div>
-                <label for="password">Password</label><br>
-                <input type="password" id="firstPass" name="password" class="requiredInput newPass" required>
-                <br>
-                <input type="password" id="matchPass" name ="matchPass" class="requiredInput newPass" required>
-            </div>
-            <div>
-                <label for="displayName">How would you like others to see you?</label><br>
-                <input type="text" id="displayName" name="displayName" class="requiredInput" required><br>
-            </div>
-            <div>
-                <label for="profileImage">Image</label><br>
-                <input type="file" name="profileImage" id="profileImage" accept="image/*">
-            </div>
-
-            <button>Submit</button>
-        </form>
-        <div id="message">
-            <h3>Password must contain the following:</h3>
-            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-            <p id="number" class="invalid">A <b>number</b></p>
-            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-            <p id="match" class="invalid">Passwords <b>must match</b></p>
-          </div>
-          </div>
-    </main>
+        </div>
+    </div>
     <script src="/javascripts/validateNewUser.js"></script>
-
-    

@@ -1,29 +1,36 @@
 <% layout("/boilerplate") %>
-
-<main>
-<section>
   <ul id="indexList">
     <% for (var i=0; i < uploads.length; i++){ 
-      var reFormat = uploads[i].image.url.replace("/upload", "/upload/w_200"); //Can this be moved to a external js file?
+      var reFormat = uploads[i].image.url.replace("/upload", "/upload/c_scale,w_1.0"); //Can this be moved to a external js file?
       %>
-    <li class="indexItem">
-<table>
-    <tr>
-      <td>
- <img class="indexImg" src="<%= reFormat %>" alt="Index image">
-        </td>
-      <td>
-  <h3><a href="/uploads/<%=uploads[i]._id %>"><%= uploads[i].title%></a></h3>
-   <p>Submitted by <a  href="/users/<%=uploads[i].author._id %>"><%= uploads[i].author.displayName%></a></p>
-   <p>Comments: <%= uploads[i].comments.length %> </p>
-   <p>Likes: <%= uploads[i].likes.length-1 %> Dislikes <%= uploads[i].dislikes.length-1 %></p>
-        </td>
-      </tr>
-    </table>      
-    </li>
+      <li class="indexItem">
+        <div class="innerItem">
+        <h3><a href="/uploads/<%=uploads[i]._id %>"><%= uploads[i].title%></a></h3>
+  <table>
+      <tr>
+        <td>
+     Submitted by <a href="/users/<%=uploads[i].author._id %>"><%= uploads[i].author.displayName%></a>
+    </td>
+    <td>
+      <%= uploads[i].datePosted%>
+     </td>
+     </tr>
+     </table>
+     <table>
+       <tr>
+    <td class ="likes">
+     Likes: <%= uploads[i].likes.length-1 %>
+          </td>
+          <td class ="dislikes">
+            Dislikes <%= uploads[i].dislikes.length-1 %>
+            </td>
+        </tr>
+      </table> 
+      <div class="imgContainer">     
+      <a href="/uploads/<%=uploads[i]._id %>"><img class="mainImg" src="<%= reFormat %>" alt="Index image"></a>
+      </div>
+      <p><a href="/uploads/<%=uploads[i]._id %>#commentSection">Comments: <%= uploads[i].comments.length %> <i class="far fa-comment-alt"></i></a></p>
+      </div>
+            </li>
     <% } %>
-    <ul>
-</section>
-</main>
-      <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
-    </body>
+  </ul>

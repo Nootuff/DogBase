@@ -1,7 +1,5 @@
 <% layout("/boilerplate") %>
-
-<main>
- 
+<div id="pageContent">
   <table>
     <td>
    <h3>Posts</h3>
@@ -11,21 +9,14 @@
      </td>
    </table>
    <hr>
- 
 <img src="<%= user.profileImage.url %>"  width="400">
-   
 <h1>User account page of <%= user.username %></h1>
 <p>Username: <%= user.username %></p>
 <p>Email: <%= user.email %></p>
 <p>Your display name: <%= user.displayName %></p>
-
-
--Way for user to change display name, user and email and password, need to find out how to change pass.
+<p><a>Edit your details</a></p>
 <br>
-
-
 <h3>Your posts</h3>
-
 <% if(!user.posts.length == 0){ %>
 <% for (var i=0; i < user.posts.length; i++){ %> 
   <table >
@@ -42,7 +33,4 @@
   <% } else { %>
 <p>You currently have no posts.</p>
     <% } %>
-
-</main>
-      <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
-    </body>
+</div>

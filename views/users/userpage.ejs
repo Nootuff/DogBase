@@ -1,6 +1,5 @@
 <% layout("/boilerplate") %>
-
-<main>
+<div id="pageContent">
     <h2>Userpage of <%= user.displayName %></h2>
     <img src="<%= user.profileImage.url %>"  width="400">
    <table>
@@ -11,7 +10,6 @@
       <h3><a href="/users/<%=user._id %>/favourites">Favourites</a></h3>
       </td>
     </table>
-
 <hr>
 <% if(!user.posts.length == 0){ %>
 <% for (var i=0; i < user.posts.length; i++){ %> 
@@ -29,8 +27,4 @@
       <p>This user currently has no posts.</p>
           <% } %>
  - Have small thumbnails of the images. 
-
-
-</main>
-
-</body>
+</div>

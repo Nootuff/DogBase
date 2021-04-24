@@ -1,7 +1,6 @@
 <% layout("/boilerplate") %>
-
-<main>
-  <div id="noData" class="hidden errorFlash">Uploads need an image and a title</div>
+<div id="noData" class="hidden flash subFlash errorFlash">Uploads need an image and a title</div>
+<div id="pageContent">
 <div class="shortPageContainer">
 <h1>Upload new dog</h1>
 <form action="/uploads" method="POST" novalidate class="validated-form" enctype="multipart/form-data"> <!-- This form creates a new product, the .post route it is linked to is in uploadRoutes.js. -->
@@ -18,5 +17,5 @@
     <input type="submit" value="Submit" onclick="captionOverride()">
 </form>
 </div>
-</main>
+</div>
 <script src="/javascripts/captionProver.js"></script>

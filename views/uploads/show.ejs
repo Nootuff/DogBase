@@ -3,13 +3,13 @@
 var likes = upload.likes.length-1; //Can all these vars be moved to a external js file?
 var dislikes = upload.dislikes.length-1;
 var comments = (upload.comments.length == 1) ? "comment" : "comments";
-var reFormat = upload.image.url.replace("/upload", "/upload/w_400");
+var reFormat = upload.image.url.replace("/upload", "/upload/c_scale,w_1.0");
 var userOrNo = (currentUser) ? "shown" : "hidden";
 var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "shown" : "hidden";
 %>
-<main>
+<div id="pageContent">
+  <section id="showMain">
   <h2><%= upload.title %></h2>
-  <p></p>
 <table>
   <tr>
     <td>
@@ -19,13 +19,17 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
     Posted: <%= upload.datePosted %>
       </td>
     </tr>
+  </table>
+  <table>
   <tr>
     <td class ="likes">Likes: <%= likes %></td>
     <td class ="dislikes">Dislikes: <%= dislikes %></td>
     <td><a href="#commentSection"><%= upload.comments.length %> <%= comments %></a></td>
   </tr>
 </table>
-  <img src="<%= reFormat %>" alt="<%= upload.image.filename %>">
+<div class="imgContainer">  
+  <img src="<%= reFormat %>" class="mainImg" alt="<%= upload.image.filename %>">
+  </div>
   <br>
 <div class="<%= userOrNo %> <%= authorOrNo %>">
   <!--like button, adds user to likes array. Shows when user is not in dislikes array or likes array-->
@@ -63,11 +67,12 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
       </form>
       <% } else if(currentUser && !currentUser.posts.includes(upload._id) && currentUser.favourites.includes(upload._id)){ %>
       <form form action="/uploads/<%= upload._id%>/unfav?_method=PUT"  method="POST" class="favForm ">
-        <button class="favButton unFav">unFavourite</button> 
+        <button class="favButton unFav">un-Favourite</button> 
       </form>
       <% } %>
     <br>
-  </div>
+    <br>
+    </div>
   <% if(upload.caption != " " ){ %>
   <section id="caption">
   <p><%= upload.caption %></p>
@@ -76,21 +81,32 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
   <hr>
   <div class="<%= userOrNo %>">
   <% if(currentUser && upload.author.equals(currentUser._id)){%>
-  <a href="/uploads/<%= upload._id%>/edit">Edit this</a>
+  <p id="editLink"><a href="/uploads/<%= upload._id%>/edit">Edit this</a></p>
     <% } %>
-  
-    <br>
     <% if(currentUser){%> <!--If there IS a current user at all, render this form. -->
     <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
-      <label for="body">Leave a comment put current user image next to this</label>
+      <table>
+        <tr>
+          <td>
+            <img class="commentImg" src="<%= currentUser.profileImage.url %>">
+            </td>
+            <td>
+      <label for="body"><h3>Leave a comment</h3></label>
       <br>
 <textarea name="comment[body]" id="body" cols=100% rows="2" required></textarea>
 <br>
 <button>Submit</button> 
+</td>
+</tr>
+</table>
     </form>
     <% } %>
   </div>
+</section>
     <section id="commentSection">
+      <% if(upload.comments.length == 0){ %>
+There are no comments yet.
+        <% } else{ %>
 <ul>
     <% for (var i=0; i < upload.comments.length; i++){ %>
     <li class="comment">
@@ -113,7 +129,6 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
         </li>
       <% } %>
       </ul>
+      <% } %>
     </section>
-</main>
-      <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
-    </body>
+  </div>

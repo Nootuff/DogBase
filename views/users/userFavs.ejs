@@ -1,36 +1,35 @@
 <% layout("/boilerplate") %>
-
-<main>
-    <h2>Userpage of <%= user.username %></h2>
-   <table>
-     <td>
-    <h3><a href="/users/<%=user._id %>">Posts</a></h3>
-    </td>
-    <td>
-      <h3>Favourites</h3>
+  <div id="pageContent">
+    <h2>Userpage of <%= user.displayName %>
+    </h2>
+    <table>
+      <td>
+        <h3><a href="/users/<%=user._id %>">Posts</a></h3>
+      </td>
+      <td>
+        <h3>Favourites</h3>
       </td>
     </table>
-<hr>
-<% if(!user.favourites.length == 0){ %>
-    <% for (var i=0; i < user.favourites.length; i++){ %> 
-      <table >
+    <hr>
+    <% if(!user.favourites.length==0){ %>
+      <% for (var i=0; i < user.favourites.length; i++){ %>
+        <table>
           <tr>
-            <td><a href="/uploads/<%=user.favourites[i]._id %>"><%=user.favourites[i].title %></a></td>
+            <td><a href="/uploads/<%=user.favourites[i]._id %>">
+                <%=user.favourites[i].title %>
+              </a></td>
           </tr>
           <tr>
-            <td>Likes: <%=user.favourites[i].likes.length-1 %></td>
-            <td>Dislikes: <%=user.favourites[i].dislikes.length-1 %></td>
-            <td>Comments: <%=user.favourites[i].comments.length %></td>
+            <td>Likes: <%=user.favourites[i].likes.length-1 %>
+            </td>
+            <td>Dislikes: <%=user.favourites[i].dislikes.length-1 %>
+            </td>
+            <td>Comments: <%=user.favourites[i].comments.length %>
+            </td>
           </tr>
         </table>
         <% }} else { %>
           <p>This user currently has no fav'd posts.</p>
-              <% } %>
-
- 
-      - Have small thumbnails of the images. 
-
-
-</main>
-
-</body>
+          <% } %>
+            - Have small thumbnails of the images.
+  </div>

@@ -98,7 +98,7 @@ router.get("/edit", isLoggedIn, catchAsync(async (req, res) => { //Render the us
     const user = await User.findByIdAndUpdate(req.user._id, { displayName: displayName });
 //const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
     req.flash("success", "Update Success!");
-    res.redirect("/uploads") 
+    res.redirect("/users/edit") 
   }));
 
   router.put('/destroyUserPic', isLoggedIn, catchAsync(async (req, res,) => { 

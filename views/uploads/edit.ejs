@@ -1,10 +1,7 @@
 <% layout("/boilerplate") %>
-
-<main>
-  <div id="noData" class="hidden errorFlash">Uploads need an image and a title</div>
-  <section>
+  <div id="noData" class="hidden flash subFlash errorFlash">Uploads need an image and a title</div>
+  <div id="pageContent">
 <h1>Edit post</h1>
-<p>Html form.</p>
 <h2><%= upload.title%></h2> 
 <form action="/uploads/<%= upload._id%>?_method=PUT" method="POST" novalidate class="validated-form"> 
      <!--Use multipart/form-data when your form includes any <input type="file"> elements. I think novalidate is something to do with error handling or making sure enough data is input.-->
@@ -13,16 +10,13 @@
     <img src="<%= upload.image.url %>" alt="<%= upload.image.filename %>">
     <br>
     <label for="caption">Caption</label>
-    <input type="text" id="caption" name="upload[caption]" value="<%= upload.caption%>" placeholder="Caption here" required>
+    <textarea name="comment[body]" id="caption" name="upload[caption]" cols=100% rows="8" placeholder="<%= upload.caption%>" required></textarea>
     <button onclick="captionOverride()">Update upload</button>
 </form>
 <form action="/uploads/<%= upload._id%>?_method=DELETE" method="POST">
   <button>Delete this</button>
   </form>
-<a href="/uploads/<%= upload._id%>">Back to campground</a>
-<br>
-
-</section>
-</main>
+<a href="/uploads/<%= upload._id%>">Back to post</a>
+</div>
 <script src="/javascripts/captionProver.js"></script>
       <!--  <script type="text/javascript" src="newjavascript.js"></script> -->

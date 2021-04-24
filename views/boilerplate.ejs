@@ -10,14 +10,11 @@
 </head>
 <body>
     <%- include("partials/header") %>
-    <section id="pageContent">
-        <%- include("partials/flash") %>
+    <main>
+         <%- include("partials/flash") %>
             <%- body %>
-    </section>
-    <footer>
-        <p> &copy; Adam Walker 2020 </p>
-        </footer>
+    </main>
+    <%- include("partials/footer") %>
 </body>
 <script src="/javascripts/validateForms.js"></script>
-
 </html>
