@@ -1,12 +1,13 @@
 <% layout("/boilerplate") %>
     <div id="noData" class="hidden subFlash flash errorFlash">Missing data</div>
     <div id="pageContent">
-        <div class="shortPageContainer">
-            <h1>Register</h1>
+        
+            <div id="loginRegister">
+            <h1>Create new account</h1>
             <form action="/users/register" method="POST" enctype="multipart/form-data" novalidate>
                 <div>
                     <label for="username">Username</label><br>
-                    <input type="text" id="username" name="username" class="requiredInput" required><br>
+                    <input type="text" id="username" name="username" pattern="[^' ']+" class="requiredInput" required><br>
                 </div>
                 <div>
                     <label for="email">Email</label><br>
@@ -20,7 +21,7 @@
                 </div>
                 <div>
                     <label for="displayName">How would you like others to see you?</label><br>
-                    <input type="text" id="displayName" name="displayName" class="requiredInput" required><br>
+                    <input type="text" id="displayName" name="displayName" name="username" pattern="[^' ']+" class="requiredInput" required><br>
                 </div>
                 <div>
                     <label for="profileImage">Image</label><br>
@@ -37,5 +38,6 @@
                 <p id="match" class="invalid">Passwords <b>must match</b></p>
             </div>
         </div>
+        
     </div>
     <script src="/javascripts/validateNewUser.js"></script>

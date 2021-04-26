@@ -1,21 +1,21 @@
 <% layout("/boilerplate") %>
-<div id="noData" class="hidden flash subFlash errorFlash">Uploads need an image and a title</div>
-<div id="pageContent">
-<div class="shortPageContainer">
-<h1>Upload new dog</h1>
-<form action="/uploads" method="POST" novalidate class="validated-form" enctype="multipart/form-data"> <!-- This form creates a new product, the .post route it is linked to is in uploadRoutes.js. -->
-    <label for="title">Title</label>
-    <input type="text" id="title" name="upload[title]" placeholder="Title here "  class="requiredInput" required>
-    <!--<div class="noInput">Please enter a valid title</div> https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22291538#questions/13805266/ this is how it should look, these show when no text entered--> 
-<br>
-    <label for="image">Image</label>
-    <input type="file" name="image" id="image" accept="image/*" required>
-    <br>
-    <label for="caption">Caption</label>
-    <input type="text" id="caption" name="upload[caption]" placeholder="Caption here">
-    <br>
-    <input type="submit" value="Submit" onclick="captionOverride()">
-</form>
-</div>
-</div>
-<script src="/javascripts/captionProver.js"></script>
+    <div id="noData" class="hidden flash subFlash errorFlash">Uploads need an image and a title</div>
+    <div id="pageContent">
+        <div class="shortPageContainer">
+            <div id="contentForms">
+            <h2>Post new dog</h2>
+            <form action="/uploads" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                <!-- This form creates a new product, the .post route it is linked to is in uploadRoutes.js. -->
+                <h3 class="editTitle">Title</h3>
+                <input type="text" id="title" name="upload[title]" placeholder="Title here" class="requiredInput" required>
+                <h3 class="editTitle">Image</h3>
+                <input type="file" name="image" id="image" accept="image/*" required>
+                <h3 id="editCaption">Caption</h3>
+                <textarea id="caption" name="upload[caption]" placeholder="Caption here" cols=100% rows="8"></textarea>
+                <br>
+                <button onclick="captionOverride()" class="formButton">Submit</button>
+            </form>
+            </div>
+        </div>
+    </div>
+    <script src="/javascripts/captionProver.js"></script>

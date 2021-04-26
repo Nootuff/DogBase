@@ -1,35 +1,52 @@
 <% layout("/boilerplate") %>
   <div id="pageContent">
-    <h2>Userpage of <%= user.displayName %>
-    </h2>
-    <table>
-      <td>
-        <h3><a href="/users/<%=user._id %>">Posts</a></h3>
-      </td>
-      <td>
-        <h3>Favourites</h3>
-      </td>
-    </table>
-    <hr>
-    <% if(!user.favourites.length==0){ %>
-      <% for (var i=0; i < user.favourites.length; i++){ %>
+    <div class="shortPageContainer">
+      <div id="userPage">
         <table>
           <tr>
-            <td><a href="/uploads/<%=user.favourites[i]._id %>">
-                <%=user.favourites[i].title %>
-              </a></td>
-          </tr>
-          <tr>
-            <td>Likes: <%=user.favourites[i].likes.length-1 %>
+            <td>
+              <img src="<%= user.profileImage.url %>" id="userPageImg">
             </td>
-            <td>Dislikes: <%=user.favourites[i].dislikes.length-1 %>
-            </td>
-            <td>Comments: <%=user.favourites[i].comments.length %>
+            <td id="userDetailsSide">
+              <h2>
+                <%= user.displayName %>
+              </h2>
+              <p>Posts: <%= user.posts.length %> Favs: <%= user.favourites.length %>
+              </p>
             </td>
           </tr>
         </table>
-        <% }} else { %>
-          <p>This user currently has no fav'd posts.</p>
-          <% } %>
-            - Have small thumbnails of the images.
+        <table>
+          <td>
+            <h3><a href="/users/<%=user._id %>">Posts</a></h3>
+          </td>
+          <td>
+            <h3>Favourites</h3>
+          </td>
+        </table>
+        <hr>
+        <% if(!user.favourites.length==0){ %>
+          <% for (var i=0; i < user.favourites.length; i++){ %>
+            <ul>
+              <li>
+                <table>
+                  <tr>
+                    <td><img src="<%= user.favourites[i].image.url %>" class="userListImg"></td>
+                    <td><a href="/uploads/<%=user.favourites[i]._id %>">
+                        <%=user.favourites[i].title %>
+                      </a>
+                      <br>
+                      <p class="smallerText">By:<a href="/users/<%=user.favourites[i].author._id %>"> <%=user.favourites[i].author.displayName %></a></p>
+                      <p>Likes: <%=user.favourites[i].likes.length-1 %> Dislikes:
+                          <%=user.favourites[i].dislikes.length-1 %> Comments: <%=user.favourites[i].comments.length %>
+                    </td>
+                  </tr>
+                </table>
+              </li>
+            </ul>
+            <% }} else { %>
+              <p>This user currently has no fav'd posts.</p>
+              <% } %>
+      </div>
+    </div>
   </div>

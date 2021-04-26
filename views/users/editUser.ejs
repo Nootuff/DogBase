@@ -2,31 +2,40 @@
   <% var picOrNo=(user.profileImage.url !="/assets/placeholder.png" ) ? "shown" : "hidden" ; %>
     <div id="noData" class="hidden flash subFlash errorFlash">Missing data</div>
     <div id="pageContent">
-      <h2>Edit Your Account Details</h2>
-      <h1>Put boxes around each of these forms and give them large buttons so it is clear they are 2 different forms.
-      </h1>
+      <div id="contentForms">
+      <h2>Edit your account details</h2>
+      <div class="flex-container">
+        <div class="flex-child ">
       <form action="/users/updateUser?_method=PUT" method="POST" class="validated-form" novalidate>
         <h3>Change Display name</h3>
         <label for="displayName">Display name</label>
         <br>
-        <input type="text" id="displayName" name="displayName" value="<%= user.displayName%>" placeholder="Display name"
+        <input type="text" id="displayName" name="displayName" value="<%= user.displayName%>" class="requiredInput" placeholder="Display name"
           required>
         <br>
-        <button>Update Display name</button>
+        <button class="formButton userUpdate">Update Display name</button>
       </form>
-      <!--Forget letting them edit password, just find some way to change the profile picture.-->
-      <img src="<%= user.profileImage.url %>" width="200">
+    </div>
+      <div class="flex-child magenta">
       <h3>Change profile picture</h3>
+      <img src="<%= user.profileImage.url %>" width="200">
       <form action="/users/updateProfilePic?_method=PUT" method="POST" enctype="multipart/form-data">
         <label for="profileImage">Image</label><br>
         <input type="file" name="profileImage" id="profileImage" accept="image/*">
         <br>
-        <button id="picSubmit">Update profile pic</button>
+        <button id="picSubmit" class="formButton userUpdate">Update profile pic</button>
       </form>
       <br>
       <% if(user.profileImage.url !="/assets/placeholder.png" ){%>
         <form action="/users/destroyUserPic?_method=PUT" method="POST" class="<%= picOrNo %>">
-          <button>Delete profile pic</button>
+          <button class="formButton">Delete profile pic</button>
         </form>
         <% } %>
+      </div>
+      </div>
+<div>
+  <h3>Switch to dark mode</h3>
+  <button id="darkMode" class="modeToggle"></button>
+  </div>
+    </div>
     </div>

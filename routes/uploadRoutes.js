@@ -9,7 +9,6 @@ const multerUpload = multer({ storage });
 const Upload = require("../models/upload"); //Link for the upload schema in models
 const User = require("../models/user");
 
-
 const datePosted = () => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -18,16 +17,16 @@ const datePosted = () => {
   return dd + '-' + mm + '-' + yyyy;
 }
 
-router.get("/", async (req, res) => { //Home page.
+router.get("/", async (req, res) => { //Home (main index) page.
   const uploads = await Upload.find({}).populate("author");
   res.render("uploads/index.ejs", { uploads });
 });
 
-router.get("/new", isLoggedIn, function (req, res) { //Just loads new page.
+router.get("/new", isLoggedIn, function (req, res) { //Just loads the new post page.
   res.render("uploads/new.ejs");
 });
 
-router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catchAsync(async (req, res, next) => {  //Post new upload post  
+router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catchAsync(async (req, res, next) => {  //Create new post  
   const dogNoise = ["Woof!", "Bark!", "Yelp!", "Yap!"];
   const upload = new Upload(req.body.upload);
   upload.image.url = req.file.path;
@@ -44,12 +43,6 @@ router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catch
   res.redirect(`/uploads/${upload._id}`)
 }));
 
-/*
-router.post("/", upload.single('image'),(req, res) => {    
-  console.log(req.file)
-  res.send("Great success!")
-});
-*/
 
 router.get("/:id", catchAsync(async (req, res) => { //This loads an individual upload on the show page. 
   var find = req.params.id;
@@ -123,7 +116,6 @@ router.put('/:id/fav', isLoggedIn, hasFavd, catchAsync(async (req, res,) => { //
   const upload = await Upload.findById(req.params.id);
   const user = await User.findByIdAndUpdate(req.user._id);
   user.favourites.push(upload);
-  console.log("upload is " + upload);
   await user.save();
   req.flash("success", "Fav'd!");
   res.redirect("back")

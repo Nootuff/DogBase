@@ -1,22 +1,27 @@
 <% layout("/boilerplate") %>
   <div id="noData" class="hidden flash subFlash errorFlash">Uploads need an image and a title</div>
   <div id="pageContent">
-<h1>Edit post</h1>
-<h2><%= upload.title%></h2> 
-<form action="/uploads/<%= upload._id%>?_method=PUT" method="POST" novalidate class="validated-form"> 
-     <!--Use multipart/form-data when your form includes any <input type="file"> elements. I think novalidate is something to do with error handling or making sure enough data is input.-->
-    <label for="title">Title</label>
-    <input type="text" id="title" name="upload[title]" value="<%= upload.title%>" placeholder="Title here"  class="requiredInput"  required>
-    <img src="<%= upload.image.url %>" alt="<%= upload.image.filename %>">
-    <br>
-    <label for="caption">Caption</label>
-    <textarea name="comment[body]" id="caption" name="upload[caption]" cols=100% rows="8" placeholder="<%= upload.caption%>" required></textarea>
-    <button onclick="captionOverride()">Update upload</button>
-</form>
-<form action="/uploads/<%= upload._id%>?_method=DELETE" method="POST">
-  <button>Delete this</button>
-  </form>
-<a href="/uploads/<%= upload._id%>">Back to post</a>
-</div>
-<script src="/javascripts/captionProver.js"></script>
-      <!--  <script type="text/javascript" src="newjavascript.js"></script> -->
+    <div id="contentForms">
+      <h2>Edit this post</h2>
+      <div class="imgContainer">
+        <img src="<%= upload.image.url %>" id="editImg" alt="<%= upload.image.filename %>">
+      </div>
+      <form action="/uploads/<%= upload._id%>?_method=PUT" method="POST" novalidate class="validated-form">
+        <!--Use multipart/form-data when your form includes any <input type="file"> elements. I think novalidate is something to do with error handling or making sure enough data is input.-->
+        <h3 class="editTitle">Title</h3>
+        <input type="text" id="title" name="upload[title]" value="<%= upload.title%>" placeholder="Title here"
+          class="requiredInput" required>
+        <h3 id="editCaption">Caption</h3>
+        <textarea id="caption" name="upload[caption]" cols=100% rows="8"
+          placeholder="<%= upload.caption%>" required></textarea>
+        <br>
+        <button onclick="captionOverride()" class="formButton">Update upload</button>
+      </form>
+      <form action="/uploads/<%= upload._id%>?_method=DELETE" method="POST">
+        <button id="deletePost" class="formButton">Delete this</button>
+      </form>
+      <a href="/uploads/<%= upload._id%>">Back to post</a>
+    </div>
+  </div>
+  <script src="/javascripts/captionProver.js"></script>
+  <!--  <script type="text/javascript" src="newjavascript.js"></script> -->

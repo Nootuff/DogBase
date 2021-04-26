@@ -1,6 +1,9 @@
 :root {
   --blue-color: #4188fa;
   --light-grey-color: #d8e0e6;
+  --red-color: #ff3838;
+  --green-color: #07be1f;
+  --dark-grey-color: #242424;
 }
 
 /* This code prevents the contents of the page being wider than the window. */
@@ -36,17 +39,6 @@ main {
   width: 90%;
 }
 
-#pageContent {
-  border: 1px solid var(--light-grey-color);
-  background-color: #ffffff;
-  margin: auto;
-  padding: 0 15px;
-  width: 90%;
-  border-radius: 5px;
-  -webkit-box-shadow: 0px 3px 14px -6px #000000;
-  box-shadow: 0px 3px 14px -6px #000000;
-}
-
 a {
   text-decoration: none;
   color: #0067b0;
@@ -57,18 +49,20 @@ ul {
   list-style: none;
 }
 
-.indexItem {
-  margin-bottom: 15px;
-  border-radius: 4px;
-  background-color: white;
-  padding: 5px 28px 10px;
+hr {
+  border-top: 1px solid #242424;
 }
 
-
-
-.mainImg {
+#pageContent {
   border: 1px solid var(--light-grey-color);
-  max-width: 80%;
+  background-color: #ffffff;
+  margin: auto;
+  padding: 0 15px;
+  width: 90%;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 3px 14px -6px #000000;
+  box-shadow: 0px 3px 14px -6px #000000;
+  box-sizing: border-box;
 }
 
 .imgContainer {
@@ -80,28 +74,112 @@ ul {
   margin-bottom: 200px;
 }
 
-#showMain{
+.indexItem {
+  border-radius: 4px;
+  border: 1px solid var(--light-grey-color);
+  background-color: white;
+  padding: 5px 28px 10px;
+  width: 90%;
+  margin: 0 auto 15px;
+}
+
+.mainImg {
+  border: 1px solid var(--light-grey-color);
+  max-width: 80%;
+}
+
+#editImg {
+  border: 1px solid var(--light-grey-color);
+  max-width: 60%;
+  margin: 10px 0;
+}
+
+#showMain {
   width: 97%;
   margin: auto;
 }
 
-#editLink{
+/* Opinion section */
+
+.opinionForm {
+  float: left;
+}
+
+.opinionButton {
+  float: left;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.opinionButton:focus {
+  outline: 0;
+}
+
+.opinionButton:active {
+  transform: scale(0.9);
+}
+
+.likes {
+  color: var(--green-color);
+  font-weight: bold;
+}
+
+.dislikes {
+  color: var(--red-color);
+  font-weight: bold;
+}
+
+.unlikeButton {
+  color: var(--green-color);
+}
+
+.unDislikeButton {
+  color: var(--red-color);
+}
+
+.favButton {
+  padding: 3px 20px;
+  background-color: white;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 5px solid var(--blue-color);
+  border-radius: 70px;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.favButton:hover {
+  background-color: var(--blue-color);
+  color: white;
+}
+
+.favForm {
+  margin-top: 10px;
+  float: left;
+}
+
+#caption {
   margin-top: 20px;
-  margin-bottom: 20px;
+}
+
+#editLink {
+  margin: 20px 0;
 }
 
 #commentSection {
   width: 95%;
-  margin: 0 auto 35px;
-}
-
-td{
- 
+  margin: 35px auto;
 }
 
 .commentImg {
   width: 100px;
-  border: 1px solid grey;
+  border: 1px solid var(--light-grey-color);
   border-radius: 6px;
   margin-right: 15px;
 }
@@ -115,16 +193,119 @@ td{
   border-bottom: 1px solid #242424;
 }
 
-hr {
-  border-top: 1px solid #242424;
+#contentForms {
+  margin: 0 auto 50px;
+  width: 90%;
 }
 
-.noInput {
-  color: red;
+.editTitle {
+  margin-bottom: -0.5px;
 }
+
+#editCaption {
+  margin-bottom: -20px;
+}
+
+#caption {
+  margin-bottom: 20px;
+}
+
+#deletePost {
+  margin: 17px 0;
+}
+
+#loginRegister {
+  margin: 0 auto 32px;
+  width: 90%;
+}
+
+#loginRegister input {
+  margin-bottom: 10px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-child {
+  flex: 1;
+  border: 2px solid var(--blue-color);
+  border-radius: 3px;
+  padding: 8px;
+}
+
+.flex-child:first-child {
+  margin-right: 20px;
+}
+
+.userUpdate{
+  margin-top: 10px;
+}
+
+.modeToggle{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.modeToggle:active {
+  transform: scale(0.9);
+}
+
+#darkMode{
+  background-color: white;
+  border: 12px solid var(--dark-grey-color);
+}
+
+.formButton {
+  padding: 3px 20px;
+  background-color: white;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 5px solid #4188fa;
+  border-radius: 70px;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.formButton:hover {
+  background-color: #4188fa;
+  color: white;
+}
+
+#userPageImg{
+  width: 170px;
+  border-radius: 5px;
+  border: 1px solid var(--light-grey-color);
+}
+
+#userPage{
+  margin: 20px auto 1px;
+  width: 90%;
+}
+
+#userDetailsSide{
+  display: block;
+}
+
+.userListImg{
+  width: 150px;
+  border-radius: 5px;
+  border: 1px solid var(--light-grey-color);
+}
+
+
+/* Footer styling */
 
 footer {
   background-color: var(--blue-color);
+  color: white;
   padding-top: 20px;
   width: 100%;
   height: 100px;
@@ -211,7 +392,7 @@ td:not(:first-child) {
 /* Add a green text color and a checkmark when the requirements are right */
 
 .valid {
-  color: green;
+  color: var(--green-color);
 }
 
 .valid:before {
@@ -223,84 +404,13 @@ td:not(:first-child) {
 /* Add a red text color and an "x" when the requirements are wrong */
 
 .invalid {
-  color: red;
+  color: var(--red-color);
 }
 
 .invalid:before {
   position: relative;
   left: -35px;
   content: "\2716";
-}
-
-/* Opinion section */
-
-.opinionForm {
-  float: left;
-}
-
-.opinionButton {
-  float: left;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  background-color: white;
-}
-
-.opinionButton:focus {
-  outline: 0;
-}
-
-.opinionButton:active {
-  transform: scale(0.9);
-}
-
-.likes {
-  color: #005925;
-  font-weight: bold;
-}
-
-.dislikes {
-  color: #ff3838;
-  font-weight: bold;
-}
-
-.unlikeButton {
-  color: green;
-}
-
-.unDislikeButton {
-  color: #ff3838;
-}
-
-.favButton {
-  padding: 3px 20px;
-  background-color: white;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  border: 5px solid #4188fa;
-  border-radius: 70px;
-  cursor: pointer;
-  outline: none;
-  font-weight: bold;
-  font-size: 14px;
-  transition: 0.3s;
-}
-
-.favButton:hover {
-  background-color: #4188fa;
-  color: white;
-}
-
-.favForm {
-  margin-top: 10px;
-  float: left;
-}
-
-.unFav {}
-
-#caption {
-  margin-top: 20px;
 }
 
 .shown {
@@ -311,16 +421,21 @@ td:not(:first-child) {
   display: none;
 }
 
-input{
+input {
   outline: none;
+  border-radius: 3px;
 }
 
 .requiredInput:invalid {
-  border: 1px solid red;
+  border: 1px solid var(--red-color);
 }
 
 .requiredInput:valid {
-  border: 1px solid green;
+  border: 1px solid var(--green-color);
+}
+
+.noInput {
+  color: var(--red-color);
 }
 
 .flash {
@@ -337,10 +452,11 @@ input{
 }
 
 .successFlash {
-  background-color: #42f55a;
+  width: 90%;
+  background-color: var(--green-color);
 }
 
 .errorFlash {
   width: 90%;
-  background-color: #ff3838;
+  background-color: var(--red-color);
 }

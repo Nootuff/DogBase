@@ -2,6 +2,7 @@
 <div id="noData" class="hidden subFlash flash errorFlash">Please enter login details</div>    
 <div  id="pageContent">
     <div class="shortPageContainer">
+        <div id="loginRegister">
         <h1>Login</h1>
         <form action="/users/login" method="POST" class="validated-form" novalidate>
             <div>
@@ -12,8 +13,9 @@
                 <label for="password">Password</label><br>
                 <input type="password" id="password" name="password"  class="requiredInput" required><br>
             </div>
-            <button>Login</button>
+            <button class="formButton">Login</button>
         </form>
         <p>Don't have an account? Why not create one <a href="/users/register">here?</a></p>
+        </div>
     </div>
 </div>

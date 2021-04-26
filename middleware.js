@@ -16,6 +16,16 @@ module.exports.isLoggedIn = (req, res, next) => { //All middleware have req, res
   next();
 }
 
+//If there is a currently logged in user, you cannot log in to a new account or register. 
+module.exports.alreadyAUser = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    req.flash("error", "You are already logged in!");
+    return res.redirect(`/uploads`);
+} else {
+    next();
+  }
+}
+
 module.exports.validateUpload = (req, res, next) => {
   const { error } = uploadSchema.validate(req.body);
   if (error) {
@@ -122,7 +132,10 @@ return res.redirect(`/users/register`);
    } else if(password != matchPass){
     req.flash("error", "Passwords must match");
     return res.redirect(`/users/register`);
-   }
+   } else if(req.isAuthenticated()){
+    req.flash("error", "You are already logged in!");
+    return res.redirect(`/uploads`);
+   } 
   next();
 }
 
