@@ -33,6 +33,29 @@ header {
   height: 170px;
 }
 
+#title{
+  color: white;
+  font-family: 'Righteous', cursive;
+  font-size: 64px;
+}
+
+#title span{
+  color: var(--red-color);
+}
+
+.logReg{
+  color: white;
+  display: inline-block;
+  
+  float: right;
+  font-size: 30px;
+ 
+}
+
+#logRegContainer{
+ margin-top: -50px;
+}
+
 main {
   margin: 190px auto 10px;
   padding: 0 15px;
@@ -279,6 +302,12 @@ hr {
   color: white;
 }
 
+
+
+#body{
+  width: 40vw;
+}
+
 #userPageImg{
   width: 170px;
   border-radius: 5px;
@@ -305,7 +334,6 @@ hr {
 
 footer {
   background-color: var(--blue-color);
-  color: white;
   padding-top: 20px;
   width: 100%;
   height: 100px;
@@ -313,6 +341,10 @@ footer {
   bottom: 0;
   left: 0;
   margin-top: 100px;
+}
+
+footer a{
+  color: white;
 }
 
 nav table {

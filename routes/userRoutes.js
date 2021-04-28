@@ -24,13 +24,7 @@ const { storage } = require("../cloudinary"); //This imports the const "storage"
 const multerUpload = multer({ storage });
 const { cloudinary } = require("../cloudinary");
 
-const dateJoined = () => {
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    const yyyy = today.getFullYear();
-    return dd + '-' + mm + '-' + yyyy;
-  }
+
 
 router.get("/register", alreadyAUser, function (req, res) { //Renders register page
         res.render("users/register.ejs")
@@ -38,12 +32,20 @@ router.get("/register", alreadyAUser, function (req, res) { //Renders register p
 
 router.post("/register", multerUpload.single('profileImage'), authNewUser, existDisplayName, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
     try {
+        const joinDate = () => {
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            const yyyy = today.getFullYear();
+            return dd + '-' + mm + '-' + yyyy;
+          }
         const username = req.body.username;
         const email = req.body.email;
         const password = req.body.password;
         const displayName = req.body.displayName;
-        var profileImage = (!req.file) ? { url: "/assets/placeholder.png", filename: "User-profile-image" } : { url: req.file.path, filename: req.file.filename };
-        const newUser = new User({ username, email, displayName, profileImage }); //Creates a new instance of user with this data.
+        const dateJoined = joinDate();
+        const profileImage = (!req.file) ? { url: "/assets/placeholder.png", filename: "User-profile-image" } : { url: req.file.path, filename: req.file.filename };
+        const newUser = new User({ username, email, displayName, profileImage, dateJoined }); //Creates a new instance of user with this data.
         const registeredUser = await User.register(newUser, password);
         console.log(registeredUser);
         req.login(registeredUser, error => { //This is another method from passport, logs in newly created user after registering. 

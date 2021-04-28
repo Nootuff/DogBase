@@ -1,8 +1,10 @@
 <header>
-    <h1><a href="/uploads">Untitled Dog Project</a></h1>
+    <p><a id="title" href="/uploads"><span>D</span>og<span>b</span>ase</a></p>
     <% if(!currentUser){ %>
-    <h3><a href="/users/login">Login</a> </h3>
-    <h3><a href="/users/register">Register</a></h3>
+      <div id="logRegContainer">
+    <p><a class="logReg" href="/users/login">Login</a> </p>
+    <p><a class="logReg" href="/users/register">Register</a></p>
+    </div>
     <% } else { %>
         <h3><a class="navItem" href="/uploads/new">Upload New</a></h3>
        <div class="dropdown">

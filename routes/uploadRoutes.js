@@ -27,7 +27,7 @@ router.get("/new", isLoggedIn, function (req, res) { //Just loads the new post p
 });
 
 router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catchAsync(async (req, res, next) => {  //Create new post  
-  const dogNoise = ["Woof!", "Bark!", "Yelp!", "Yap!"];
+  const dogNoise = ["Woof!", "Bark!", "Yelp!", "Yap!", "Arf!"];
   const upload = new Upload(req.body.upload);
   upload.image.url = req.file.path;
   upload.image.filename = req.file.filename;
@@ -39,7 +39,7 @@ router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catch
   author.posts.push(upload);
   await author.save();
   await upload.save();
-  req.flash("success", dogNoise[Math.floor(Math.random() * dogNoise.length)] + " Remember to build a js function that dissmisses this when you press the X!");
+  req.flash("success", dogNoise[Math.floor(Math.random() * dogNoise.length)]);
   res.redirect(`/uploads/${upload._id}`)
 }));
 
@@ -139,7 +139,6 @@ router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => { //D
     await User.findByIdAndUpdate(user, { $pull: { posts: upload } });
   }
   await Upload.findByIdAndDelete(upload);
-
   req.flash("success", "Deleted.");
   res.redirect('/uploads');
 }));
