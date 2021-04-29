@@ -63,6 +63,11 @@ router.get("/login", alreadyAUser, function (req, res) { //Renders login page.
     res.render("users/login.ejs");
 })
 
+router.get("/privacyPolicy", function (req, res) { //Renders login page. 
+    res.render("users/privacyPolicy.ejs");
+})
+
+
 router.get("/logout", function (req, res) {
     req.logout(); //.logout() is another route bought in from passport, logs the user out.
     req.flash("success", "Goodbye!");

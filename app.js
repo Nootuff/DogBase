@@ -92,13 +92,10 @@ const validateComment = (req, res, next) => {
   }
 }
 
-app.get('/', (req, res) => {
-  res.send('home')
+app.get('/', async (req, res) =>  {
+  const uploads = await Upload.find({}).populate("author");
+  res.render("uploads/index.ejs", { uploads });
 });
-
-//Must find a way to get this into the userRoutes.js file, if there is no /users/ then this route breaks the whole system if its in taht file but if you want to add /users/ to everything in user routes you must redo all the url links like login and logout and register. 
-
-
 
 app.all("*", (req, res, next) => { //app.all means this will activate for all route types eg .put and .get. The * means it will activate for all inputted urls. This will only run if nothing else runs first which is why it is last. 
   next(new ExpressError("Page not found.", 404))

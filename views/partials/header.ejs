@@ -1,20 +1,21 @@
 <header>
-    <p><a id="title" href="/uploads"><span>D</span>og<span>b</span>ase</a></p>
+    <p><a id="logo" href="/uploads"><span>d</span>og<span>B</span>ase</a></p>
+    <div id="userInterface">
     <% if(!currentUser){ %>
-      <div id="logRegContainer">
-    <p><a class="logReg" href="/users/login">Login</a> </p>
-    <p><a class="logReg" href="/users/register">Register</a></p>
-    </div>
+    <p><a class="userCtrls userBtn" href="/users/login">Login</a> </p>
+    <p><a class="userCtrls userBtn" href="/users/register">Register</a></p>
+    
     <% } else { %>
-        <h3><a class="navItem" href="/uploads/new">Upload New</a></h3>
-       <div class="dropdown">
-        <button class="dropbtn"><a href="/users/accountPage"><%= currentUser.username %></a> have user profile pic in a tiny circle</button>
-        <div class="dropdown-content">
+        <h3><a class="userCtrls userBtn" href="/uploads/new">Upload New</a></h3>
+       <div class="dropdown userCtrls">
+        <button  class="dropbtn userBtn" onclick="menuDrop()"><%= currentUser.username %> have user profile pic in a tiny circle</button>
+        <div id="dropdownMenu" class="dropdown-content">
           <a href="/users/accountPage">Account Page</a>
           <a href="/users/edit">Change details</a>
           <a href="/users/logout">Logout</a>
         </div>
       </div>
     <% } %>
+  </div>
     </header>
 

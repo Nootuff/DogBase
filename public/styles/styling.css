@@ -30,31 +30,76 @@ header {
   background-color: var(--blue-color);
   width: 100%;
   padding: 0 15px;
-  height: 170px;
+  height: 130px;
 }
 
-#title{
+#logo{
   color: white;
-  font-family: 'Righteous', cursive;
-  font-size: 64px;
+  font-family: 'Righteous', cursive, Tahoma;
+  font-size: 70px;
 }
 
-#title span{
+#logo span{
   color: var(--red-color);
 }
 
-.logReg{
+.userCtrls{
   color: white;
   display: inline-block;
-  
   float: right;
-  font-size: 30px;
- 
+  font-size: 20px;
+  margin-right: 15px;
 }
 
-#logRegContainer{
- margin-top: -50px;
+.userBtn{
+  padding: 4px 16px;
+  background-color: var(--blue-color);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 3px solid white;
+  border-radius: 70px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
 }
+
+.userBtn:hover{
+  background-color: white;
+  color: var(--blue-color);
+}
+
+#userInterface{
+  margin-top: -70px;
+}
+
+/* Header dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.dropped {display: block;}
+
 
 main {
   margin: 190px auto 10px;
@@ -288,7 +333,7 @@ hr {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  border: 5px solid #4188fa;
+  border: 5px solid var(--blue-color);
   border-radius: 70px;
   cursor: pointer;
   outline: none;
@@ -298,11 +343,9 @@ hr {
 }
 
 .formButton:hover {
-  background-color: #4188fa;
+  background-color: var(--blue-color);
   color: white;
 }
-
-
 
 #body{
   width: 40vw;
@@ -329,9 +372,7 @@ hr {
   border: 1px solid var(--light-grey-color);
 }
 
-
 /* Footer styling */
-
 footer {
   background-color: var(--blue-color);
   padding-top: 20px;
@@ -359,48 +400,6 @@ nav td {
 
 td:not(:first-child) {
   border-left: 1px solid white;
-}
-
-/* Header dropdown styles */
-
-.dropbtn {
-  background-color: #322bff;
-  color: white;
-  font-size: 16px;
-  border: none;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
-  background-color: #05008a;
 }
 
 /*User registration form */
