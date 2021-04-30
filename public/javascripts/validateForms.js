@@ -25,25 +25,3 @@ document.getElementById("picSubmit").onclick = function(e) {
     document.getElementById("noData").classList.remove("hidden");
   }
 }
-
-
-
-
-
- /*
-window.onclick = function(event) {
-  alert("connected")
- 
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('dropped')) {
-        openDropdown.classList.remove('dropped');
-      }
-    }
-  }
-  
-}
-*/

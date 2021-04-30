@@ -6,15 +6,17 @@
     <p><a class="userCtrls userBtn" href="/users/register">Register</a></p>
     
     <% } else { %>
-        <h3><a class="userCtrls userBtn" href="/uploads/new">Upload New</a></h3>
-       <div class="dropdown userCtrls">
-        <button  class="dropbtn userBtn" onclick="menuDrop()"><%= currentUser.username %> have user profile pic in a tiny circle</button>
+        <p><a class="userCtrls userBtn" href="/uploads/new">Upload New</a></p>
+        
+        <div class="dropdown userCtrls">
+        <button  class="nameBtn dropbtn" onclick="menuDrop()"><%= currentUser.username %></button>
         <div id="dropdownMenu" class="dropdown-content">
           <a href="/users/accountPage">Account Page</a>
           <a href="/users/edit">Change details</a>
           <a href="/users/logout">Logout</a>
         </div>
       </div>
+      <img src="<%= currentUser.profileImage.url %>" alt="User profile image" onclick="menuDrop()" class="headerUserImg userCtrls dropbtn">
     <% } %>
   </div>
     </header>
