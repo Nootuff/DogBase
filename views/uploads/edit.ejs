@@ -2,18 +2,19 @@
   <div id="noData" class="hidden flash subFlash errorFlash">Uploads need an image and a title</div>
   <div id="pageContent">
     <div id="contentForms">
-      <h2>Edit this post</h2>
+      <h2 class="toggleText">Edit this post</h2>
       <div class="imgContainer">
         <img src="<%= upload.image.url %>" id="editImg" alt="<%= upload.image.filename %>">
       </div>
+      <hr>
       <form action="/uploads/<%= upload._id%>?_method=PUT" method="POST" novalidate class="validated-form">
         <!--Use multipart/form-data when your form includes any <input type="file"> elements. I think novalidate is something to do with error handling or making sure enough data is input.-->
-        <h3 class="editTitle">Title</h3>
+        <h3 class="editTitle toggleText">Title</h3>
         <input type="text" id="title" name="upload[title]" value="<%= upload.title%>" placeholder="Title here"
           class="requiredInput" required>
-        <h3 id="editCaption">Caption</h3>
-        <textarea id="caption" name="upload[caption]" cols=100% rows="8"
-          placeholder="<%= upload.caption%>" required></textarea>
+        <h3 id="editCaption" class="toggleText">Caption</h3>
+        <textarea id="caption" name="upload[caption]" cols=100% rows="8" 
+           required><%= upload.caption%></textarea>
         <br>
         <button onclick="captionOverride()" class="formButton">Update upload</button>
       </form>

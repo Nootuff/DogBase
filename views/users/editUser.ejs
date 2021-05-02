@@ -18,7 +18,7 @@
     </div>
       <div class="flex-child magenta">
       <h3>Change profile picture</h3>
-      <img src="<%= user.profileImage.url %>" width="200">
+      <img src="<%= user.profileImage.url %>" id="editUserImg">
       <form action="/users/updateProfilePic?_method=PUT" method="POST" enctype="multipart/form-data">
         <label for="profileImage">Image</label><br>
         <input type="file" name="profileImage" id="profileImage" accept="image/*">
@@ -35,7 +35,9 @@
       </div>
 <div>
   <h3>Switch to dark mode</h3>
-  <button id="darkMode" class="modeToggle"></button>
+  <form action="/users/viewMode?_method=PUT" method="POST">
+  <button id="modeToggle"></button>
+  </form>
   </div>
     </div>
     </div>

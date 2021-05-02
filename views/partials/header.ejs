@@ -5,9 +5,7 @@
     <p><a class="userCtrls userBtn" href="/users/login">Login</a> </p>
     <p><a class="userCtrls userBtn" href="/users/register">Register</a></p>
     
-    <% } else { %>
-        <p><a class="userCtrls userBtn" href="/uploads/new">Upload New</a></p>
-        
+    <% } else { %>       
         <div class="dropdown userCtrls">
         <button  class="nameBtn dropbtn" onclick="menuDrop()"><%= currentUser.username %></button>
         <div id="dropdownMenu" class="dropdown-content">
@@ -17,6 +15,8 @@
         </div>
       </div>
       <img src="<%= currentUser.profileImage.url %>" alt="User profile image" onclick="menuDrop()" class="headerUserImg userCtrls dropbtn">
+
+      <p><a class="userCtrls userBtn" href="/uploads/new">Upload New</a></p>
     <% } %>
   </div>
     </header>

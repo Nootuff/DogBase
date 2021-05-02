@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to Dog Project</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/styling.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- This works because of the app.use statment in app.js setting dirname to public-->
-    <script src="https://kit.fontawesome.com/0db405f613.js"></script>
-</head>
-<body>
-    <%- include("partials/header") %>
-    <main>
-         <%- include("partials/flash") %>
-            <%- body %>
-    </main>
-    <%- include("partials/footer") %>
-</body>
-<script src="/javascripts/validateForms.js"></script>
-<script src="/javascripts/dropdownFunc.js"></script>
+<html class="toggleText">
+<% var viewMode; if(!currentUser){ viewMode="lightMode" ; } else{ if(currentUser.darkMode==false){ viewMode="lightMode"
+    ; } else{ viewMode="darkMode" ; } } %>
+    <head>
+        <title>Welcome to Dog Project</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/styles/styling.css">
+        <link rel="stylesheet" href="/styles/<%= viewMode %>.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- This works because of the app.use statment in app.js setting dirname to public-->
+        <script src="https://kit.fontawesome.com/0db405f613.js"></script>
+    </head>
+    <body>
+        <%- include("partials/header") %>
+            <main>
+                <%- include("partials/flash") %>
+                    <%- body %>
+            </main>
+            <%- include("partials/footer") %>
+    </body>
+    <script src="/javascripts/validateForms.js"></script>
+    <script src="/javascripts/dropdownFunc.js"></script>
 </html>

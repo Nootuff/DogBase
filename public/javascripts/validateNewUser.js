@@ -62,6 +62,15 @@ firstPass.onkeyup = function() {
     length.classList.remove("valid");
     length.classList.add("invalid");
   }
+
+  //Check passes match if user types in match pass first for some reason
+  if(firstPass.value == matchPass.value) {
+    match.classList.remove("invalid");
+    match.classList.add("valid");
+  } else {
+    match.classList.remove("valid");
+    match.classList.add("invalid");
+  }
 }
 
 //Check passwords match

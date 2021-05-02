@@ -1,0 +1,40 @@
+:root {
+    --blue-color: #4188fa;
+    --white-color: #ffffff;
+    --black-color: #000000;
+    --light-grey-color: #d8e0e6;
+    --dark-grey-color: #242424;
+}
+
+body, html {
+    background-color: var(--light-grey-color);
+}
+
+header {
+    background-color: var(--blue-color);
+}
+
+footer {
+    background-color: var(--blue-color);
+}
+
+.toggleText{
+    color: var(--black-color);
+}
+
+
+.indexItem {
+    background-color: var(--white-color);
+}
+
+#pageContent{
+    background-color: var(--white-color);
+}
+
+.comment:not(:last-child) {
+    border-bottom: 1px solid var(--dark-grey-color);
+  }
+
+#modeToggle {
+    border: 12px solid var(--dark-grey-color);
+}

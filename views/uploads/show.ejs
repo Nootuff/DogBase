@@ -1,6 +1,6 @@
 <% layout("/boilerplate") %>
 <%  
-var likes = upload.likes.length-1; //Can all these vars be moved to a external js file?
+var likes = upload.likes.length-1; //Can all these vars be lets?
 var dislikes = upload.dislikes.length-1;
 var comments = (upload.comments.length == 1) ? "comment" : "comments";
 var reFormat = upload.image.url.replace("/upload", "/upload/c_scale,w_1.0");
@@ -9,13 +9,13 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
 %>
 <div id="pageContent">
   <section id="showMain">
-  <h2><%= upload.title %></h2>
+  <h2 class="toggleText"><%= upload.title %></h2>
 <table>
   <tr>
-    <td>
-      By: <a href="/users/<%= upload.author._id  %>"><%= upload.author.displayName %></a>
+    <td >
+      <span class="toggleText">By:</span> <a href="/users/<%= upload.author._id  %>"><%= upload.author.displayName %></a>
       </td>
-     <td>
+     <td class="toggleText">
     Posted: <%= upload.datePosted %>
       </td>
     </tr>
@@ -75,7 +75,7 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
     </div>
   <% if(upload.caption != " " ){ %>
   <section id="caption">
-  <p><%= upload.caption %></p>
+  <p class="toggleText"><%= upload.caption %></p>
   </section>
   <% } %>
   <hr>
@@ -91,7 +91,7 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
             <img class="commentImg" src="<%= currentUser.profileImage.url %>">
             </td>
             <td>
-      <label for="body"><h3>Leave a comment</h3></label>
+      <label for="body" class="toggleText"><h3>Leave a comment</h3></label>
       <br>
 <textarea name="comment[body]" id="body" rows="2" required></textarea>
 <br>
@@ -116,8 +116,8 @@ There are no comments yet.
       <img class="commentImg" src="<%= upload.comments[i].author.profileImage.url %>">
       </td>
       <td>
-      <p><a href="/users/<%=upload.comments[i].author._id %>"><%=upload.comments[i].author.displayName %></a> <%=upload.comments[i].datePosted %></p>
-      <p><%=upload.comments[i].body %></p>
+      <p><a href="/users/<%=upload.comments[i].author._id %>"><%=upload.comments[i].author.displayName %></a><span class="toggleText"> <%=upload.comments[i].datePosted %></span></p>
+      <p class="toggleText"><%=upload.comments[i].body %></p>
       <% if(currentUser && upload.comments[i].author.equals(currentUser._id)){%>
         <form action="/uploads/<%= upload._id%>/comments/<%=upload.comments[i]._id%>?_method=DELETE" method="POST">
           <button>Delete</button>

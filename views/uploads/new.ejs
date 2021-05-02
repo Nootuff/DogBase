@@ -3,14 +3,14 @@
     <div id="pageContent">
         <div class="shortPageContainer">
             <div id="contentForms">
-            <h2>Post new dog</h2>
+            <h2 class="toggleText">Post new dog</h2>
             <form action="/uploads" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
                 <!-- This form creates a new product, the .post route it is linked to is in uploadRoutes.js. -->
-                <h3 class="editTitle">Title</h3>
+                <h3 class="editTitle toggleText">Title</h3>
                 <input type="text" id="title" name="upload[title]" placeholder="Title here" class="requiredInput" required>
-                <h3 class="editTitle">Image</h3>
+                <h3 class="editTitle toggleText">Image</h3>
                 <input type="file" name="image" id="image" accept="image/*" required>
-                <h3 id="editCaption">Caption</h3>
+                <h3 id="editCaption" class="toggleText">Caption</h3>
                 <textarea id="caption" name="upload[caption]" placeholder="Caption here" cols=100% rows="8"></textarea>
                 <br>
                 <button onclick="captionOverride()" class="formButton">Submit</button>

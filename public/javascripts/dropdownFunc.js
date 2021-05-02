@@ -3,12 +3,6 @@ function menuDrop() {
     document.getElementById("dropdownMenu").classList.toggle("dropped");
   }
 
-/*
-  function tesr(){
-    document.getElementById("dropdownMenu").classList.toggle("dropped");
-  }
- */
-
   // Close the dropdown if the user clicks outside of it
   window.onclick = function(event) { 
     if (!event.target.matches('.dropbtn')) {

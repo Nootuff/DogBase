@@ -67,6 +67,10 @@ router.get("/privacyPolicy", function (req, res) { //Renders login page.
     res.render("users/privacyPolicy.ejs");
 })
 
+router.get("/contactPage", function (req, res) { //Renders login page. 
+    res.render("users/contactPage.ejs");
+})
+
 
 router.get("/logout", function (req, res) {
     req.logout(); //.logout() is another route bought in from passport, logs the user out.
@@ -92,12 +96,22 @@ router.get("/edit", isLoggedIn, catchAsync(async (req, res) => { //Render the us
 router.put('/updateUser', isLoggedIn, existDisplayName, catchAsync(async (req, res,) => { //This activates when the submit button is pressed on the editUser.ejs page.
     const displayName = req.body.displayName;
     const user = await User.findByIdAndUpdate(req.user._id, { displayName: displayName });
-    //const user = await User.findByIdAndUpdate(req.user._id, { ...req.body.user });
     req.flash("success", "Update Success!");
     res.redirect("/users/edit")
 }));
 
-router.put('/destroyUserPic', isLoggedIn, catchAsync(async (req, res,) => {
+router.put('/viewMode', isLoggedIn, catchAsync(async (req, res,) => { 
+    const user = await User.findById(req.user._id);
+   if(user.darkMode == false){
+       user.darkMode = true;
+   } else{
+    user.darkMode = false; 
+   }
+   await user.save();
+    res.redirect("/users/edit")
+}));
+
+router.put('/destroyUserPic', isLoggedIn, catchAsync(async (req, res,) => { //Delete user profile pic and replace with default.
     const user = await User.findById(req.user._id);
     await cloudinary.uploader.destroy(user.profileImage.filename);
     user.profileImage.url = "/assets/placeholder.png";
