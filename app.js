@@ -14,6 +14,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const methodOverride = require('method-override'); //THis npm lets you use the edit and delete parts of CRUD.
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet'); 
  
 const ExpressError = require("./utilities/ExpressError"); //Imports the function from ExpressError.js.
 const Upload = require("./models/upload"); //Link for the upload schema in models
@@ -50,11 +51,13 @@ app.use(express.static(path.join(__dirname + '/public')));
 app.use(mongoSanitize());
 
 const sessionConfig = {
+  name: "dogSession", //This is the name of the session id.
   secret: "secretHere",
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true, //This thing is optional, if its included, the cookie cannot be accessed through or interfered with by a client side script. This is extra security. Hackers cannot see confidential cookies, you should include it. 
+    // secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //This is when the cookie is programmed to expire. It is todays date, Date.now is in milliseconds. We want this cookie to expire in a week so the sum is 1000 milliseconds in a second, 60 secs in a minute, 60 mins in an hour, 24 hours etc. So the date it will expire is today's date plus that time.
     maxAge: 1000 * 60 * 60 * 24 * 7
     //All this expiration stuff is because we don't want users to log in and stay logged in, they will get logged out after a week. 
@@ -62,6 +65,49 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig)); //This must be above passposrt.session which is below.
 app.use(flash());
+app.use(helmet());
+
+const scriptSrcUrls = [
+  "https://stackpath.bootstrapcdn.com/",
+  "https://kit.fontawesome.com/",
+  "https://cdnjs.cloudflare.com/",
+  "https://cdn.jsdelivr.net",
+];
+const styleSrcUrls = [
+  "https://kit-free.fontawesome.com/",
+  "https://stackpath.bootstrapcdn.com/",
+  "https://fonts.googleapis.com/",
+  "https://use.fontawesome.com/",
+];
+
+const connectSrcUrls = [
+  "https://ka-f.fontawesome.com"
+];
+
+const fontSrcUrls = [
+  "https://ka-f.fontawesome.com", //Allows you to use fontAwesome. 
+  "https://fonts.gstatic.com/"
+];
+app.use(
+  helmet.contentSecurityPolicy({
+      directives: {
+          defaultSrc: [],
+          connectSrc: ["'self'", ...connectSrcUrls],
+          scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+          styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+          workerSrc: ["'self'", "blob:"],
+          objectSrc: [],
+          imgSrc: [
+              "'self'",
+              "blob:",
+              "data:",
+              "https://res.cloudinary.com/dfj7xeo4n/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+              "https://images.unsplash.com/",
+          ],
+          fontSrc: ["'self'", ...fontSrcUrls],
+      },
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());

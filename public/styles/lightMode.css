@@ -30,6 +30,10 @@ footer {
     background-color: var(--white-color);
 }
 
+.opinionButton {
+    background-color: var(--white-color);
+}
+
 .comment:not(:last-child) {
     border-bottom: 1px solid var(--dark-grey-color);
   }

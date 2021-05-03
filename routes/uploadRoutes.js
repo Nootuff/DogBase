@@ -43,7 +43,6 @@ router.post("/", isLoggedIn, multerUpload.single('image'), validateUpload, catch
   res.redirect(`/uploads/${upload._id}`)
 }));
 
-
 router.get("/:id", catchAsync(async (req, res) => { //This loads an individual upload on the show page. 
   var find = req.params.id;
   const upload = await Upload.findById(find).populate({ path: "comments", populate: { path: "author" } }).populate("author"); // Populate lets you  automatically replace the specified paths in the document with document(s) from other collection(s). Eg replacing those object IDs with the actual data they represent. The path stuff with comments tells the system to populate all the comments from the comments array from the upload we're finding, then on each comment, populate that comment's author. 
@@ -73,7 +72,6 @@ router.put('/:id', isLoggedIn, isAuthor, validateUpload, catchAsync(async (req, 
 }));
 
 //Like and un-like and dislike routes.  
-
 router.put('/:id/like', isLoggedIn, hasLiked, catchAsync(async (req, res,) => { //Add to like array route
   const upload = await Upload.findByIdAndUpdate(req.params.id);
   upload.likes.push(req.user._id);

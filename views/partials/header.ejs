@@ -7,7 +7,7 @@
     
     <% } else { %>       
         <div class="dropdown userCtrls">
-        <button  class="nameBtn dropbtn" onclick="menuDrop()"><%= currentUser.username %></button>
+        <button  class="nameBtn dropbtn" onclick="menuDrop()"><%= currentUser.displayName %></button>
         <div id="dropdownMenu" class="dropdown-content">
           <a href="/users/accountPage">Account Page</a>
           <a href="/users/edit">Change details</a>
