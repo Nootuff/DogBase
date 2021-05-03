@@ -15,7 +15,7 @@ for (var i=0; i < newPass.length; i++) {
   }
 }
 
-//When user clicks away from passwrod fields hide the message box
+//When user clicks away from password fields hide the message box
 for (var i=0; i < newPass.length; i++) {
   newPass[i].onblur = function() {
     document.getElementById("message").style.display = "none";
@@ -63,7 +63,7 @@ firstPass.onkeyup = function() {
     length.classList.add("invalid");
   }
 
-  //Check passes match if user types in match pass first for some reason
+  //Check passes match if user types in match pass first
   if(firstPass.value == matchPass.value) {
     match.classList.remove("invalid");
     match.classList.add("valid");
@@ -73,7 +73,7 @@ firstPass.onkeyup = function() {
   }
 }
 
-//Check passwords match
+//Check passwords match when user types in the matchPass
 matchPass.onkeyup = function() {
  if(matchPass.value == firstPass.value ) {
   match.classList.remove("invalid");
@@ -83,15 +83,3 @@ matchPass.onkeyup = function() {
   match.classList.add("invalid");
 }
 }
-
-/*
-//Prevent submission if they don't.
-function checkMatch() {
-  if (firstPass.value != matchPass.value) {
-      alert("Passwords do not match.");
-      location.reload();
-      return false;
-  }
-  return true;
-}
-*/

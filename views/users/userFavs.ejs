@@ -13,7 +13,8 @@
               </h2>
               <p>Posts: <%= user.posts.length %> Favs: <%= user.favourites.length %>
               </p>
-              <p>Date joined: <%= user.dateJoined %></p>
+              <p>Date joined: <%= user.dateJoined %>
+              </p>
             </td>
           </tr>
         </table>
@@ -37,7 +38,9 @@
                         <%=user.favourites[i].title %>
                       </a>
                       <br>
-                      <p class="smallerText">By:<a href="/users/<%=user.favourites[i].author._id %>"> <%=user.favourites[i].author.displayName %></a></p>
+                      <p class="smallerText">By:<a href="/users/<%=user.favourites[i].author._id %>">
+                          <%=user.favourites[i].author.displayName %>
+                        </a></p>
                       <p>Likes: <%=user.favourites[i].likes.length-1 %> Dislikes:
                           <%=user.favourites[i].dislikes.length-1 %> Comments: <%=user.favourites[i].comments.length %>
                     </td>
