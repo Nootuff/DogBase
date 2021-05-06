@@ -1,10 +1,10 @@
 const { uploadSchema, commentSchema, userSchema } = require("./schemas.js")
 const ExpressError = require("./utilities/ExpressError"); //Imports the function from ExpressError.js.
-const Upload = require("./models/upload"); //Link for the upload schema in models
+const Upload = require("./models/upload"); //Link for the upload schema in models.
 const Comment = require("./models/comment");
 const User = require("./models/user");
 
-module.exports.isLoggedIn = (req, res, next) => { //All middleware have req, res and next. The module.exports is exporting this meaning it an be used in other files.
+module.exports.isLoggedIn = (req, res, next) => { //All middleware have req, res and next. The module.exports is exporting this meaning it can be used in other files.
   //console.log(req.user);
   if (!req.isAuthenticated()) { //isAuthenticated is a method bought in by passport. It detects if the currect user is logged in (Authenticated)
     //console.log(req.originalUrl);
@@ -16,7 +16,7 @@ module.exports.isLoggedIn = (req, res, next) => { //All middleware have req, res
   next();
 }
 
-//If there is a currently logged in user, you cannot log in to a new account or register. 
+//Middleware to ensure that if there is a currently logged in user, you cannot log in to a new account or register. 
 module.exports.alreadyAUser = (req, res, next) => {
   if (req.isAuthenticated()) {
     req.flash("error", "You are already logged in!");

@@ -1,7 +1,7 @@
 <% layout("/boilerplate") %>
   <ul id="indexList">
-    <% for (var i=0; i < uploads.length; i++){ 
-      var reFormat = uploads[i].image.url.replace("/upload", "/upload/c_scale,w_1.0"); //Can this be moved to a external js file?
+    <% for (let i=0; i < uploads.length; i++){ 
+      let reFormat = uploads[i].image.url.replace("/upload", "/upload/c_scale,w_1.0");
       %>
       <li class="indexItem">
         <h3><a href="/uploads/<%=uploads[i]._id %>"><%= uploads[i].title%></a></h3>

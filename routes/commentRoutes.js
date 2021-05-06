@@ -10,7 +10,7 @@ const { validateComment, isLoggedIn, isCommentAuthor } = require('../middleware'
 const datePosted = () => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0
   const yyyy = today.getFullYear();
   return dd + '-' + mm + '-' + yyyy;
 }
@@ -27,7 +27,7 @@ router.post("/", isLoggedIn, validateComment, catchAsync(async (req, res) => { /
   res.redirect(`/uploads/${upload._id}`)
 }));
 
-router.delete("/:commentId", isLoggedIn, isCommentAuthor, catchAsync(async (req, res) => {
+router.delete("/:commentId", isLoggedIn, isCommentAuthor, catchAsync(async (req, res) => { //Deletes comment.
   const id = req.params.id
   const commentId = req.params.commentId
   await Upload.findByIdAndUpdate(id, { $pull: { comments: commentId } })

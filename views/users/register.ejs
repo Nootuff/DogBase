@@ -1,7 +1,6 @@
 <% layout("/boilerplate") %>
     <div id="noData" class="hidden subFlash flash errorFlash">Missing data</div>
     <div id="pageContent">
-        
             <div id="loginRegister">
             <h1>Create new account</h1>
             <form action="/users/register" method="POST" enctype="multipart/form-data" novalidate>
@@ -24,7 +23,7 @@
                     <input type="text" id="displayName" name="displayName" name="username" pattern="[^' ']+" class="requiredInput" required><br>
                 </div>
                 <div>
-                    <label for="profileImage">Image</label><br>
+                    <label for="profileImage">Image (not mandatory)</label><br>
                     <input type="file" name="profileImage" id="profileImage" accept="image/*">
                 </div>
                 <button>Submit</button>
@@ -38,6 +37,5 @@
                 <p id="match" class="invalid">Passwords <b>must match</b></p>
             </div>
         </div>
-        
     </div>
     <script src="/javascripts/validateNewUser.js"></script>

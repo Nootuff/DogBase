@@ -1,5 +1,5 @@
 <% layout("/boilerplate") %>
-  <% var picOrNo=(user.profileImage.url !="/assets/placeholder.png" ) ? "shown" : "hidden" ; %>
+  <% let picOrNo=(user.profileImage.url !="/assets/placeholder.png" ) ? "shown" : "hidden" ; %>
     <div id="noData" class="hidden flash subFlash errorFlash">Missing data</div>
     <div id="pageContent">
       <div id="contentForms">

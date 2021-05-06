@@ -4,8 +4,7 @@
     <% if(!currentUser){ %>
     <p><a class="userCtrls userBtn" href="/users/login">Login</a> </p>
     <p><a class="userCtrls userBtn" href="/users/register">Register</a></p>
-    
-    <% } else { %>       
+    <% } else { %> <!--If there is a current user present, render the user controls and new upload button. -->
         <div class="dropdown userCtrls">
         <button  class="nameBtn dropbtn" onclick="menuDrop()"><%= currentUser.displayName %></button>
         <div id="dropdownMenu" class="dropdown-content">
@@ -15,7 +14,6 @@
         </div>
       </div>
       <img src="<%= currentUser.profileImage.url %>" alt="User profile image" onclick="menuDrop()" class="headerUserImg userCtrls dropbtn">
-
       <p><a class="userCtrls userBtn" href="/uploads/new">Upload New</a></p>
     <% } %>
   </div>

@@ -5,19 +5,19 @@ if (process.env.NODE_ENV !== "production") {
 const express = require('express');
 const path = require("path");
 const ejs = require('ejs');
-const engine = require('ejs-mate'); //This npm lets you use your boilerplate.ejs
+const engine = require('ejs-mate'); //This npm lets the site use the boilerplate.ejs
 const mongoose = require('mongoose');
 const Joi = require("joi");
 const session = require("express-session");
 const flash = require('connect-flash');
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const methodOverride = require('method-override'); //THis npm lets you use the edit and delete parts of CRUD.
+const methodOverride = require('method-override'); //THis npm unlocks the CRUD functionality of HTML forms with the put and delete options.
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet'); 
  
-const ExpressError = require("./utilities/ExpressError"); //Imports the function from ExpressError.js.
-const Upload = require("./models/upload"); //Link for the upload schema in models
+const ExpressError = require("./utilities/ExpressError");
+const Upload = require("./models/upload");
 const Comment = require("./models/comment");
 const User = require("./models/user");
 const userRoutes = require("./routes/userRoutes");
@@ -27,7 +27,7 @@ const commentRoutes = require('./routes/commentRoutes');
 const { commentSchema } = require("./schemas.js");
 const catchAsync = require("./utilities/catchAsync");
 
-const app = express(); //Activates express.
+const app = express();
 
 mongoose.connect('mongodb://localhost:27017/ExpressDogProject', {
   useNewUrlParser: true,
@@ -36,13 +36,13 @@ mongoose.connect('mongodb://localhost:27017/ExpressDogProject', {
   useFindAndModify: false
 })
 
-const db = mongoose.connection; //No idea what this code does, seems to just put messages in console log
+const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
   console.log("Database connected");
 });
 
-app.use(express.urlencoded({ extended: true })); //Lets you take the inputted data from the form
+app.use(express.urlencoded({ extended: true })); //Lets you take the inputted data from the form to use methodOverride.
 app.use(methodOverride('_method')); //Activates methodOverride.
 
 app.engine('ejs', engine);
@@ -56,11 +56,11 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: true,
   cookie: {
-    httpOnly: true, //This thing is optional, if its included, the cookie cannot be accessed through or interfered with by a client side script. This is extra security. Hackers cannot see confidential cookies, you should include it. 
+    httpOnly: true, //This is optional, if it's included, the cookie cannot be accessed through or interfered with by a client-side script. This is extra security. Hackers cannot see confidential cookies. 
     // secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //This is when the cookie is programmed to expire. It is todays date, Date.now is in milliseconds. We want this cookie to expire in a week so the sum is 1000 milliseconds in a second, 60 secs in a minute, 60 mins in an hour, 24 hours etc. So the date it will expire is today's date plus that time.
     maxAge: 1000 * 60 * 60 * 24 * 7
-    //All this expiration stuff is because we don't want users to log in and stay logged in, they will get logged out after a week. 
+    //All of this expiration stuff is because we don't want users to log in and stay logged in, they will get logged out after a week. 
 }
 }
 app.use(session(sessionConfig)); //This must be above passposrt.session which is below.
@@ -85,7 +85,7 @@ const connectSrcUrls = [
 ];
 
 const fontSrcUrls = [
-  "https://ka-f.fontawesome.com", //Allows you to use fontAwesome. 
+  "https://ka-f.fontawesome.com", //Allows the use of fontAwesome. 
   "https://fonts.gstatic.com/"
 ];
 app.use(
@@ -113,11 +113,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate())); //User is the const holding the user schema. This line of code is telling the app to use LocalStrategy and the authentication method will be located on the User model and the method is called "authenticate", there is no method in user.js because passport-local imports it itself.
 
-passport.serializeUser(User.serializeUser());//This is something relating to storing the user in the session. Once again, "User" is the const holding our user schema. 
-passport.deserializeUser(User.deserializeUser());//This lets you get the user out of the session, remove them from the session's storage. serializeUser and deserializeUser are methods bought in from passport, you didn't write them. 
+passport.serializeUser(User.serializeUser());//This is relating to storing the user in the session. Once again, "User" is the const holding our user schema. 
+passport.deserializeUser(User.deserializeUser());//This lets you get the user out of the session, remove them from the session's storage. serializeUser and deserializeUser are methods bought in by the passport npm package, I didn't write them anywhere myself. 
 
-
-app.use(function (req, res, next) {//has to come before the route handlers below. These things are called "locals" you have access to them accross the entire website.
+app.use(function (req, res, next) {//has to come before the route handlers below. These things are called "locals" the system has access to them accross the entire website.
   res.locals.currentUser = req.user; 
   res.locals.successFlash = req.flash("success"); 
   res.locals.errorFlash = req.flash("error");
@@ -138,7 +137,7 @@ const validateComment = (req, res, next) => {
   }
 }
 
-app.get('/', async (req, res) =>  {
+app.get('/', async (req, res) =>  { //Loads home page which is set to the main index.
   const uploads = await Upload.find({}).populate("author");
   res.render("uploads/index.ejs", { uploads });
 });
@@ -147,7 +146,7 @@ app.all("*", (req, res, next) => { //app.all means this will activate for all ro
   next(new ExpressError("Page not found.", 404))
 });
 
-app.use((err, req, res, next) => { //err in this case holds the value of the new ExpressError above.
+app.use((err, req, res, next) => { //err in this case holds the value of new ExpressError.
   const { statusCode = 500 } = err //This const is destructured.
   if (!err.message) err.message = "Something went wrong!"
   res.status(statusCode).render("error.ejs", { err });//This is the error handling, this loads the error page and is triggered by something going wrong in any of the async functions, it is triggered by catchAsync. When catchAsync passes to "next" it is activating this route, this is the "next" in that context. Err is the error that has occurred. 

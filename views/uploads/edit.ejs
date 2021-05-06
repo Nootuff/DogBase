@@ -8,7 +8,6 @@
       </div>
       <hr>
       <form action="/uploads/<%= upload._id%>?_method=PUT" method="POST" novalidate class="validated-form">
-        <!--Use multipart/form-data when your form includes any <input type="file"> elements. I think novalidate is something to do with error handling or making sure enough data is input.-->
         <h3 class="editTitle toggleText">Title</h3>
         <input type="text" id="title" name="upload[title]" value="<%= upload.title%>" placeholder="Title here"
           class="requiredInput" required>
@@ -25,4 +24,3 @@
     </div>
   </div>
   <script src="/javascripts/captionProver.js"></script>
-  <!--  <script type="text/javascript" src="newjavascript.js"></script> -->

@@ -1,11 +1,11 @@
 <% layout("/boilerplate") %>
 <%  
-var likes = upload.likes.length-1; //Can all these vars be lets?
-var dislikes = upload.dislikes.length-1;
-var comments = (upload.comments.length == 1) ? "comment" : "comments";
-var reFormat = upload.image.url.replace("/upload", "/upload/c_scale,w_1.0");
-var userOrNo = (currentUser) ? "shown" : "hidden";
-var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "shown" : "hidden";
+let likes = upload.likes.length-1;
+let dislikes = upload.dislikes.length-1;
+let comments = (upload.comments.length == 1) ? "comment" : "comments";
+let reFormat = upload.image.url.replace("/upload", "/upload/c_scale,w_1.0");
+let userOrNo = (currentUser) ? "shown" : "hidden";
+let authorOrNo = (currentUser && !currentUser.posts.includes(upload._id)) ? "shown" : "hidden";
 %>
 <div id="pageContent">
   <section id="showMain">
@@ -38,21 +38,18 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
     <button  class="opinionButton"><i class="fas fa-thumbs-up"></i></button>
     </form>
     <% } %>
-
        <!--UN-like button, removes user to from likes array. Shows when user is in likes array.-->
   <% if(currentUser && upload.likes.includes(currentUser._id) && !upload.dislikes.includes(currentUser._id)){%>
     <form form action="/uploads/<%= upload._id%>/unlike?_method=PUT"  method="POST" class="opinionForm ">
       <button class="opinionButton unlikeButton"><i class="fas fa-thumbs-up"></i></button> 
     </form>
     <% } %>
-
     <!--Dislike button, adds user to dislikes array. Shows when user is not in dislikes array or likes array-->
     <% if(currentUser && !upload.dislikes.includes(currentUser._id)){%>
     <form form action="/uploads/<%= upload._id%>/dislike?_method=PUT"  method="POST" class="opinionForm ">
     <button class="opinionButton"><i class="fas fa-thumbs-down"></i></button> 
   </form>
   <% } %>
-
   <!--Un-dislike button, removes user  from dislike array. Shows when user is in dislikes array.-->
   <% if(currentUser && !upload.likes.includes(currentUser._id) && upload.dislikes.includes(currentUser._id)){%>
   <form form action="/uploads/<%= upload._id%>/undislike?_method=PUT"  method="POST" class="opinionForm ">
@@ -83,7 +80,7 @@ var authorOrNo = (currentUser  && !currentUser.posts.includes(upload._id)) ? "sh
   <% if(currentUser && upload.author.equals(currentUser._id)){%>
   <p id="editLink"><a href="/uploads/<%= upload._id%>/edit">Edit this</a></p>
     <% } %>
-    <% if(currentUser){%> <!--If there IS a current user at all, render this form. -->
+    <% if(currentUser){%> <!--If there IS a current user at all, render the comment form. -->
     <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
       <table>
         <tr>
