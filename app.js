@@ -160,6 +160,8 @@ const validateComment = (req, res, next) => {
 }
 
 app.get('/', async (req, res) =>  { //Loads home page which is set to the main index.
+  console.log(process.env.CLOUDINARY_KEY)
+  console.log(process.env.DB_URL)
   const uploads = await Upload.find({}).populate("author");
   res.render("uploads/index.ejs", { uploads });
 });
