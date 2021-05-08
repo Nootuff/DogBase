@@ -24,7 +24,7 @@ router.post("/", isLoggedIn, validateComment, catchAsync(async (req, res) => { /
   await comment.save();
   await upload.save();
   req.flash("success", "Comment posted.");
-  res.redirect(`/uploads/${upload._id}`)
+  res.redirect(`/uploads/${upload._id}`);
 }));
 
 router.delete("/:commentId", isLoggedIn, isCommentAuthor, catchAsync(async (req, res) => { //Deletes comment.
@@ -33,7 +33,7 @@ router.delete("/:commentId", isLoggedIn, isCommentAuthor, catchAsync(async (req,
   await Upload.findByIdAndUpdate(id, { $pull: { comments: commentId } })
   await Comment.findByIdAndDelete(commentId);
   req.flash("success", "Comment deleted.");
-  res.redirect(`/uploads/${id}`)
+  res.redirect(`/uploads/${id}`);
 }));
 
 module.exports = router;

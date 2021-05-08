@@ -28,7 +28,7 @@ router.get("/register", alreadyAUser, function (req, res) { //Loads register pag
     res.render("users/register.ejs");
 });
 
-router.post("/register", multerUpload.single('profileImage'), authNewUser, existDisplayName, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
+router.post("/register", multerUpload.single('profileImage'), authNewUser, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
     try {
         const joinDate = () => {
             const today = new Date();
@@ -105,7 +105,7 @@ router.put('/viewMode', isLoggedIn, catchAsync(async (req, res,) => { //The rout
         user.darkMode = false;
     }
     await user.save();
-    res.redirect("/users/edit")
+    res.redirect("/users/edit");
 }));
 
 router.put('/destroyUserPic', isLoggedIn, catchAsync(async (req, res,) => { //Delete user profile pic and replace with default.
@@ -115,7 +115,7 @@ router.put('/destroyUserPic', isLoggedIn, catchAsync(async (req, res,) => { //De
     user.profileImage.filename = "User-profile-image";
     await user.save();
     req.flash("success", "Image deleted.");
-    res.redirect("/users/edit")
+    res.redirect("/users/edit");
 }));
 
 router.put('/updateProfilePic', multerUpload.single('profileImage'), isLoggedIn, catchAsync(async (req, res,) => { //Update user display image with new image.
@@ -125,23 +125,23 @@ router.put('/updateProfilePic', multerUpload.single('profileImage'), isLoggedIn,
     user.profileImage = profileImage;
     await user.save();
     req.flash("success", "Update Success!");
-    res.redirect("/users/edit")
+    res.redirect("/users/edit");
 }));
 
 router.get("/:id", catchAsync(async (req, res) => { //This renders the userpage.
     const find = req.params.id;
     const user = await (User.findById(find)).populate("posts");
-    res.render("users/userPage.ejs", { user })
+    res.render("users/userPage.ejs", { user });
 }));
 
 router.get("/:id/favourites", catchAsync(async (req, res) => { //This renders the userpage favs tab. 
     const find = req.params.id;
     const user = await (User.findById(find)).populate({ path: "favourites", populate: { path: "author" } });
-    res.render("users/userFavs.ejs", { user })
+    res.render("users/userFavs.ejs", { user });
 }));
 
 router.post("/login", alreadyAUser, passport.authenticate("local", { failureFlash: true, failureRedirect: "/users/login" }), (req, res) => { //Lets a user log in to their account.
-    req.flash("success", "Welcome back " + req.user.username + "!")
+    req.flash("success", "Welcome back " + req.user.username + "!");
     const redirectUrl = req.session.returnTo || "/uploads"; //When user logs in, either redirect them to the page held in returnTo as defined in middleware.js OR redirect them to the main index page. 
     delete req.session.returnTo; //We don't need the returnTo data in the session after the redirect so delete just deletes it from the object, otherwise all these returnTo's would clutter up the object.
     res.redirect(redirectUrl);

@@ -5,13 +5,10 @@ const Comment = require("./models/comment");
 const User = require("./models/user");
 
 module.exports.isLoggedIn = (req, res, next) => { //All middleware have req, res and next. The module.exports is exporting this meaning it can be used in other files.
-  //console.log(req.user);
   if (!req.isAuthenticated()) { //isAuthenticated is a method bought in by passport. It detects if the currect user is logged in (Authenticated)
-    //console.log(req.originalUrl);
-    //req.session.returnTo = req.originalUrl originalUrl holds the URL they are requesting/page they want to go to when they hit the login screen maybe? returnTo will be the url we redirect the user back to. I think putting req.session before it adds the data of what they were trying to access to their session cookies.
-    req.session.returnTo = req.originalUrl //originalUrl holds the URL they are requesting/page they want to go to when they hit the login screen maybe? returnTo will be the url we redirect the user back to. I think putting req.session before it adds the data of what they were trying to access to their session cookies.
+    req.session.returnTo = req.originalUrl //originalUrl holds the URL the user is requesting/page they want to go to when they hit the login screen. returnTo will be the url we redirect the user back to. Putting req.session before it adds the data of what they were trying to access to their session cookies.
     req.flash("error", "You must be signed in to do this.");
-    return res.redirect("/users/login"); //These things activate if the user does not read as logged in. Always have a return on a redirect in an if statement. 
+    return res.redirect("/users/login"); //These activate if the user does not read as logged in. You should always have a return on a redirect in an if statement. 
   }
   next();
 }
@@ -36,9 +33,10 @@ module.exports.validateUpload = (req, res, next) => {
   }
 }
 
+//Middleware to detect if the current user is the author of this post.
 module.exports.isAuthor = async (req, res, next) => {
   const idHolder = req.params.id;
-  const upload = await Upload.findById(idHolder);  //Look to see if the user whose logged in right now's Id equals (is the same as) the current campground ID. 
+  const upload = await Upload.findById(idHolder);  //Look to see if the user whose logged in right now's Id equals (is the same as) the current post ID. 
   if (!upload.author.equals(req.user._id)) {
     req.flash("error", "You don't have permission to do this.");
     return res.redirect(`/uploads/${idHolder}`);
@@ -46,8 +44,9 @@ module.exports.isAuthor = async (req, res, next) => {
   next(); //The next lets you move on with whatever you want to do once the function has ascertained you have permission.
 }
 
+//Middleware to detect if the current user is the author of this comment.
 module.exports.isCommentAuthor = async (req, res, next) => {
-  const idHolder = req.params.id; //System seems to take these Ids from the URL 
+  const idHolder = req.params.id;
   const commentIdHolder = req.params.commentId;
   const comment = await Comment.findById(commentIdHolder);
   if (!comment.author.equals(req.user._id)) {
@@ -58,15 +57,16 @@ module.exports.isCommentAuthor = async (req, res, next) => {
 }
 
 module.exports.validateComment = (req, res, next) => {
-  const { error } = commentSchema.validate(req.body)
+  const { error } = commentSchema.validate(req.body);
   if (error) {
-    const msg = error.details.map(el => el.message).join(",") //If there's more than 1 message, join them all together with a comment. 
+    const msg = error.details.map(el => el.message).join(",")
     throw new ExpressError(msg, 400)
   } else {
     next();
   }
 }
 
+//Middleware to see if the current user has already liked this post.
 module.exports.hasLiked = async (req, res, next) => {
   const idHolder = req.params.id;
   const upload = await Upload.findById(idHolder);
@@ -77,6 +77,7 @@ module.exports.hasLiked = async (req, res, next) => {
   next();
 }
 
+//Middleware to see if the current user has already disliked this post.
 module.exports.hasDisliked = async (req, res, next) => {
   const idHolder = req.params.id;
   const upload = await Upload.findById(idHolder);
@@ -87,6 +88,7 @@ module.exports.hasDisliked = async (req, res, next) => {
   next();
 }
 
+//Middleware to see if the current user has already faved this post.
 module.exports.hasFavd = async (req, res, next) => {
   const idHolder = req.params.id;
   const upload = await Upload.findById(idHolder);
@@ -98,30 +100,43 @@ const user = await User.findById(req.user._id);
   next();
 }
 
+//Middleware to check a new users account creation details.
 module.exports.authNewUser = async (req, res, next) => {
-  //Check if username has been taken already
+  //Check if username has been taken already.
   const username = req.body.username;
   const existUsername = await User.findOne({username: username});
-  //Check if inputted passwords match
+//Check to see if email has been taken.
+  const email = req.body.email;
+  const existEmail = await User.findOne({email: email});
+  //Check to see if display name is taken.
+  const displayName = req.body.displayName;
+  const existDisplayName = await User.findOne({displayName: displayName});
+  //Check if inputted passwords match.
   const password = req.body.password;
   const matchPass = req.body.matchPass;
 //Regex system for checking password validity.
   const passRegex = /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,30}$/;
   const passPattern = new RegExp(passRegex);
   const passCheck = passPattern.test(password);
-  //Check if email is valid
-  const email = req.body.email;
+  //Check if email is valid.
   const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
   const emailPattern = new RegExp(emailRegex);
   const emailCheck = emailPattern.test(email); 
+  //Error messages and trigger criteria.
   if(req.body.username.length < 4){
   req.flash("error", "Username must be at least 4 characters long");
 return res.redirect(`/users/register`);
-  }  else if(username.includes(" ")){
+  } else if(username.includes(" ")){
     req.flash("error", "Username cannot include spaces");
     return res.redirect(`/users/register`);
   } else if (existUsername) {
     req.flash("error", "Username already in use");
+    return res.redirect(`/users/register`);
+   } else if (existEmail) {
+    req.flash("error", "Email already in use");
+    return res.redirect(`/users/register`);
+   } else if (existDisplayName) {
+    req.flash("error", "Display name already in use");
     return res.redirect(`/users/register`);
    } else if(emailCheck == false){
     req.flash("error", "Invalid email.");
@@ -139,18 +154,19 @@ return res.redirect(`/users/register`);
   next();
 }
 
+//Middleware that checks to see if the display name the user has chosen is already in use or does not meet certain criteria on the user edit page.
 module.exports.existDisplayName = async (req, res, next) => {
   const displayName =  req.body.displayName;
   const existDisplayName = await User.findOne({displayName: displayName});
   if (existDisplayName) {
     req.flash("error", "Display name already in use");
-    return res.redirect("back");
-   } else if(displayName.length > 30){
+    return res.redirect("/users/edit");
+   } else if(displayName.length > 20){
     req.flash("error", "Display name too long");
-    return res.redirect("back");
+    return res.redirect("/users/edit");
    } else if (displayName.includes(" ")){
     req.flash("error", "Display name cannot include spaces");
-    return res.redirect("back");
+    return res.redirect("/users/edit");
    }
   next();
 }

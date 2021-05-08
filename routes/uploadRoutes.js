@@ -96,7 +96,7 @@ router.put('/:id/dislike', isLoggedIn, hasDisliked, catchAsync(async (req, res,)
     await Upload.findByIdAndUpdate(upload, { $pull: { likes: req.user._id } }); //Remove user from likes array.
   }
   await upload.save();
-  res.redirect(`/uploads/${upload._id}`)
+  res.redirect(`/uploads/${upload._id}`);
 }));
 
 router.put('/:id/undislike', isLoggedIn, catchAsync(async (req, res,) => { //Remove user from dislikes array, replace undislike button with dislike .
@@ -113,7 +113,7 @@ router.put('/:id/fav', isLoggedIn, hasFavd, catchAsync(async (req, res,) => { //
   user.favourites.push(upload);
   await user.save();
   req.flash("success", "Fav'd!");
-  res.redirect(`/uploads/${upload._id}`)
+  res.redirect(`/uploads/${upload._id}`);
 }));
 
 router.put('/:id/unFav', isLoggedIn, catchAsync(async (req, res,) => { //Remove post from user fav array route.

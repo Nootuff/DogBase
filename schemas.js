@@ -1,7 +1,7 @@
 const BaseJoi = require('joi');
 const sanitizeHtml = require('sanitize-html');
 
-const extension = (joi) => ({ //This is a function using sanitizeHtml up above to get rid of any html script a user might input intp a text input to hack the site. 
+const extension = (joi) => ({ //This is a function using sanitizeHtml required up above to get rid of any html script a user might input into a text input to hack the site. 
     type: 'string',
     base: joi.string(),
     messages: {
@@ -11,7 +11,7 @@ const extension = (joi) => ({ //This is a function using sanitizeHtml up above t
         escapeHTML: {
             validate(value, helpers) {
                 const clean = sanitizeHtml(value, {
-                    allowedTags: [], //This is where you but the html tags you are allowing users to enter into inputs, it is empty, nothing is allowed. 
+                    allowedTags: [], //This is where we put the html tags the site is allowing users to enter into inputs, it is empty, nothing is allowed. 
                     allowedAttributes: {}, //This is the same, nothing is allowed, no fancy stuff. 
                 });
                 if (clean !== value) return helpers.error('string.escapeHTML', { value })
