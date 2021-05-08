@@ -173,6 +173,8 @@ app.use((err, req, res, next) => { //err in this case holds the value of new Exp
   res.status(statusCode).render("error.ejs", { err });//This is the error handling, this loads the error page and is triggered by something going wrong in any of the async functions, it is triggered by catchAsync. When catchAsync passes to "next" it is activating this route, this is the "next" in that context. Err is the error that has occurred. 
 })
 
-app.listen(3000, function () {
-  console.log("Site is live"); //String template literal, accuratley shows the port you are serving on Heroku or local. 
+const port = process.env.PORT || 3000;
+
+app.listen(port, function () {
+  console.log(`Site is live on port ${port}`); //String template literal, accuratley shows the port you are serving on Heroku or local. 
 });
