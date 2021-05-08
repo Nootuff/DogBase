@@ -24,12 +24,16 @@ const userRoutes = require("./routes/userRoutes");
 const uploadRoutes = require('./routes/uploadRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 
+const expressSession = require('express-session');
+const MongoStore = require('connect-mongo'); //Version 4.4.1 is installed.
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/ExpressDogProject';
 const { commentSchema } = require("./schemas.js");
 const catchAsync = require("./utilities/catchAsync");
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/ExpressDogProject', {
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -48,11 +52,28 @@ app.use(methodOverride('_method')); //Activates methodOverride.
 app.engine('ejs', engine);
 app.set("views", path.join(__dirname, "/views"))
 app.use(express.static(path.join(__dirname + '/public')));
-app.use(mongoSanitize());
+app.use(mongoSanitize({
+    replaceWith: '_'
+}));
+
+const secret = process.env.SECRET || "secretHere";
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret //The value of "secret" is set to the data in const secret, no need to write it twice.
+  }
+});
+
+store.on("error", function(error){
+  console.log("Session Store error!", error)
+  });
 
 const sessionConfig = {
+  store,
   name: "dogSession", //This is the name of the session id.
-  secret: "secretHere",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
