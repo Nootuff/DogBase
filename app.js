@@ -160,10 +160,10 @@ const validateComment = (req, res, next) => {
 }
 
 app.get('/', async (req, res) =>  { //Loads home page which is set to the main index.
-  console.log("Here it is");
-  console.log(" cloud_name" + process.env.CLOUDINARY_CLOUD_NAME);
-  console.log("api_key" + process.env.CLOUDINARY_KEY);
-  console.log("api_secret" + process.env.CLOUDINARY_SECRET);
+  console.log("Cloudinary var details");
+  console.log(" cloud_name " + process.env.CLOUDINARY_CLOUD_NAME);
+  console.log("api_key " + process.env.CLOUDINARY_KEY);
+  console.log("api_secret " + process.env.CLOUDINARY_SECRET);
   const uploads = await Upload.find({}).populate("author");
   res.render("uploads/index.ejs", { uploads });
 });
