@@ -51,7 +51,7 @@ app.use(express.urlencoded({ extended: true })); //Lets you take the inputted da
 app.use(methodOverride('_method')); //Activates methodOverride.
 
 app.engine('ejs', engine);
-app.set("views", path.join(__dirname, "/views"));
+app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname + '/public')));
 app.use(mongoSanitize({
     replaceWith: '_'
@@ -160,10 +160,6 @@ const validateComment = (req, res, next) => {
 }
 
 app.get('/', async (req, res) =>  { //Loads home page which is set to the main index.
-  console.log("Cloudinary var details");
-  console.log("cloud_name " + process.env.CLOUDINARY_CLOUD_NAME);
-  console.log("api_key " + process.env.CLOUDINARY_KEY);
-  console.log("api_secret " + process.env.CLOUDINARY_SECRET);
   const uploads = await Upload.find({}).populate("author");
   res.render("uploads/index.ejs", { uploads });
 });
