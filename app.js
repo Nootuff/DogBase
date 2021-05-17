@@ -51,7 +51,7 @@ app.use(express.urlencoded({ extended: true })); //Lets you take the inputted da
 app.use(methodOverride('_method')); //Activates methodOverride.
 
 app.engine('ejs', engine);
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "/views"));
 app.use(express.static(path.join(__dirname + '/public')));
 app.use(mongoSanitize({
     replaceWith: '_'
