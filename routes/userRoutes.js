@@ -1,17 +1,3 @@
-/*
-username: Adam
-email: adamwalkerlondon@gmail.com
-pass: Winter01
-
-username: EmochNoh
-  email: blue.emu@hotmail.com
-  pass: Jackson1
-
-  username: Tester
-  email: tester@hotmail.com
-  pass: Testing01
-*/
-
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
