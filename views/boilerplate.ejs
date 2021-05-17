@@ -2,7 +2,7 @@
 <html class="toggleText">
 <% let viewMode; if(!currentUser){ viewMode="lightMode" ; } else{ if(currentUser.darkMode==false){ viewMode="lightMode"; } else{ viewMode="darkMode"; }} %>
     <head>
-        <title>Welcome to Dog Project</title>
+        <title>Welcome to dogBase</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
          <!-- This works because of the app.use statment in app.js setting dirname to public-->
         <link rel="stylesheet" href="/styles/styling.css"> <!--The site's view mode is set by the ternary operator above looking for a user and their preferences.-->
