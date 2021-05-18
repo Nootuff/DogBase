@@ -9,7 +9,8 @@ let authorOrNo = (currentUser && !currentUser.posts.includes(upload._id)) ? "sho
 %>
 <div id="pageContent">
   <section id="showMain">
-  <h2 class="toggleText"><%= upload.title %></h2>
+  <h2 class="toggleText title"><%= upload.title %></h2>
+  <div class="nonImgContainer">
 <table>
   <tr>
     <td >
@@ -27,11 +28,12 @@ let authorOrNo = (currentUser && !currentUser.posts.includes(upload._id)) ? "sho
     <td><a href="#commentSection"><%= upload.comments.length %> <%= comments %></a></td>
   </tr>
 </table>
+</div>
 <div class="imgContainer">  
   <img src="<%= reFormat %>" class="mainImg" alt="<%= upload.image.filename %>">
   </div>
   <br>
-<div class="<%= userOrNo %> <%= authorOrNo %>">
+<div class="<%= userOrNo %> <%= authorOrNo %> nonImgContainer">
   <!--like button, adds user to likes array. Shows when user is not in dislikes array or likes array-->
   <% if(currentUser && !upload.likes.includes(currentUser._id) ){%>
   <form form action="/uploads/<%= upload._id%>/like?_method=PUT"  method="POST" class="opinionForm "> 
@@ -71,8 +73,9 @@ let authorOrNo = (currentUser && !currentUser.posts.includes(upload._id)) ? "sho
     <br>
     </div>
   <% if(upload.caption != " " ){ %>
+    
   <section id="caption">
-  <p class="toggleText"><%= upload.caption %></p>
+  <p class="toggleText nonImgContainer"><%= upload.caption %></p>
   </section>
   <% } %>
   <hr>

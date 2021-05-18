@@ -4,7 +4,8 @@
       let reFormat = uploads[i].image.url.replace("/upload", "/upload/c_scale,w_1.0");
       %>
       <li class="indexItem">
-        <h3><a href="/uploads/<%=uploads[i]._id %>"><%= uploads[i].title%></a></h3>
+        <h3 class="title"><a href="/uploads/<%=uploads[i]._id %>"><%= uploads[i].title%></a></h3>
+        <div class="nonImgContainer">
   <table>
       <tr>
         <td>
@@ -25,10 +26,11 @@
             </td>
         </tr>
       </table> 
+      </div>
       <div class="imgContainer">     
       <a href="/uploads/<%=uploads[i]._id %>"><img class="mainImg" src="<%= reFormat %>" alt="Index image"></a>
       </div>
-      <p><a href="/uploads/<%=uploads[i]._id %>#commentSection">Comments: <%= uploads[i].comments.length %> <i class="far fa-comment-alt"></i></a></p>
+      <p class="nonImgContainer"><a href="/uploads/<%=uploads[i]._id %>#commentSection">Comments: <%= uploads[i].comments.length %> <i class="far fa-comment-alt"></i></a></p>
             </li>
     <% } %>
   </ul>

@@ -12,7 +12,7 @@ const session = require("express-session");
 const flash = require('connect-flash');
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const methodOverride = require('method-override'); //THis npm unlocks the CRUD functionality of HTML forms with the put and delete options.
+const methodOverride = require('method-override'); //This npm unlocks the CRUD functionality of HTML forms with the put and delete options.
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet'); 
  
