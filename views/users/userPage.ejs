@@ -17,6 +17,16 @@
           </td>
         </tr>
       </table>
+      <div id="userDetailsBelow">
+       
+        <h2>
+          <%= user.displayName %>
+        </h2>
+        <p>Posts: <%= user.posts.length %> Favs: <%= user.favourites.length %>
+        </p>
+        <p>Date joined: <%= user.dateJoined %>
+        </p>
+      </div>
       <table>
         <td>
           <h3>Posts</h3>

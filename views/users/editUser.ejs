@@ -4,8 +4,8 @@
     <div id="pageContent">
       <div id="contentForms">
         <h2>Edit your account details</h2>
-        <div class="flex-container">
-          <div class="flex-child">
+        <div class="userFormContainer">
+          <div class="userForm">
             <form action="/users/updateUser?_method=PUT" method="POST" class="validated-form" novalidate>
               <h3>Change Display name</h3>
               <label for="displayName">Display name</label>
@@ -16,7 +16,7 @@
               <button class="formButton userUpdate">Update Display name</button>
             </form>
           </div>
-          <div class="flex-child">
+          <div class="userForm">
             <h3>Change profile picture</h3>
             <img src="<%= user.profileImage.url %>" id="editUserImg">
             <form action="/users/updateProfilePic?_method=PUT" method="POST" enctype="multipart/form-data">

@@ -1,56 +1,67 @@
 <% layout("/boilerplate") %>
   <div id="pageContent">
-      <div id="userPage">
-        <table>
-          <tr>
-            <td>
-              <img src="<%= user.profileImage.url %>" id="userPageImg">
-            </td>
-            <td id="userDetailsSide">
-              <h2>
-                <%= user.displayName %>
-              </h2>
-              <p>Posts: <%= user.posts.length %> Favs: <%= user.favourites.length %>
-              </p>
-              <p>Date joined: <%= user.dateJoined %>
-              </p>
-            </td>
-          </tr>
-        </table>
-        <table>
+    <div id="userPage">
+      <table>
+        <tr>
           <td>
-            <h3><a href="/users/<%=user._id %>">Posts</a></h3>
+            <img src="<%= user.profileImage.url %>" id="userPageImg">
           </td>
-          <td>
-            <h3>Favourites</h3>
+          <td id="userDetailsSide">
+            <h2>
+              <%= user.displayName %>
+            </h2>
+            <p>Posts: <%= user.posts.length %> Favs: <%= user.favourites.length %>
+            </p>
+            <p>Date joined: <%= user.dateJoined %>
+            </p>
           </td>
-        </table>
-        <hr>
-        <% if(!user.favourites.length==0){ %>         
-            <ul>
-              <% for (let i = user.favourites.length - 1; i >= 0; i--){ %>   
-              <li class="liBorder">
-                <table>
-                  <tr>
-                    <td><img src="<%= user.favourites[i].image.url %>" class="userListImg"></td>
-                    <td><a href="/uploads/<%=user.favourites[i]._id %>">
-                        <%=user.favourites[i].title %>
-                      </a>
-                      <br>
-                      <p class="smallerText">By:<a href="/users/<%=user.favourites[i].author._id %>">
-                          <%=user.favourites[i].author.displayName %>
-                        </a></p>
-                      <p>Likes: <%=user.favourites[i].likes.length-1 %> Dislikes:
-                          <%=user.favourites[i].dislikes.length-1 %> Comments: <%=user.favourites[i].comments.length %></p>
-                          <p>Posted: <%= user.favourites[i].datePosted%> </p>
-                    </td>
-                  </tr>
-                </table>
-              </li>
-              <% }%> 
-            </ul>
-            <% } else { %>
-              <p>This user currently has no fav'd posts.</p>
-              <% } %>
-      </div>  
+        </tr>
+      </table>
+      <div id="userDetailsBelow">
+        <h2>
+          <%= user.displayName %>
+        </h2>
+        <p>Posts: <%= user.posts.length %> Favs: <%= user.favourites.length %>
+        </p>
+        <p>Date joined: <%= user.dateJoined %>
+        </p>
+      </div>
+      <table>
+        <td>
+          <h3><a href="/users/<%=user._id %>">Posts</a></h3>
+        </td>
+        <td>
+          <h3>Favourites</h3>
+        </td>
+      </table>
+      <hr>
+      <% if(!user.favourites.length==0){ %>
+        <ul>
+          <% for (let i=user.favourites.length - 1; i>= 0; i--){ %>
+            <li class="liBorder">
+              <table>
+                <tr>
+                  <td><img src="<%= user.favourites[i].image.url %>" class="userListImg"></td>
+                  <td><a href="/uploads/<%=user.favourites[i]._id %>">
+                      <%=user.favourites[i].title %>
+                    </a>
+                    <br>
+                    <p class="smallerText">By:<a href="/users/<%=user.favourites[i].author._id %>">
+                        <%=user.favourites[i].author.displayName %>
+                      </a></p>
+                    <p>Likes: <%=user.favourites[i].likes.length-1 %> Dislikes:
+                        <%=user.favourites[i].dislikes.length-1 %> Comments: <%=user.favourites[i].comments.length %>
+                    </p>
+                    <p>Posted: <%= user.favourites[i].datePosted%>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </li>
+            <% }%>
+        </ul>
+        <% } else { %>
+          <p>This user currently has no fav'd posts.</p>
+          <% } %>
+    </div>
   </div>

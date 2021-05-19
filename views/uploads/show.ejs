@@ -96,17 +96,20 @@
             <hr>
             <div class="<%= userOrNo %>">
               <% if(currentUser && upload.author.equals(currentUser._id)){%>
+                <div class="nonImgContainer">
                 <p id="editLink"><a href="/uploads/<%= upload._id%>/edit">Edit this</a></p>
+              </div>
                 <% } %>
                   <% if(currentUser){%>
+                    <div class="nonImgContainer">
                     <!--If there IS a current user at all, render the comment form. -->
-                    <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
+                    <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form" >
                       <table>
                         <tr>
                           <td>
                             <img class="commentImg" src="<%= currentUser.profileImage.url %>">
                           </td>
-                          <td>
+                          <td id="commentInput">
                             <label for="body" class="toggleText">
                               <h3>Leave a comment</h3>
                             </label>
@@ -118,6 +121,7 @@
                         </tr>
                       </table>
                     </form>
+                  </div>
                     <% } %>
             </div>
       </section>
