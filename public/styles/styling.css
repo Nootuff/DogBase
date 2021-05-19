@@ -56,19 +56,26 @@ header {
   cursor: pointer;
 }
 
+.userCtrls {
+  display: inline-block;
+  float: left;
+  margin-right: 8px;
+}
+
 .dropbtn:hover, .userBtn:hover {
   background-color: var(--white-color);
   color: var(--blue-color);
 }
 
 /* Header dropdown styles */
+
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-.dropbtn{
-background-color: transparent;
+.dropbtn {
+  background-color: transparent;
 }
 
 .dropdown-content {
@@ -119,7 +126,7 @@ hr {
   margin-top: 20px;
 }
 
-.title{
+.title {
   margin-left: 10px;
 }
 
@@ -139,7 +146,7 @@ hr {
   width: 100%;
 }
 
-.nonImgContainer{
+.nonImgContainer {
   margin-left: 10px;
 }
 
@@ -167,12 +174,8 @@ hr {
 }
 
 #showMain {
- width: 100%
+  width: 100%
 }
-
-
-
-
 
 /* Opinion section of show page*/
 
@@ -304,7 +307,7 @@ hr {
   width: 90%;
   border: 2px solid var(--blue-color);
   border-radius: 3px;
-  padding: 8px; 
+  padding: 8px;
 }
 
 .userForm:first-child {
@@ -354,7 +357,7 @@ hr {
   color: var(--white-color);
 }
 
-#commentInput{
+#commentInput {
   width: 100%;
 }
 
@@ -377,7 +380,7 @@ hr {
   display: none;
 }
 
-#userDetailsBelow{
+#userDetailsBelow {
   margin-left: 5px;
   display: block;
 }
@@ -398,7 +401,7 @@ hr {
 footer {
   padding: 40px 0;
   width: 100%;
- /* height: 100px; */
+  /* height: 100px; */
   position: relative;
   bottom: 0;
   left: 0;
@@ -515,48 +518,35 @@ input {
   background-color: var(--red-color);
 }
 
-@media only screen and (min-width: 400px) {
-
-}
-
 @media only screen and (min-width: 700px) {
-main{
-  margin-top: 190px;
-}
-
-header{
-  height: 130px;
-}
-
-  .userCtrls {
-    display: inline-block;
-    float: right;
-    margin-right: 8px;
+  main {
+    margin-top: 190px;
   }
-  
+  header {
+    height: 130px;
+  }
+  .userCtrls {
+    float: right;
+  }
   #userInterface {
     margin-top: -70px;
   }
-
   .userFormContainer {
     display: flex;
   }
-
   .userForm {
     flex: 1;
     margin: 0;
     height: 400px;
   }
-
   .userForm:first-child {
     margin-right: 20px;
   }
-
   #userDetailsSide {
     margin-left: 7px;
     display: block;
   }
-  #userDetailsBelow{
+  #userDetailsBelow {
     display: none;
   }
 }
@@ -568,26 +558,21 @@ header{
     padding: 0 15px;
     width: 90%;
   }
-
   #pageContent {
     padding: 0 15px;
     width: 90%;
   }
-
   .indexItem {
     padding: 5px 28px 10px;
     width: 90%;
   }
-  
   #showMain {
     width: 98%;
     margin: auto;
-   }
-
-   .mainImg {
+  }
+  .mainImg {
     max-width: 80%;
   }
-
   footer {
     font-size: 17px;
     text-align: left;
