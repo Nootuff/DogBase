@@ -1,6 +1,5 @@
 <% layout("/boilerplate") %>
   <div id="pageContent">
-    <div class="shortPageContainer">
       <div id="userPage">
         <table>
           <tr>
@@ -27,10 +26,10 @@
           </td>
         </table>
         <hr>
-        <% if(!user.favourites.length==0){ %>
-          <% for (var i=0; i < user.favourites.length; i++){ %>
+        <% if(!user.favourites.length==0){ %>         
             <ul>
-              <li>
+              <% for (let i = user.favourites.length - 1; i >= 0; i--){ %>   
+              <li class="liBorder">
                 <table>
                   <tr>
                     <td><img src="<%= user.favourites[i].image.url %>" class="userListImg"></td>
@@ -42,15 +41,16 @@
                           <%=user.favourites[i].author.displayName %>
                         </a></p>
                       <p>Likes: <%=user.favourites[i].likes.length-1 %> Dislikes:
-                          <%=user.favourites[i].dislikes.length-1 %> Comments: <%=user.favourites[i].comments.length %>
+                          <%=user.favourites[i].dislikes.length-1 %> Comments: <%=user.favourites[i].comments.length %></p>
+                          <p>Posted: <%= user.favourites[i].datePosted%> </p>
                     </td>
                   </tr>
                 </table>
               </li>
+              <% }%> 
             </ul>
-            <% }} else { %>
+            <% } else { %>
               <p>This user currently has no fav'd posts.</p>
               <% } %>
-      </div>
-    </div>
+      </div>  
   </div>

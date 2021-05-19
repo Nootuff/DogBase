@@ -1,6 +1,6 @@
 <% layout("/boilerplate") %>
   <ul id="indexList">
-    <% for (let i=0; i < uploads.length; i++){ 
+    <% for (let i = uploads.length - 1; i >= 0; i--) { 
       let reFormat = uploads[i].image.url.replace("/upload", "/upload/c_scale,w_1.0");
       %>
       <li class="indexItem">

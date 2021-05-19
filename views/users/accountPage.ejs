@@ -31,9 +31,9 @@
       </table>
       <hr>
       <% if(!user.posts.length==0){ %>
-        <% for (var i=0; i < user.posts.length; i++){ %>
           <ul>
-            <li>
+            <% for (let i = user.posts.length - 1; i >= 0; i--){ %>
+            <li class="liBorder">
               <table>
                 <tr>
                   <td><img src="<%= user.posts[i].image.url %>" class="userListImg"></td>
@@ -42,13 +42,15 @@
                     </a>
                     <br>
                     <p>Likes: <%=user.posts[i].likes.length-1 %> Dislikes: <%=user.posts[i].dislikes.length-1 %>
-                          Comments: <%=user.posts[i].comments.length %>
+                          Comments: <%=user.posts[i].comments.length %></p>
+                          <p>Posted: <%= user.posts[i].datePosted%> </p>
                   </td>
                 </tr>
               </table>
             </li>
+            <% }%> 
           </ul>
-          <% }} else { %>
+          <% } else { %>
             <p>You currently have no posts, why not <a href="/uploads/new">make one</a>?</p>
             <% } %>
     </div>

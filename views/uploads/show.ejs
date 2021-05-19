@@ -1,134 +1,159 @@
 <% layout("/boilerplate") %>
-<%  
-let likes = upload.likes.length-1;
-let dislikes = upload.dislikes.length-1;
-let comments = (upload.comments.length == 1) ? "comment" : "comments";
-let reFormat = upload.image.url.replace("/upload", "/upload/c_scale,w_1.0");
-let userOrNo = (currentUser) ? "shown" : "hidden";
-let authorOrNo = (currentUser && !currentUser.posts.includes(upload._id)) ? "shown" : "hidden";
-%>
-<div id="pageContent">
-  <section id="showMain">
-  <h2 class="toggleText title"><%= upload.title %></h2>
-  <div class="nonImgContainer">
-<table>
-  <tr>
-    <td >
-      <span class="toggleText">By:</span> <a href="/users/<%= upload.author._id  %>"><%= upload.author.displayName %></a>
-      </td>
-     <td class="toggleText">
-    Posted: <%= upload.datePosted %>
-      </td>
-    </tr>
-  </table>
-  <table>
-  <tr>
-    <td class ="likes">Likes: <%= likes %></td>
-    <td class ="dislikes">Dislikes: <%= dislikes %></td>
-    <td><a href="#commentSection"><%= upload.comments.length %> <%= comments %></a></td>
-  </tr>
-</table>
-</div>
-<div class="imgContainer">  
-  <img src="<%= reFormat %>" class="mainImg" alt="<%= upload.image.filename %>">
-  </div>
-  <br>
-<div class="<%= userOrNo %> <%= authorOrNo %> nonImgContainer">
-  <!--like button, adds user to likes array. Shows when user is not in dislikes array or likes array-->
-  <% if(currentUser && !upload.likes.includes(currentUser._id) ){%>
-  <form form action="/uploads/<%= upload._id%>/like?_method=PUT"  method="POST" class="opinionForm "> 
-    <button  class="opinionButton"><i class="fas fa-thumbs-up"></i></button>
-    </form>
-    <% } %>
-       <!--UN-like button, removes user to from likes array. Shows when user is in likes array.-->
-  <% if(currentUser && upload.likes.includes(currentUser._id) && !upload.dislikes.includes(currentUser._id)){%>
-    <form form action="/uploads/<%= upload._id%>/unlike?_method=PUT"  method="POST" class="opinionForm ">
-      <button class="opinionButton unlikeButton"><i class="fas fa-thumbs-up"></i></button> 
-    </form>
-    <% } %>
-    <!--Dislike button, adds user to dislikes array. Shows when user is not in dislikes array or likes array-->
-    <% if(currentUser && !upload.dislikes.includes(currentUser._id)){%>
-    <form form action="/uploads/<%= upload._id%>/dislike?_method=PUT"  method="POST" class="opinionForm ">
-    <button class="opinionButton"><i class="fas fa-thumbs-down"></i></button> 
-  </form>
-  <% } %>
-  <!--Un-dislike button, removes user  from dislike array. Shows when user is in dislikes array.-->
-  <% if(currentUser && !upload.likes.includes(currentUser._id) && upload.dislikes.includes(currentUser._id)){%>
-  <form form action="/uploads/<%= upload._id%>/undislike?_method=PUT"  method="POST" class="opinionForm ">
-    <button class="opinionButton unDislikeButton"><i class="fas fa-thumbs-down"></i></button> 
-  </form>
-  <% } %>
-  <br>
-  <br>
-  <% if(currentUser && !currentUser.posts.includes(upload._id) && !currentUser.favourites.includes(upload._id)){%>
-    <form form action="/uploads/<%= upload._id%>/fav?_method=PUT"  method="POST" class="favForm "> 
-      <button class="favButton">Favourite</button>
-      </form>
-      <% } else if(currentUser && !currentUser.posts.includes(upload._id) && currentUser.favourites.includes(upload._id)){ %>
-      <form form action="/uploads/<%= upload._id%>/unfav?_method=PUT"  method="POST" class="favForm ">
-        <button class="favButton unFav">un-Favourite</button> 
-      </form>
-      <% } %>
-    <br>
-    <br>
-    </div>
-  <% if(upload.caption != " " ){ %>
-    
-  <section id="caption">
-  <p class="toggleText nonImgContainer"><%= upload.caption %></p>
-  </section>
-  <% } %>
-  <hr>
-  <div class="<%= userOrNo %>">
-  <% if(currentUser && upload.author.equals(currentUser._id)){%>
-  <p id="editLink"><a href="/uploads/<%= upload._id%>/edit">Edit this</a></p>
-    <% } %>
-    <% if(currentUser){%> <!--If there IS a current user at all, render the comment form. -->
-    <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
-      <table>
-        <tr>
-          <td>
-            <img class="commentImg" src="<%= currentUser.profileImage.url %>">
-            </td>
-            <td>
-      <label for="body" class="toggleText"><h3>Leave a comment</h3></label>
-      <br>
-<textarea name="comment[body]" id="body" rows="2" required></textarea>
-<br>
-<button class="formButton">Submit</button> 
-</td>
-</tr>
-</table>
-    </form>
-    <% } %>
-  </div>
-</section>
-    <section id="commentSection">
-      <% if(upload.comments.length == 0){ %>
-There are no comments yet.
-        <% } else{ %>
-<ul>
-    <% for (var i=0; i < upload.comments.length; i++){ %>
-    <li class="comment">
-      <table>
-        <tr>
-          <td>
-      <img class="commentImg" src="<%= upload.comments[i].author.profileImage.url %>">
-      </td>
-      <td>
-      <p><a href="/users/<%=upload.comments[i].author._id %>"><%=upload.comments[i].author.displayName %></a><span class="toggleText"> <%=upload.comments[i].datePosted %></span></p>
-      <p class="toggleText"><%=upload.comments[i].body %></p>
-      <% if(currentUser && upload.comments[i].author.equals(currentUser._id)){%>
-        <form action="/uploads/<%= upload._id%>/comments/<%=upload.comments[i]._id%>?_method=DELETE" method="POST">
-          <button>Delete</button>
-          </form>
+  <% let likes=upload.likes.length-1; let dislikes=upload.dislikes.length-1; let comments=(upload.comments.length==1)
+    ? "comment" : "comments" ; let reFormat=upload.image.url.replace("/upload", "/upload/c_scale,w_1.0" ); let
+    userOrNo=(currentUser) ? "shown" : "hidden" ; let authorOrNo=(currentUser &&
+    !currentUser.posts.includes(upload._id)) ? "shown" : "hidden" ; %>
+    <div id="pageContent">
+      <section id="showMain">
+        <h2 class="toggleText title">
+          <%= upload.title %>
+        </h2>
+        <div class="nonImgContainer">
+          <table>
+            <tr>
+              <td>
+                <span class="toggleText">By:</span> <a href="/users/<%= upload.author._id  %>">
+                  <%= upload.author.displayName %>
+                </a>
+              </td>
+              <td class="toggleText">
+                Posted: <%= upload.datePosted %>
+              </td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td class="likes">Likes: <%= likes %>
+              </td>
+              <td class="dislikes">Dislikes: <%= dislikes %>
+              </td>
+              <td><a href="#commentSection">
+                  <%= upload.comments.length %>
+                    <%= comments %>
+                </a></td>
+            </tr>
+          </table>
+        </div>
+        <div class="imgContainer">
+          <img src="<%= reFormat %>" class="mainImg" alt="<%= upload.image.filename %>">
+        </div>
+        <br>
+        <div class="<%= userOrNo %> <%= authorOrNo %> nonImgContainer">
+          <!--like button, adds user to likes array. Shows when user is not in dislikes array or likes array-->
+          <% if(currentUser && !upload.likes.includes(currentUser._id) ){%>
+            <form form action="/uploads/<%= upload._id%>/like?_method=PUT" method="POST" class="opinionForm ">
+              <button class="opinionButton"><i class="fas fa-thumbs-up"></i></button>
+            </form>
+            <% } %>
+              <!--UN-like button, removes user to from likes array. Shows when user is in likes array.-->
+              <% if(currentUser && upload.likes.includes(currentUser._id) &&
+                !upload.dislikes.includes(currentUser._id)){%>
+                <form form action="/uploads/<%= upload._id%>/unlike?_method=PUT" method="POST" class="opinionForm ">
+                  <button class="opinionButton unlikeButton"><i class="fas fa-thumbs-up"></i></button>
+                </form>
+                <% } %>
+                  <!--Dislike button, adds user to dislikes array. Shows when user is not in dislikes array or likes array-->
+                  <% if(currentUser && !upload.dislikes.includes(currentUser._id)){%>
+                    <form form action="/uploads/<%= upload._id%>/dislike?_method=PUT" method="POST"
+                      class="opinionForm ">
+                      <button class="opinionButton"><i class="fas fa-thumbs-down"></i></button>
+                    </form>
+                    <% } %>
+                      <!--Un-dislike button, removes user  from dislike array. Shows when user is in dislikes array.-->
+                      <% if(currentUser && !upload.likes.includes(currentUser._id) &&
+                        upload.dislikes.includes(currentUser._id)){%>
+                        <form form action="/uploads/<%= upload._id%>/undislike?_method=PUT" method="POST"
+                          class="opinionForm ">
+                          <button class="opinionButton unDislikeButton"><i class="fas fa-thumbs-down"></i></button>
+                        </form>
+                        <% } %>
+                          <br>
+                          <br>
+                          <% if(currentUser && !currentUser.posts.includes(upload._id) &&
+                            !currentUser.favourites.includes(upload._id)){%>
+                            <form form action="/uploads/<%= upload._id%>/fav?_method=PUT" method="POST"
+                              class="favForm ">
+                              <button class="favButton">Favourite</button>
+                            </form>
+                            <% } else if(currentUser && !currentUser.posts.includes(upload._id) &&
+                              currentUser.favourites.includes(upload._id)){ %>
+                              <form form action="/uploads/<%= upload._id%>/unfav?_method=PUT" method="POST"
+                                class="favForm ">
+                                <button class="favButton unFav">un-Favourite</button>
+                              </form>
+                              <% } %>
+                                <br>
+                                <br>
+        </div>
+        <% if(upload.caption !=" " ){ %>
+
+          <section id="caption">
+            <p class="toggleText nonImgContainer">
+              <%= upload.caption %>
+            </p>
+          </section>
           <% } %>
-      </td>
-        </tr>
-        </table>
-        </li>
-      <% } %>
-      </ul>
-      <% } %>
-    </section>
-  </div>
+            <hr>
+            <div class="<%= userOrNo %>">
+              <% if(currentUser && upload.author.equals(currentUser._id)){%>
+                <p id="editLink"><a href="/uploads/<%= upload._id%>/edit">Edit this</a></p>
+                <% } %>
+                  <% if(currentUser){%>
+                    <!--If there IS a current user at all, render the comment form. -->
+                    <form action="/uploads/<%= upload._id%>/comments" method="POST" novalidate class="validated-form">
+                      <table>
+                        <tr>
+                          <td>
+                            <img class="commentImg" src="<%= currentUser.profileImage.url %>">
+                          </td>
+                          <td>
+                            <label for="body" class="toggleText">
+                              <h3>Leave a comment</h3>
+                            </label>
+                            <br>
+                            <textarea name="comment[body]" id="body" rows="2" required></textarea>
+                            <br>
+                            <button class="formButton">Submit</button>
+                          </td>
+                        </tr>
+                      </table>
+                    </form>
+                    <% } %>
+            </div>
+      </section>
+      <section id="commentSection">
+        <% if(upload.comments.length==0){ %>
+          There are no comments yet.
+          <% } else{ %>
+            <ul>
+              <% for (let i=upload.comments.length - 1; i>= 0; i--){ %>
+                <li class="comment liBorder">
+                  <table>
+                    <tr>
+                      <td>
+                        <img class="commentImg" src="<%= upload.comments[i].author.profileImage.url %>">
+                      </td>
+                      <td>
+                        <p><a href="/users/<%=upload.comments[i].author._id %>">
+                            <%=upload.comments[i].author.displayName %>
+                          </a><span class="toggleText">
+                            <%=upload.comments[i].datePosted %>
+                          </span></p>
+                        <p class="toggleText">
+                          <%=upload.comments[i].body %>
+                        </p>
+                        <% if(currentUser && upload.comments[i].author.equals(currentUser._id)){%>
+                          <form action="/uploads/<%= upload._id%>/comments/<%=upload.comments[i]._id%>?_method=DELETE"
+                            method="POST">
+                            <button>Delete</button>
+                          </form>
+                          <% } %>
+                      </td>
+                    </tr>
+                  </table>
+                </li>
+                <% } %>
+            </ul>
+            <% } %>
+      </section>
+    </div>
