@@ -269,6 +269,14 @@ hr {
   padding: 10px 0;
 }
 
+.commentDelete{
+  border-radius: 5px;
+  padding: 3px 7px;
+  border: none;
+background: none;
+cursor: pointer;
+}
+
 #contentForms {
   margin: 0 auto 50px;
   width: 90%;

@@ -34,6 +34,11 @@ footer {
     background-color: var(--white-color);
 }
 
+.commentDelete{
+    background-color: var(--dark-grey-color);
+    color: var(--white-color);
+}
+
 .liBorder:not(:last-child) {
     border-bottom: 1px solid var(--dark-grey-color);
   }

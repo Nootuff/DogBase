@@ -42,7 +42,7 @@
           <!--like button, adds user to likes array. Shows when user is not in dislikes array or likes array-->
           <% if(currentUser && !upload.likes.includes(currentUser._id) ){%>
             <form form action="/uploads/<%= upload._id%>/like?_method=PUT" method="POST" class="opinionForm ">
-              <button class="opinionButton"><i class="fas fa-thumbs-up"></i></button>
+              <button class="opinionButton neutralButton"><i class="fas fa-thumbs-up"></i></button>
             </form>
             <% } %>
               <!--UN-like button, removes user to from likes array. Shows when user is in likes array.-->
@@ -56,7 +56,7 @@
                   <% if(currentUser && !upload.dislikes.includes(currentUser._id)){%>
                     <form form action="/uploads/<%= upload._id%>/dislike?_method=PUT" method="POST"
                       class="opinionForm ">
-                      <button class="opinionButton"><i class="fas fa-thumbs-down"></i></button>
+                      <button class="opinionButton neutralButton"><i class="fas fa-thumbs-down"></i></button>
                     </form>
                     <% } %>
                       <!--Un-dislike button, removes user  from dislike array. Shows when user is in dislikes array.-->
@@ -149,7 +149,7 @@
                         <% if(currentUser && upload.comments[i].author.equals(currentUser._id)){%>
                           <form action="/uploads/<%= upload._id%>/comments/<%=upload.comments[i]._id%>?_method=DELETE"
                             method="POST">
-                            <button>Delete</button>
+                            <button class="commentDelete">Delete</button>
                           </form>
                           <% } %>
                       </td>
