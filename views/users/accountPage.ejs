@@ -45,7 +45,7 @@
             <li class="liBorder">
               <table>
                 <tr>
-                  <td><img src="<%= user.posts[i].image.url %>" class="userListImg"></td>
+                  <td><a href="/uploads/<%=user.posts[i]._id %>"><img src="<%= user.posts[i].image.url %>" class="userListImg"></a></td>
                   <td><a href="/uploads/<%=user.posts[i]._id %>">
                       <%=user.posts[i].title %>
                     </a>

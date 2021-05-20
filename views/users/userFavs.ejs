@@ -41,7 +41,7 @@
             <li class="liBorder">
               <table>
                 <tr>
-                  <td><img src="<%= user.favourites[i].image.url %>" class="userListImg"></td>
+                  <td><a href="/uploads/<%=user.favourites[i]._id %>"><img src="<%= user.favourites[i].image.url %>" class="userListImg"></a></td>
                   <td><a href="/uploads/<%=user.favourites[i]._id %>">
                       <%=user.favourites[i].title %>
                     </a>

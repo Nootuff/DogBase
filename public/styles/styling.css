@@ -317,7 +317,7 @@ cursor: pointer;
   border: 2px solid var(--blue-color);
   border-radius: 3px;
   padding: 8px;
-  height: 400px;
+  height: auto;
 }
 
 .userForm:first-child {
@@ -564,6 +564,7 @@ header {
     width: 50%;
     flex: 1;
     margin: 0;
+    height: 400px;
   }
   .userForm:first-child {
     margin-right: 20px;
