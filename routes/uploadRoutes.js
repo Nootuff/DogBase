@@ -128,7 +128,6 @@ router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => { //D
   const upload = req.params.id;
   const user = await User.findById(req.user._id);
   if (user.posts.includes(upload)) {
-    console.log("post detected");
     await User.findByIdAndUpdate(user, { $pull: { posts: upload } });
   }
   await Upload.findByIdAndDelete(upload);

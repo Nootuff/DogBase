@@ -316,6 +316,7 @@ cursor: pointer;
   border: 2px solid var(--blue-color);
   border-radius: 3px;
   padding: 8px;
+  height: 400px;
 }
 
 .userForm:first-child {
@@ -327,7 +328,7 @@ cursor: pointer;
 }
 
 #editUserImg {
-  width: 60%;
+  width: 170px;
   border: 1px solid var(--light-grey-color);
   border-radius: 5px;
 }
@@ -555,20 +556,17 @@ header {
 
 @media only screen and (min-width: 700px) {
   /* Tablet: */
-
- 
   .userFormContainer {
     display: flex;
   }
   .userForm {
+    width: 50%;
     flex: 1;
     margin: 0;
-    height: 400px;
   }
   .userForm:first-child {
     margin-right: 20px;
   }
- 
 }
 
 @media only screen and (min-width: 768px) {

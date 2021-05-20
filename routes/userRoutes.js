@@ -58,7 +58,7 @@ router.get("/contactPage", function (req, res) { //Loads contact page.
 router.get("/logout", function (req, res) { //Logs user out.
     req.logout(); //.logout() is another route bought in from passport, logs the user out.
     req.flash("success", "Goodbye!");
-    res.redirect("/uploads");
+    res.redirect("/");
 });
 
 router.get("/accountPage", isLoggedIn, catchAsync(async (req, res) => { //Loads the current users' account page.    
