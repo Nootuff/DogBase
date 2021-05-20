@@ -5,9 +5,9 @@
                 <h3>Something Went Wrong</h3>
                 <p>An Error Has Occurred.</p>
                 <p><a href="/uploads">Return to main page.</a></p>
-                <p><b><%=err.message %></b></p>
                 <!--This checks to see what mode the app is in, if it's in production mode, triggering an error will only show the title, if we're in development mode, it will show the error stack with all the error details and things.-->
                 <% if (process.env.NODE_ENV !=="production" ){ %>
+                    <p><b><%=err.message %></b></p>
                     <p><b><%=err.stack %></b></p> 
                     <% } %>
             </div>
