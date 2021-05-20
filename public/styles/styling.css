@@ -526,19 +526,37 @@ input {
   background-color: var(--red-color);
 }
 
+/* All styles above this are default or for phones held portrait: */
+@media only screen and (min-width: 600px) {
+/* Mobile landscape: */
+main {
+  margin-top: 190px;
+}
+header {
+  height: 130px;
+}
+
+#userInterface {
+  margin-top: -70px;
+}
+
+.userCtrls {
+  float: right;
+}
+
+#userDetailsSide {
+  margin-left: 7px;
+  display: block;
+}
+#userDetailsBelow {
+  display: none;
+}
+}
+
 @media only screen and (min-width: 700px) {
-  main {
-    margin-top: 190px;
-  }
-  header {
-    height: 130px;
-  }
-  .userCtrls {
-    float: right;
-  }
-  #userInterface {
-    margin-top: -70px;
-  }
+  /* Tablet: */
+
+ 
   .userFormContainer {
     display: flex;
   }
@@ -550,13 +568,7 @@ input {
   .userForm:first-child {
     margin-right: 20px;
   }
-  #userDetailsSide {
-    margin-left: 7px;
-    display: block;
-  }
-  #userDetailsBelow {
-    display: none;
-  }
+ 
 }
 
 @media only screen and (min-width: 768px) {
