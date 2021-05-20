@@ -80,8 +80,8 @@ const sessionConfig = {
   cookie: {
     httpOnly: true, //This is optional, if it's included, the cookie cannot be accessed through or interfered with by a client-side script. This is extra security. Hackers cannot see confidential cookies. 
     // secure: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //This is when the cookie is programmed to expire. It is todays date, Date.now is in milliseconds. We want this cookie to expire in a week so the sum is 1000 milliseconds in a second, 60 secs in a minute, 60 mins in an hour, 24 hours etc. So the date it will expire is today's date plus that time.
-    maxAge: 1000 * 60 * 60 * 24 * 7
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 1, //This is when the cookie is programmed to expire. It is todays date, Date.now is in milliseconds. We want this cookie to expire in a week so the sum is 1000 milliseconds in a second, 60 secs in a minute, 60 mins in an hour, 24 hours etc. So the date it will expire is today's date plus that time.
+    maxAge: 1000 * 60 * 60 * 24 * 1
     //All of this expiration stuff is because we don't want users to log in and stay logged in, they will get logged out after a week. 
 }
 }
