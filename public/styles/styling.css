@@ -258,6 +258,7 @@ hr {
 }
 
 .commentImg {
+  max-height: 150px;
   width: 100px;
   border: 1px solid var(--light-grey-color);
   border-radius: 6px;
@@ -328,7 +329,7 @@ cursor: pointer;
 }
 
 #editUserImg {
-  width: 170px;
+  max-height: 170px;  
   border: 1px solid var(--light-grey-color);
   border-radius: 5px;
 }

@@ -138,8 +138,14 @@ return res.redirect(`/users/register`);
    } else if (existDisplayName) {
     req.flash("error", "Display name already in use");
     return res.redirect(`/users/register`);
+   } else if(displayName.length > 20){
+    req.flash("error", "Display name too long");
+    return res.redirect(`/users/register`);
+   } else if (displayName.includes(" ")){
+    req.flash("error", "Display name cannot include spaces");
+    return res.redirect(`/users/register`);
    } else if(emailCheck == false){
-    req.flash("error", "Invalid email.");
+    req.flash("error", "Please enter a valid email.");
     return res.redirect(`/users/register`);
    } else if(passCheck == false){
     req.flash("error", "Password must have 1 capital letter, 1 lowercase letter, 1 number & be at least 8 characters long with no spaces.");

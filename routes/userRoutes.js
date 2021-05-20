@@ -14,7 +14,7 @@ router.get("/register", alreadyAUser, function (req, res) { //Loads register pag
     res.render("users/register.ejs");
 });
 
-router.post("/register", multerUpload.single('profileImage'), authNewUser, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
+router.post("/register", alreadyAUser, multerUpload.single('profileImage'), authNewUser, catchAsync(async (req, res) => { //The route that adds a new user onto the system. 
     try {
         const joinDate = () => {
             const today = new Date();
@@ -104,7 +104,7 @@ router.put('/destroyUserPic', isLoggedIn, catchAsync(async (req, res,) => { //De
     res.redirect("/users/edit");
 }));
 
-router.put('/updateProfilePic', multerUpload.single('profileImage'), isLoggedIn, catchAsync(async (req, res,) => { //Update user display image with new image.
+router.put('/updateProfilePic', isLoggedIn, multerUpload.single('profileImage'),  catchAsync(async (req, res,) => { //Update user display image with new image.
     const user = await User.findById(req.user._id);
     await cloudinary.uploader.destroy(user.profileImage.filename);//The destroy method deletes the old image from the cloudinary database.
     const profileImage = { url: req.file.path, filename: req.file.filename };
