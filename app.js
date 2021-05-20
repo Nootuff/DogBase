@@ -27,7 +27,7 @@ const commentRoutes = require('./routes/commentRoutes');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo'); //Version 4.4.1 is installed.
 
-const dbUrl = /* process.env.DB_URL || */ 'mongodb://localhost:27017/ExpressDogProject'; //This code determines which database the code is saved to, the local mongoDb server or atlas.
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/ExpressDogProject'; //This code determines which database the code is saved to, the local mongoDb server or atlas.
 
 const { commentSchema } = require("./schemas.js");
 const catchAsync = require("./utilities/catchAsync");
