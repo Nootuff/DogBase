@@ -1,5 +1,6 @@
 <% layout("/boilerplate") %>
-  <% let picOrNo=(user.profileImage.url !="/assets/placeholder.png" ) ? "shown" : "hidden" ; %>
+  <% let picOrNo=(user.profileImage.url !="/assets/placeholder.png" ) ? "shown" : "hidden" ;
+  let mode = (currentUser.darkMode==false) ? "dark" : "light"; %>
     <div id="noData" class="hidden flash subFlash errorFlash">Missing data</div>
     <div id="pageContent">
       <div id="contentForms">
@@ -34,7 +35,7 @@
           </div>
         </div>
         <div>
-          <h3>Switch to dark mode</h3>
+          <h3>Switch to <%= mode %> mode</h3>
           <form action="/users/viewMode?_method=PUT" method="POST">
             <button id="modeToggle"></button>
           </form>
